@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 错误消息 -->
+    <string name="msg01">网络连接异常，请重新尝试</string>
+</resources>
