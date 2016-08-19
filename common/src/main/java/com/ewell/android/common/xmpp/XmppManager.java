@@ -3,18 +3,12 @@ package com.ewell.android.common.xmpp;
 import com.ewell.android.common.config.InitConfigModel;
 import com.ewell.android.common.exception.EwellException;
 import com.ewell.android.common.exception.ExceptionEnum;
+import com.ewell.android.model.AlarmList;
 import com.ewell.android.model.BaseMessage;
 import com.ewell.android.model.EMRealTimeReport;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
-
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Dongjg on 2016-7-12.
@@ -43,6 +37,7 @@ public class XmppManager implements XmppMsgDelegate<String> {
     public void SetXmppMsgDelegate(XmppMsgDelegate xmppMsgDelegate) {
         this.xmppMsgDelegate = xmppMsgDelegate;
     }
+
 
     /*
     * 连接服务器
@@ -75,7 +70,7 @@ public class XmppManager implements XmppMsgDelegate<String> {
                     throw new EwellException(ExceptionEnum.TimeOutError);
                 }
 
-                Thread.sleep(10);
+               // Thread.sleep(10);
             }
             result = this.requestQuene.get(key);
             this.requestQuene.remove(key);
@@ -107,12 +102,20 @@ public class XmppManager implements XmppMsgDelegate<String> {
     public void ReciveMessage(String xml) {
         try {
             BaseMessage msg = ParseModel(xml);
+
+
             if (msg != null) {
                 if (msg.getClass().isAssignableFrom(EMRealTimeReport.class)) {
                     if (this.xmppMsgDelegate != null) {
                         xmppMsgDelegate.ReciveMessage((EMRealTimeReport)msg);
                     }
-                } else {
+                }
+                else if(msg.getClass().isAssignableFrom(AlarmList.class) && !msg.getSubject().get_operate().equals("sleepcareforiphone")){
+                    if (this.xmppMsgDelegate != null) {
+                        xmppMsgDelegate.ReciveMessage((AlarmList)msg);
+                    }
+                }
+                else {
                     this.requestQuene.put(msg.getSubject().getRequestID(), msg);
                 }
             }

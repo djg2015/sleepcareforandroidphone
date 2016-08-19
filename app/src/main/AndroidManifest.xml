@@ -1,30 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ewell.android.sleepcareforphone">
+    package="com.ewell.android.sleepcareforphone"
+    android:versionName="1.0">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    //网络通信权限
     <uses-permission android:name="android.permission.INTERNET" />
-    //写文件权限
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".application"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_sleepcaresingle"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity">
+        android:theme="@style/AppTheme"
+        >
+        <activity android:name=".activities.UpdateActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ForgetPwdActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.RegistAccountActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ReadProtocolActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ReadInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ReadTipsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.MipcaActivityCapture" android:screenOrientation="portrait" />
+        <activity android:name=".activities.BindPatientInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ModifyAccountActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ModifyPatientInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.AccountSettingActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.MyDevicesActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ShowAlarmActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.TabbarActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ShowWeekReportActivity" android:screenOrientation="portrait"  />
+        <activity android:name=".activities.LoginActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.MainActivity" android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".common.pushnotification.PushService"
+            android:label=" Push Notifications Service"
+            />
+
+        <receiver android:name=".common.pushnotification.BootReceiver" >
+            <intent-filter>
+                <action android:name="com.example.lillix.pushnotification.destroy" />
+            </intent-filter>
+        </receiver>
     </application>
+
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
 
 </manifest>

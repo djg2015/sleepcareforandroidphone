@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/backgroundandseperator" >
+
+    <RelativeLayout
+        android:id="@+id/topview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blue"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="监护人"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:id="@+id/texttitle"
+            android:layout_centerInParent="true"
+            />
+
+
+    </RelativeLayout>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/mypatient"
+            android:drawableLeft="@drawable/icon_nurse"
+            android:drawableRight="@drawable/btn_rightarrow"
+            android:paddingRight="25dp"
+            android:paddingLeft="20dp"
+            android:drawablePadding="20dp"
+            android:text="老人信息"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:textColor="@color/darkgrey"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/mydevices"
+            android:drawableLeft="@drawable/icon_mydevices"
+            android:drawableRight="@drawable/btn_rightarrow"
+            android:paddingRight="25dp"
+            android:paddingLeft="26dp"
+            android:drawablePadding="26dp"
+            android:text="我的设备"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:textColor="@color/darkgrey"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/myalarms"
+            android:drawableLeft="@drawable/icon_alarminfos"
+            android:drawableRight="@drawable/btn_rightarrow"
+
+            android:paddingRight="25dp"
+            android:paddingLeft="26dp"
+            android:drawablePadding="26dp"
+            android:text="报警信息"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:textColor="@color/darkgrey"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/weekreport"
+            android:drawableLeft="@drawable/icon_weekreport"
+            android:drawableRight="@drawable/btn_rightarrow"
+            android:paddingRight="25dp"
+            android:paddingLeft="26dp"
+            android:drawablePadding="26dp"
+            android:text="周报表"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:textColor="@color/darkgrey"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/about"
+            android:drawableLeft="@drawable/icon_about"
+            android:drawableRight="@drawable/btn_rightarrow"
+            android:paddingRight="25dp"
+            android:paddingLeft="26dp"
+            android:drawablePadding="26dp"
+            android:text="关于"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:textColor="@color/darkgrey"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/tips"
+            android:drawableLeft="@drawable/icon_tips"
+            android:drawableRight="@drawable/btn_rightarrow"
+            android:paddingRight="25dp"
+            android:paddingLeft="26dp"
+            android:drawablePadding="26dp"
+            android:text="使用技巧"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:textColor="@color/darkgrey"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="1dp"
+
+            android:id="@+id/version"
+            android:drawableLeft="@drawable/icon_version"
+            android:drawableRight="@drawable/icon_versiontext"
+            android:paddingRight="25dp"
+            android:paddingLeft="26dp"
+            android:drawablePadding="26dp"
+            android:text="当前版本"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:textColor="@color/darkgrey"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/accountsetting"
+            android:drawableLeft="@drawable/icon_setting"
+            android:drawableRight="@drawable/btn_rightarrow"
+            android:paddingRight="25dp"
+            android:paddingLeft="26dp"
+            android:drawablePadding="26dp"
+            android:text="设置"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="@color/darkgrey"
+            android:background="@color/white"
+            />
+    </LinearLayout>
+
+</ScrollView>
+
+    </LinearLayout>

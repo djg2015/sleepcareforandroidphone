@@ -4,6 +4,7 @@ import com.ewell.android.common.config.InitConfigModel;
 import com.ewell.android.common.log.LogManager;
 import com.ewell.android.common.xmpp.XmppManager;
 
+
 /**
  * 全局使用对象
  */
@@ -33,3 +34,6 @@ public class Grobal {
     }
 
 }
+
+
+

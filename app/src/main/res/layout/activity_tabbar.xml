@@ -1,0 +1,141 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+
+
+
+    <FrameLayout
+        android:id="@+id/frame_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/frameMenu"
+        android:layout_alignParentTop="true"
+        >
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/backgroundandseperator"
+            android:orientation="horizontal" >
+
+            <!-- hr -->
+
+            <FrameLayout
+                android:id="@+id/layout_hr"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_hr"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="38dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="top|center"
+                    android:src="@drawable/skin_tabbar_icon_hr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="bottom|center"
+                    android:text="@string/skin_tabbar_icon_hr"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <!-- rr -->
+
+            <FrameLayout
+                android:id="@+id/layout_rr"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_rr"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="38dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="top|center"
+                    android:src="@drawable/skin_tabbar_icon_rr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:text="@string/skin_tabbar_icon_rr"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <!-- sleep-->
+            <FrameLayout
+                android:id="@+id/layout_sleep"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_sleep"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="38dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="top|center"
+                    android:src="@drawable/skin_tabbar_icon_sleep" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:text="@string/skin_tabbar_icon_sleep"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <!-- me -->
+
+            <FrameLayout
+                android:id="@+id/layout_me"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_me"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="38dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="top|center"
+                    android:src="@drawable/skin_tabbar_icon_me" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:text="@string/skin_tabbar_icon_me"
+
+                    android:textColor="@color/darkgrey"
+                    android:textSize="12sp" />
+            </FrameLayout>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+    <!-- 中间按钮背景 -->
+
+    <!-- 中间按钮 -->
+
+
+
+</RelativeLayout>

@@ -10,8 +10,30 @@ public class EwellException extends  Exception {
         return _exceptionEnum;
     }
 
-    private String _exceptionMsg;
+    private String _exceptionMsg="";
     public String getExceptionMsg() {
+        switch(_exceptionEnum){
+            case XmppBusinessError:
+                _exceptionMsg="远程业务内部异常";
+                break;
+            case UnknowResponse:
+                _exceptionMsg="返回的响应数据无法识别";
+                break;
+            case TimeOutError:
+                _exceptionMsg="请求超时";
+                break;
+            case NetError:
+                _exceptionMsg="网络连接异常";
+                break;
+            case SystemError:
+                _exceptionMsg="系统异常";
+                break;
+
+            default:
+                break;
+
+        }
+
         return _exceptionMsg;
     }
 

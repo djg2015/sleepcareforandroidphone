@@ -11,6 +11,8 @@ public class XmppMsgSubject {
     private String _version = "1.0";
     private String _bizCode = "sleepcareforiphone";
     private String _operate = "";
+public String get_operate(){return this._operate;}
+
 
     private String _requestID = null;
 

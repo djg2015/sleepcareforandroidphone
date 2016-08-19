@@ -1,0 +1,196 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class=".PatientInfoBinder">
+
+        <variable
+            name="bindPatientInfo"
+            type="com.ewell.android.sleepcareforphone.viewmodels.BindPatientInfoViewModel" />
+
+    </data>
+
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context="com.ewell.android.sleepcareforphone.activities.BindPatientInfoActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/TitleView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/themeblue">
+
+                <TextView
+                    android:id="@+id/titleText"
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/patientinfo"
+                    android:textSize="22sp"
+
+                    />
+
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/icon_logo_1" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.1">
+
+            <EditText
+                android:id="@+id/textpatientname"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_above="@+id/textpatienttelephone"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="125dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_figure"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_figure"
+
+                android:editable="false"
+                android:text="@{bindPatientInfo.patientName}"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="@color/darkgrey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/underline1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/textpatientname"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="#4d9dfd" />
+
+            <EditText
+                android:id="@+id/textpatienttelephone"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_above="@+id/textpatientaddress"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_telephone"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_telephone"
+                android:hint="@string/patienttelephone"
+                android:inputType="number"
+                android:text="@{bindPatientInfo.patientTelephone}"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="@color/lightgrey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/underline2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/textpatienttelephone"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="#4d9dfd" />
+
+            <EditText
+                android:id="@+id/textpatientaddress"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="35dp"
+
+                android:background="@null"
+                android:drawableLeft="@drawable/btn_address"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/btn_address"
+                android:hint="@string/patientaddress"
+                android:inputType="textMultiLine"
+                android:text="@{bindPatientInfo.patientAddress}"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="@color/lightgrey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/underline3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/textpatientaddress"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="#4d9dfd" />
+
+            <Button
+                android:id="@+id/confirmResignPwd"
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textpatientaddress"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/icon_loginbtn"
+                android:onClick="ClickConfirm"
+
+                android:text="@string/confirm"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <Button
+                android:id="@+id/btnmale"
+                android:layout_width="34dp"
+                android:layout_height="30dp"
+
+                android:layout_above="@+id/underline1"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/malebutton"
+                android:onClick="ClickMale" />
+
+            <Button
+                android:id="@+id/btnfemale"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_above="@+id/underline1"
+                android:layout_marginBottom="12dp"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/btnmale"
+                android:background="@drawable/femalebutton"
+                android:onClick="ClickFemale" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

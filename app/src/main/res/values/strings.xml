@@ -1,1 +1,64 @@
-<resources></resources>
+<resources>
+    <string name="app_name">智能床</string>
+    <string name="loginusername">请输入手机号</string>
+    <string name="loginpassword">请输入密码</string>
+    <string name="savepassword">记住密码</string>
+    <string name="forgetpassword">忘记密码</string>
+    <string name="noaccount">没有帐号? </string>
+    <string name="registaccount">注册</string>
+    <string name="action_sign_in">登 录</string>
+
+    <string name="resignpassword">重置密码</string>
+    <string name="oldpassword">输入旧密码</string>
+    <string name="newpassword">输入新密码</string>
+    <string name="confirmnewpassword">再次输入新密码</string>
+    <string name="confirm">确 认</string>
+    <string name="verifynum">短信校验码</string>
+    <string name="sendverifynum">获取校验码</string>
+
+    <string name="modifyaccount">修改账户</string>
+    <string name="scancode">扫一扫</string>
+    <string name="agreeprotocol">我已阅读并同意uSleepCare协议</string>
+    <string name="goback">返回</string>
+
+    <string name="readprotocol">uSleepCare服务协议</string>
+    <string name="readtips">uSleepCare使用说明</string>
+    <string name="readinfo">关于uSleepCare</string>
+
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+
+
+    <string name="patientinfo">老人信息</string>
+    <string name="modifypatientinfo">修改老人信息</string>
+    <string name="patientname">请输入姓名</string>
+
+    <string name="patienttelephone">请输入联系电话</string>
+    <string name="patientaddress">请输入地址</string>
+
+    <string name="accountsetting">软件设置</string>
+    <string name="logout">退出登录</string>
+    <string name="alarmswitch">报警通知</string>
+    <string name="accountandsecurity">帐号与安全</string>
+    <string name="switchon">开</string>
+    <string name="switchooff">关</string>
+
+    <string name="devices">我的设备</string>
+    <string name="alarms">报警信息</string>
+
+    <string name="skin_tabbar_icon_hr">心率</string>
+    <string name="skin_tabbar_icon_rr">呼吸</string>
+    <string name="skin_tabbar_icon_sleep">睡眠</string>
+    <string name="skin_tabbar_icon_me">我的</string>
+
+    <string name="weekreport">周报表</string>
+    <string name="hrrrtitle">心率和呼吸</string>
+    <string name="leavebedtimetitle">离床时间</string>
+    <string name="sleeptimetitle">睡眠时间</string>
+    <string name="sleepsuggesttitle">睡眠建议</string>
+
+    <string name="sendemailtitle">发送周报表</string>
+    <string name="emailaddresshint">请输入邮箱地址</string>
+
+    <string name="softwareupdate">软件更新</string>
+
+</resources>

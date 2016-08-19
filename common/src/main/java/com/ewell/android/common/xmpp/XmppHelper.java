@@ -62,6 +62,8 @@ public class XmppHelper {
     //0:未登录 1：已登录
     private int loginFlag = 0;
 
+
+
     /*
     * 连接xmpp服务器
     * */

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--本地化（中文） -->
-    <string name="app_name">SleepcareforPhone</string>
+
     <string name="prompt_userName">请输入账户</string>
     <string name="prompt_password">请输入密码</string>
-    <string name="action_sign_in">登 录</string>
     <string name="action_sign_out">退 出</string>
     <string name="constatus">连接状态</string>
 </resources>

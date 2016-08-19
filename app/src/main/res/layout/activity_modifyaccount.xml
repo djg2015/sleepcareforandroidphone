@@ -1,0 +1,200 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class=".ModifyAccountBinder">
+
+        <variable
+            name="modifyaccount"
+            type="com.ewell.android.sleepcareforphone.viewmodels.ModifyAccountViewModel" />
+
+    </data>
+
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/themeblue">
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="65dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:text="@string/modifyaccount"
+                android:textSize="22sp"
+                android:textColor="@color/white"
+                />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="16dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/btn_back"
+                android:onClick="ClickClose" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+
+                android:src="@drawable/icon_logo_1" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_above="@+id/oldpassword"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_telephone"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_telephone"
+                android:text="@{modifyaccount.username}"
+                android:textColor="@color/darkgrey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/underline1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/username"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@color/themeblue" />
+
+            <EditText
+                android:id="@+id/oldpassword"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_above="@+id/newpassword"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_password"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_password"
+                android:hint="@string/oldpassword"
+                android:inputType="textPassword"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="@color/lightgrey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btnpwdvisible"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/username"
+
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/icon_eyeclose"
+                android:onClick="ClickPwdVisible"
+
+                />
+
+            <TextView
+                android:id="@+id/underline2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/oldpassword"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@color/themeblue" />
+
+            <EditText
+                android:id="@+id/newpassword"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_password"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_password"
+                android:hint="@string/newpassword"
+                android:inputType="textPassword"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="@color/lightgrey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/underline3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/newpassword"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@color/themeblue" />
+
+            <EditText
+                android:id="@+id/confirmnewpassword"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/newpassword"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_password"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_password"
+                android:hint="@string/confirmnewpassword"
+                android:inputType="textPassword"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="@color/lightgrey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/underline4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/confirmnewpassword"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@color/themeblue" />
+
+            <Button
+                android:id="@+id/confirmResignPwd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/confirmnewpassword"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/icon_loginbtn"
+                android:onClick="@{modifyaccount.ConfirmCommand}"
+                android:text="@string/confirm"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

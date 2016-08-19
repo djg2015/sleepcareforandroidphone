@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nodevice_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/topview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blue"
+
+        >
+
+        <TextView
+            android:id="@+id/texttitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择老人"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="20dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/texttitle"
+            android:background="@drawable/btn_downarrow" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/topview1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/onbedstatusimg"
+            android:layout_width="38dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/icon_offline" />
+
+        <TextView
+            android:id="@+id/choosedate"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:text="2016/01/01"
+            android:textColor="@color/darkgrey"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/circleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+
+        <com.ewell.android.sleepcareforphone.common.SleepProgressView
+            android:id="@+id/my_sleepprogress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/centerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_weight="1.5">
+
+        <TextView
+            android:id="@+id/lightsleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/lightsleeptitle"
+            android:layout_centerHorizontal="true"
+            android:text="00/00"
+            android:textColor="@color/green"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/deepsleeptitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/lightsleeptitle"
+            android:layout_marginRight="63dp"
+
+            android:text="深睡"
+            android:textColor="@color/darkgrey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/deepsleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/lightsleep"
+            android:layout_marginRight="50dp"
+            android:layout_above="@id/deepsleeptitle"
+            android:text="00/00"
+            android:textColor="@color/blue"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/lightsleeptitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerInParent="true"
+            android:text="浅睡"
+            android:textColor="@color/darkgrey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/awakesleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lightsleep"
+            android:layout_marginLeft="50dp"
+           android:layout_above="@+id/awaketitle"
+            android:text="00/00"
+            android:textColor="@color/lightgreen"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/awaketitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/lightsleeptitle"
+
+            android:layout_marginLeft="63dp"
+            android:text="清醒"
+            android:textColor="@color/darkgrey"
+            android:textSize="12sp" />
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/chartview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/chartviewtitle"
+            android:layout_width="match_parent"
+            android:layout_height="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="睡眠时长(时/天)"
+                android:textColor="@color/darkgrey"
+                android:layout_marginLeft="20dp"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+
+<com.ewell.android.sleepcareforphone.common.fancychart.FancyChart
+    android:id="@+id/my_sleepchart"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="10dp"
+
+   />
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -15,19 +15,47 @@ import java.io.StringReader;
 public class EMRealTimeReport extends BaseMessage {
 
     private String HR = "";
+
     public String getHR() {
         return HR;
     }
 
     private String RR = "";
+
     public String getRR() {
         return RR;
     }
 
     private String time = "";
+
     public String getTime() {
         return time;
     }
+
+    private String LastedAvgHR = "";
+
+    public String getLastedAvgHR() {
+        return LastedAvgHR;
+    }
+
+    private String LastedAvgRR = "";
+
+    public String getLastedAvgRR() {
+        return LastedAvgRR;
+    }
+
+    private String BedUserCode = "";
+
+    public String getBedUserCode() {
+        return BedUserCode;
+    }
+
+    private String OnBedStatus = "";
+
+    public String getOnBedStatus() {
+        return OnBedStatus;
+    }
+
 
     public EMRealTimeReport(XmppMsgSubject subject) {
         super(subject);
@@ -41,9 +69,14 @@ public class EMRealTimeReport extends BaseMessage {
         Element root = doc.getRootElement();
 //        Element segment= user.getChild("LoginName");
 //        String email=book.getAttributeValue(“email”);
-        result.HR =root.getChildTextTrim("HR");
-        result.RR =root.getChildTextTrim("RR");
-        result.time =root.getChildTextTrim("MsgTime");
+        result.HR = root.getChildTextTrim("HR")==null ? "" : root.getChildTextTrim("HR");
+        result.RR = root.getChildTextTrim("RR")==null ? "" : root.getChildTextTrim("RR");
+        result.time = root.getChildTextTrim("MsgTime");
+        result.LastedAvgHR = root.getChildTextTrim("LastedAvgHR");
+        result.LastedAvgRR = root.getChildTextTrim("LastedAvgRR");
+        result.BedUserCode = root.getChildTextTrim("UserCode");
+result.OnBedStatus = root.getChildTextTrim("OnBedStatus")==null ? "" : root.getChildTextTrim("OnBedStatus");
+
         returnQuote.close();
         return result;
     }

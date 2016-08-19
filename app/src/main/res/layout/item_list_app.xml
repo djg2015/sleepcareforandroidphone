@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:background="@color/white"
+    android:padding="8dp">
+
+    <Button
+        android:id="@+id/sex"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+
+        android:layout_marginTop="1dp"
+        android:background="@drawable/sexbtn" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/sex"
+        android:text="name"
+        android:textColor="@color/darkgrey"
+        android:textSize="20sp" />
+
+
+    <ImageView
+        android:id="@+id/addressimg"
+        android:layout_width="16dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/name"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_address" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/name"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/darkgrey"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/equipmentid"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/address"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="5dp"
+        android:text="equipmentid"
+        android:textColor="@color/themeblue"
+        android:textSize="20sp" />
+
+</RelativeLayout>

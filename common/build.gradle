@@ -17,4 +17,7 @@ dependencies {
     compile files('src/main/java/commonlibs/asmack-android-8-4.0.7.jar')
     compile project(':model')
     compile files('libs/jdom.jar')
+    compile files('src/main/java/commonlibs/zxing.jar')
+    compile files('src/main/java/commonlibs/core-3.1.0.jar')
+    compile files('src/main/java/commonlibs/wmqtt.jar')
 }

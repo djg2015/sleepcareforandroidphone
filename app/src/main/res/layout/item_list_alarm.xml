@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="160dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/alarmimg"
+        android:layout_width="30dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="2dp"
+
+        android:src="@drawable/icon_alarm" />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/alarmimg"
+        android:text="在床"
+        android:textColor="@color/red"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/timeanddate"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:text="2016/01/01 12:00:00"
+        android:textColor="@color/darkgrey"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/sex"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_below="@+id/alarmimg"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/sexbtn" />
+
+    <TextView
+        android:id="@+id/bednumber"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/alarmimg"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/sex"
+        android:text="100床"
+        android:textColor="@color/darkgrey"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/alarmimg"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/bednumber"
+        android:text="张奶奶"
+        android:textColor="@color/darkgrey"
+        android:textSize="18sp"
+
+        />
+
+    <TextView
+        android:id="@+id/alarmcontent"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_below="@id/name"
+        android:layout_marginLeft="43dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="3dp"
+        android:text="离床报警:已超过预设30分钟!就撒开后立即付款沙发健康哈是艰苦奋斗"
+        android:textColor="@color/darkgrey"
+        android:textSize="15sp"
+
+        />
+
+    <TextView
+        android:id="@+id/equipmentid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/alarmcontent"
+        android:layout_marginRight="8dp"
+        android:text="设备编号: 01270000006"
+        android:textColor="@color/darkgrey"
+        android:textSize="14sp" />
+</RelativeLayout>

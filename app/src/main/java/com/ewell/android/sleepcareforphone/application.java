@@ -27,6 +27,9 @@ public class application extends Application {
         initConfigModel.setXmppServerJID("ewell@122.224.242.241");
         initConfigModel.setXmppUserPWD("123");
 
+
+
+
         Grobal.setInitConfigModel(initConfigModel);
         Grobal.setXmppManager(XmppManager.GetInstance(initConfigModel));
 
@@ -35,4 +38,7 @@ public class application extends Application {
                     + "sleepcareforphone" + File.separator + "logs" + File.separator + "log.txt");
         Grobal.setLogManager(logManager);
     }
+
+
+
 }
