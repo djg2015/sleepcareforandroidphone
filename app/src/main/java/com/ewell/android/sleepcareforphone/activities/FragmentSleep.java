@@ -1,12 +1,10 @@
 package com.ewell.android.sleepcareforphone.activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +35,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.Map;
 
 
 public class FragmentSleep extends Fragment implements View.OnClickListener, XmppMsgDelegate<EMRealTimeReport> {
@@ -51,18 +46,12 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
     private String onbedstatus = "";
 
     private TextView patientname;
-    private Button b1;
 
     private static TextView lightsleeptxt;
     private static TextView deepsleeptxt;
     private static TextView awakesleeptxt;
 
-    private ArrayList<String> tempusercodelist = new ArrayList<String>();
-    private ArrayList<String> tempusernamelist = new ArrayList<String>();
 
-    //  private String[] areas = new String[]{"张奶奶", "王奶奶", "王爷爷", "李爷爷", "123"};
-    private RadioOnClick radioOnClick = new RadioOnClick(0);
-    private ListView areaRadioListView;
 
     private DatePickerFragment fragment;
 
@@ -83,6 +72,9 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
     private LinearLayout view2;
     private RelativeLayout view3;
     private RelativeLayout view4;
+
+    private Button back;
+
 
     //从父activty传参
     public static FragmentSleep newInstance(String bedusercode, String bedusername) {
@@ -134,8 +126,7 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sleep, container, false);
 //change patient button
-        b1 = (Button) v.findViewById(R.id.btn1);
-        b1.setOnClickListener(this);
+
         patientname = (TextView) v.findViewById(R.id.texttitle);
         patientname.setOnClickListener(this);
         if (!BedUserName.equals("")) {
@@ -174,7 +165,7 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
             }
         });
 
-RefreshChart();
+        RefreshChart();
 
 
 //        ChartData data2 = new ChartData(ChartData.LINE_COLOR_GREEN);
@@ -190,17 +181,10 @@ RefreshChart();
 //            data3.addPoint(i, yValues3[i]);
 //        }
 //        chart.addData(data3);
-        //当前账户下没有设备,则隐藏子view,只显示背景图片
-        view1 = (RelativeLayout) v.findViewById(R.id.topview1);
-        view2 = (LinearLayout)v.findViewById(R.id.circleview);
-        view3 = (RelativeLayout)v.findViewById(R.id.centerview);
-        view4=(RelativeLayout)v.findViewById(R.id.chartview);
-        if(Grobal.getInitConfigModel().getEquipmentcodeList().size()==0){
-            view1.setVisibility(View.INVISIBLE);
-            view2.setVisibility(View.INVISIBLE);
-            view3.setVisibility(View.INVISIBLE);
-            view4.setVisibility(View.INVISIBLE);
-        }
+
+
+        back=(Button)v.findViewById(R.id.btnClose);
+       back.setOnClickListener(this);
 
         return v;
     }
@@ -209,11 +193,9 @@ RefreshChart();
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn1:
-                ClickChangeBtn();
-                break;
-            case R.id.texttitle:
-                ClickChangeBtn();
+            case R.id.btnClose:
+
+                getActivity().finish();
                 break;
             case R.id.choosedate:
                 showDatePickerFragemnt();
@@ -226,80 +208,6 @@ RefreshChart();
 
     }
 
-    //------------------------------------ 切换老人---------------------------
-    public void ClickChangeBtn() {
-        Map<String, String> tempmap = Grobal.getInitConfigModel().getUserCodeNameMap();
-        tempusernamelist.clear();
-        tempusercodelist.clear();
-
-        // entrySet使用iterator遍历key和value
-        Iterator<Map.Entry<String, String>> it = tempmap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, String> entry = it.next();
-            tempusercodelist.add(entry.getKey());
-            tempusernamelist.add(entry.getValue());
-            //   System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
-        }
-
-        int count = tempusercodelist.size();
-        if (count > 0) {
-            int i = 0;
-            String[] usernamelist = new String[count];
-            while (i < count) {
-                usernamelist[i] = tempusernamelist.get(i);
-                i++;
-            }
-            //弹窗
-            AlertDialog ad = new AlertDialog.Builder(getActivity())
-                    .setTitle("选择老人")
-                    .setSingleChoiceItems(usernamelist, radioOnClick.getIndex(), radioOnClick)
-                    .create();
-
-
-            areaRadioListView = ad.getListView();
-            ad.show();
-
-            ad.getWindow().setLayout(500, 500);
-        } else {
-            Toast.makeText(getActivity(), "当前账户下没有关注老人!请先添加设备", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * 点击单选框事件
-     *
-     * @author xmz
-     */
-    class RadioOnClick implements DialogInterface.OnClickListener {
-        private int index;
-
-        public RadioOnClick(int index) {
-            this.index = index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void onClick(DialogInterface dialog, int whichButton) {
-            setIndex(whichButton);
-            patientname.setText(tempusernamelist.get(index));
-            BedUserCode = tempusercodelist.get(index);
-            Grobal.getInitConfigModel().setCurUserCode(tempusercodelist.get(index));
-            Grobal.getInitConfigModel().setCurUserName(tempusernamelist.get(index));
-            editor.putString("curusercode", tempusercodelist.get(index));
-            editor.putString("curusername", tempusernamelist.get(index));
-            editor.commit();
-
-            RefreshAfterSelectDate(reportDate);
-            //   Toast.makeText(getActivity(), "您已经选择了： " + index + ":" + areas[index], Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        }
-    }
 
     //----------------------选择日期--------------------------
     private void showDatePickerFragemnt() {
@@ -429,5 +337,7 @@ RefreshChart();
 
         }
     }
+
+
 
 }

@@ -61,7 +61,7 @@ private SharedPreferences.Editor editor;
                     PushService.actionStop(AccountSettingActivity.this);
                 }
                 }catch (EwellException ex) {
-                    Toast.makeText(AccountSettingActivity.this,ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AccountSettingActivity.this,ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
                 }
             }
         });// 添加监听事件
@@ -99,7 +99,7 @@ private SharedPreferences.Editor editor;
         DataFactory.GetSleepcareforPhoneManage().CloseNotificationForAndroid(deviceid, loginname);
         PushService.actionStop(AccountSettingActivity.this);
         }catch (EwellException ex) {
-            Toast.makeText(AccountSettingActivity.this,ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(AccountSettingActivity.this,ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
         }
 
         Intent intent = new Intent(this, LoginActivity.class);

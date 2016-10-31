@@ -2,8 +2,6 @@ package com.ewell.android.sleepcareforphone.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -20,7 +18,6 @@ import com.ewell.android.model.AlarmInfo;
 import com.ewell.android.model.AlarmList;
 import com.ewell.android.sleepcareforphone.R;
 import com.ewell.android.sleepcareforphone.common.pushnotification.PushService;
-import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.ArrayList;
 
@@ -31,40 +28,40 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
     private FragmentRr fragmentRr;
     private FragmentHr fragmentHr;
     private FragmentSleep fragmentSleep;
-    private FragmentMe fragmentMe;
 
-    private FrameLayout rrFl, hrFl, sleepFl, meFl;
-    private ImageView rrIv, hrIv, sleepIv, meIv;
+
+    private FrameLayout rrFl, hrFl, sleepFl;//, meFl;
+    private ImageView rrIv, hrIv, sleepIv;//, meIv;
 
     private SharedPreferences mSP;
     private String curUserName;
     private String curUserCode;
 
     private static final int MSG_SUCCESS = 0;//
-    private BadgeView badge;
+  //  private BadgeView badge;
     private Thread mThread;
     private ArrayList<String> unhandledCodes = new ArrayList<String>();
 
 
 
 
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {//此方法在ui线程运行
-            switch (msg.what) {
-                case MSG_SUCCESS:
-                    if(unhandledCodes.size()>0) {
-                        badge.setText(Integer.toString(unhandledCodes.size()));
-                        badge.show();
-                    }
-                    else{
-                        badge.hide();
-                    }
-                    break;
-            }
-
-
-        }
-    };
+//    private Handler mHandler = new Handler() {
+//        public void handleMessage(Message msg) {//此方法在ui线程运行
+//            switch (msg.what) {
+//                case MSG_SUCCESS:
+//                    if(unhandledCodes.size()>0) {
+//                        badge.setText(Integer.toString(unhandledCodes.size()));
+//                        badge.show();
+//                    }
+//                    else{
+//                        badge.hide();
+//                    }
+//                    break;
+//            }
+//
+//
+//        }
+//    };
 
 
     @Override
@@ -85,48 +82,48 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         try {
             if (getSharedPreferences("config", MODE_PRIVATE).getBoolean("notificationflag", true)) {
                 DataFactory.GetSleepcareforPhoneManage().OpenNotificationForAndroid(deviceid, loginname);
-                PushService.actionStart(TabbarActivity.this);
+                //PushService.actionStart(TabbarActivity.this);
             } else {
                 DataFactory.GetSleepcareforPhoneManage().CloseNotificationForAndroid(deviceid, loginname);
-                PushService.actionStop(TabbarActivity.this);
+              //  PushService.actionStop(TabbarActivity.this);
             }
         }catch (EwellException ex) {
 
-            Toast.makeText(TabbarActivity.this,ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(TabbarActivity.this,ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
         }
 
         //"me"上的报警数字提醒
-        badge = new BadgeView(this, meFl);
-        badge.setTextSize(12);
-        badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+//        badge = new BadgeView(this, meFl);
+//        badge.setTextSize(12);
+//        badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         //从服务器获取当前账户下未处理的报警数
         LoadUnhandledAlarms();
 
 
         //新线程,每3秒刷新报警数
-        mThread = new Thread(runnable);
-        mThread.start();
+     //   mThread = new Thread(runnable);
+     //   mThread.start();
 
 
     }
 
 
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            //run()在新的线程中运行
-            while (true) {
-                //获取当前未处理的报警数
-                mHandler.obtainMessage(MSG_SUCCESS, unhandledCodes.size()).sendToTarget();
-
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
+//    Runnable runnable = new Runnable() {
+//        @Override
+//        public void run() {
+//            //run()在新的线程中运行
+//            while (true) {
+//                //获取当前未处理的报警数
+//                mHandler.obtainMessage(MSG_SUCCESS, unhandledCodes.size()).sendToTarget();
+//
+//                try {
+//                    Thread.sleep(3000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    };
 
 
 
@@ -137,13 +134,13 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         rrFl = (FrameLayout) findViewById(R.id.layout_rr);
         hrFl = (FrameLayout) findViewById(R.id.layout_hr);
         sleepFl = (FrameLayout) findViewById(R.id.layout_sleep);
-        meFl = (FrameLayout) findViewById(R.id.layout_me);
+//        meFl = (FrameLayout) findViewById(R.id.layout_me);
 
 
         rrIv = (ImageView) findViewById(R.id.image_rr);
         hrIv = (ImageView) findViewById(R.id.image_hr);
         sleepIv = (ImageView) findViewById(R.id.image_sleep);
-        meIv = (ImageView) findViewById(R.id.image_me);
+   //     meIv = (ImageView) findViewById(R.id.image_me);
 
         //完成sp的初始化。
         mSP = getSharedPreferences("config", MODE_PRIVATE);
@@ -155,7 +152,7 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         rrFl.setOnClickListener(this);
         hrFl.setOnClickListener(this);
         sleepFl.setOnClickListener(this);
-        meFl.setOnClickListener(this);
+     //   meFl.setOnClickListener(this);
 
 
     }
@@ -176,9 +173,9 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
                 clickSleepBtn();
                 break;
 
-            case R.id.layout_me:
-                clickMeBtn();
-                break;
+//            case R.id.layout_me:
+//                clickMeBtn();
+//                break;
 
             default:
                 System.out.print("============================none");
@@ -209,8 +206,8 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         sleepFl.setSelected(false);
         sleepIv.setSelected(false);
 
-        meFl.setSelected(false);
-        meIv.setSelected(false);
+//        meFl.setSelected(false);
+//        meIv.setSelected(false);
     }
 
     private void clickHrBtn() {
@@ -238,8 +235,8 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         sleepFl.setSelected(false);
         sleepIv.setSelected(false);
 
-        meFl.setSelected(false);
-        meIv.setSelected(false);
+//        meFl.setSelected(false);
+//        meIv.setSelected(false);
     }
 
     private void clickSleepBtn() {
@@ -265,36 +262,36 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         sleepFl.setSelected(true);
         sleepIv.setSelected(true);
 
-        meFl.setSelected(false);
-        meIv.setSelected(false);
+//        meFl.setSelected(false);
+//        meIv.setSelected(false);
     }
 
 
-    private void clickMeBtn() {
-
-        // fragmentMore = new FragmentMore();
-        curUserCode = mSP.getString("curusercode", "");
-        fragmentMe = FragmentMe.newInstance(curUserCode);
-
-        FragmentTransaction fragmentTransaction = this
-                .getSupportFragmentManager().beginTransaction();
-
-        fragmentTransaction.replace(R.id.frame_content, fragmentMe);
-
-        fragmentTransaction.commit();
-
-        rrFl.setSelected(false);
-        rrIv.setSelected(false);
-
-        hrFl.setSelected(false);
-        hrIv.setSelected(false);
-
-        sleepFl.setSelected(false);
-        sleepIv.setSelected(false);
-
-        meFl.setSelected(true);
-        meIv.setSelected(true);
-    }
+//    private void clickMeBtn() {
+//
+//        // fragmentMore = new FragmentMore();
+//        curUserCode = mSP.getString("curusercode", "");
+//        fragmentMe = FragmentMe.newInstance(curUserCode);
+//
+//        FragmentTransaction fragmentTransaction = this
+//                .getSupportFragmentManager().beginTransaction();
+//
+//        fragmentTransaction.replace(R.id.frame_content, fragmentMe);
+//
+//        fragmentTransaction.commit();
+//
+//        rrFl.setSelected(false);
+//        rrIv.setSelected(false);
+//
+//        hrFl.setSelected(false);
+//        hrIv.setSelected(false);
+//
+//        sleepFl.setSelected(false);
+//        sleepIv.setSelected(false);
+//
+//        meFl.setSelected(true);
+//        meIv.setSelected(true);
+//    }
 
     private void LoadUnhandledAlarms() {
         SleepcareforPhoneManage sleepcareforPhoneManage = DataFactory.GetSleepcareforPhoneManage();
@@ -303,7 +300,7 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
             if (Grobal.getXmppManager().Connect()) {
                 String username = Grobal.getInitConfigModel().getLoginUserName();
 
-                AlarmList tempAlarmlist = sleepcareforPhoneManage.GetSingleAlarmByLoginUser(username, "", "", "", "001", "", "");
+                AlarmList tempAlarmlist = sleepcareforPhoneManage.GetAlarmByLoginUser("",username, "", "", "", "001", "", "");
                 ArrayList<AlarmInfo> alarminfoList = tempAlarmlist.getAlarmInfoList();
                 for (int i = 0; i < alarminfoList.size(); i++) {
                     unhandledCodes.add(alarminfoList.get(i).getAlarmCode());
@@ -368,6 +365,7 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         }
         return false;
     }
+
 
 }
 

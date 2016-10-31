@@ -7,7 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/ibll/ibll.iml" filepath="$PROJECT_DIR$/ibll/ibll.iml" />
       <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sleepcareforandroidphone.iml" filepath="$PROJECT_DIR$/sleepcareforandroidphone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sleepcarehospitalandroid.iml" filepath="$PROJECT_DIR$/sleepcarehospitalandroid.iml" />
     </modules>
   </component>
 </project>

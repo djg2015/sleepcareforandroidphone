@@ -446,7 +446,7 @@ private ShowWeekReportActivity parentactivity;
 
         } catch (EwellException ex) {
             //做消息弹窗提醒
-            Toast.makeText(parentactivity, ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(parentactivity, ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //做消息弹窗提醒
             e.printStackTrace();
@@ -462,7 +462,7 @@ private ShowWeekReportActivity parentactivity;
 
         } catch (EwellException ex) {
             //做消息弹窗提醒
-            Toast.makeText(parentactivity, ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(parentactivity, ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //做消息弹窗提醒
             e.printStackTrace();

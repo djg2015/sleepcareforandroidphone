@@ -61,4 +61,9 @@
 
     <string name="softwareupdate">软件更新</string>
 
+    <string name="mypatientlist">病人列表</string>
+
+    <string name="addpatient">添加病人</string>
+    <string name="serversetting">服务器设置</string>
+
 </resources>

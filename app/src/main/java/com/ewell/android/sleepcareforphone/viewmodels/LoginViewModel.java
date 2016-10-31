@@ -14,14 +14,8 @@ import com.ewell.android.common.Grobal;
 import com.ewell.android.common.exception.EwellException;
 import com.ewell.android.ibll.SleepcareforPhoneManage;
 import com.ewell.android.model.EMLoginUser;
-import com.ewell.android.model.EquipmentInfo;
-import com.ewell.android.model.EquipmentList;
 import com.ewell.android.sleepcareforphone.activities.LoginActivity;
-import com.ewell.android.sleepcareforphone.activities.TabbarActivity;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.ewell.android.sleepcareforphone.activities.MyPatientsActivity;
 
 //import com.ewell.android.sleepcareforphone.BR;
 
@@ -104,7 +98,7 @@ public class LoginViewModel extends BaseViewModel {
                 }
 
                 Toast.makeText(loginActivity, "正在登录...", Toast.LENGTH_SHORT).show();
-                EMLoginUser emLoginUser = sleepcareforPhoneManage.SingleLogin(this.loginName, this.password);
+                EMLoginUser emLoginUser = sleepcareforPhoneManage.Login(this.loginName, this.password);
 
                 //记录在全局变量里
                 Grobal.getInitConfigModel().setLoginUserName(this.loginName);
@@ -128,62 +122,30 @@ public class LoginViewModel extends BaseViewModel {
 
 
                 //获取当前账户下的设备列表,当前关注的老人code/name
-                EquipmentList tempequipmentlist = sleepcareforPhoneManage.GetEquipmentsByLoginName(this.loginName);
-                ArrayList<EquipmentInfo> tempequipmentinfoList = tempequipmentlist.getEquipmentInfoList();
-
-
-                Map<String, String> map = new HashMap<String, String>();
-                ArrayList<String> list = new ArrayList<String>();
-                ArrayList<String> list2 = new ArrayList<String>();
-                for (int i = 0; i < tempequipmentinfoList.size(); i++) {
-                    map.put(tempequipmentinfoList.get(i).getBedUserCode(), tempequipmentinfoList.get(i).getBedUserName());
-                    list.add(tempequipmentinfoList.get(i).getEquipmentID());
-                    list2.add(tempequipmentinfoList.get(i).getBedUserCode());
-                }
-                Grobal.getInitConfigModel().setUserCodeNameMap(map);
-                Grobal.getInitConfigModel().setEquipmentcodeList(list);
-                Grobal.getInitConfigModel().setBedusercodeList(list2);
+//                EquipmentList tempequipmentlist = sleepcareforPhoneManage.GetEquipmentsByLoginName(this.loginName);
+//                ArrayList<EquipmentInfo> tempequipmentinfoList = tempequipmentlist.getEquipmentInfoList();
+//
+//
+//                Map<String, String> map = new HashMap<String, String>();
+//                ArrayList<String> list = new ArrayList<String>();
+//                ArrayList<String> list2 = new ArrayList<String>();
+//                for (int i = 0; i < tempequipmentinfoList.size(); i++) {
+//                    map.put(tempequipmentinfoList.get(i).getBedUserCode(), tempequipmentinfoList.get(i).getBedUserName());
+//                    list.add(tempequipmentinfoList.get(i).getEquipmentID());
+//                    list2.add(tempequipmentinfoList.get(i).getBedUserCode());
+//                }
+//                Grobal.getInitConfigModel().setUserCodeNameMap(map);
+//                Grobal.getInitConfigModel().setEquipmentcodeList(list);
+//                Grobal.getInitConfigModel().setBedusercodeList(list2);
 
                 //获取curusercode,curusername,进行验证
-                String tempusername = sp.getString("curusername", "");
-                String tempusercode = sp.getString("curusercode", "");
-                //当前没有usercode,则置空
-                if (list.size() == 0) {
-                    tempusercode = "";
-                    tempusername = "";
-                }
-                //当前只有一个usercode,则默认选中
-                else if (list.size() == 1) {
-                    for (String key : map.keySet()) {
-                        tempusercode = key;
-                        tempusername = map.get(key);
-                    }
-                }
-                //当前有多个usercode,则验证纪录里的curusercode是否在当前usercode里
-                else if (tempusercode != null && !tempusercode.equals("")) {
-                    Boolean flag = false;
-                    for (String s : map.keySet()) {
-                        if (s.equals(tempusercode)) {
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if (!flag) {
-                        tempusercode = "";
-                        tempusername = "";
-                    }
-                }
-                Grobal.getInitConfigModel().setCurUserCode(tempusercode);
-                Grobal.getInitConfigModel().setCurUserName(tempusername);
-                editor.putString("curusercode", tempusercode);
-                editor.putString("curusername", tempusername);
 
 
                 // 把数据给保存到sp里面
                 editor.commit();
 
                 //跳转下一页面
-                Intent intent = new Intent(this.loginActivity, TabbarActivity.class);
+                Intent intent = new Intent(this.loginActivity, MyPatientsActivity.class);
                 this.loginActivity.startActivity(intent);
 
             } else {
@@ -193,7 +155,7 @@ public class LoginViewModel extends BaseViewModel {
 
         } catch (EwellException ex) {
 
-            Toast.makeText(loginActivity, "登录失败!"+ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(loginActivity, "登录失败!"+ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
 
             //做消息弹窗提醒
         } catch (Exception e) {

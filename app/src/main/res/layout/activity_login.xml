@@ -84,19 +84,6 @@
                 android:textSize="18sp" />
 
 
-            <Button
-                android:id="@+id/btn_forgetpassword"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/password"
-                android:layout_marginTop="10dp"
-                android:background="#00000000"
-                android:onClick="ClickForgetPwd"
-                android:text="@string/forgetpassword"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
         </RelativeLayout>
 
         <!--登录按钮以下部分,占1/3-->
@@ -105,7 +92,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_weight="1">
+            android:layout_weight="1.2">
 
             <Button
                 android:id="@+id/email_sign_in_button"
@@ -126,32 +113,6 @@
                 android:layout_width="5dp"
                 android:layout_height="30dp"
                 android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:id="@+id/text_noaccount"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="25dp"
-                android:layout_toLeftOf="@+id/btn_registaccount"
-                android:gravity="center"
-
-                android:text="@string/noaccount"
-                android:textColor="@color/themeblue"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btn_registaccount"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:layout_alignTop="@+id/text_noaccount"
-
-                android:layout_toRightOf="@+id/blankcenter"
-                android:background="#00000000"
-                android:onClick="ClickRegistAccount"
-                android:text="@string/registaccount"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
 
         </RelativeLayout>
 

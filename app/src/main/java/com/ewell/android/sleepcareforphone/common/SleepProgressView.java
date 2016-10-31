@@ -138,23 +138,27 @@ mPaint.setColor(circle_default);
         int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
-        if (widthSpecMode == MeasureSpec.EXACTLY
-                || widthSpecMode == MeasureSpec.AT_MOST) {
-            mWidth = widthSpecSize/7*3;
 
-        } else {
-            mWidth = 0;
-        }
         if (heightSpecMode == MeasureSpec.AT_MOST
                 || heightSpecMode == MeasureSpec.UNSPECIFIED) {
             mHeight = dipToPx(15);
         }
 
         else {
-            //	mHeight = heightSpecSize;
-            mHeight = mWidth;
+          	mHeight = heightSpecSize;
+          //  mHeight = mWidth;
 
         }
+
+        if (widthSpecMode == MeasureSpec.EXACTLY
+                || widthSpecMode == MeasureSpec.AT_MOST) {
+            mWidth = mHeight;
+
+        } else {
+            mWidth = 0;
+        }
+
+
         setMeasuredDimension(mWidth, mHeight);
     }
 }

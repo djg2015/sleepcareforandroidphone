@@ -8,9 +8,6 @@ import com.ewell.android.common.exception.EwellException;
 import com.ewell.android.ibll.SleepcareforPhoneManage;
 import com.ewell.android.model.AlarmInfo;
 import com.ewell.android.model.AlarmList;
-import com.ewell.android.model.EquipmentInfo;
-import com.ewell.android.model.EquipmentList;
-import com.ewell.android.model.ServerResult;
 import com.ewell.android.sleepcareforphone.activities.ShowAlarmActivity;
 
 import java.util.ArrayList;
@@ -41,9 +38,7 @@ public class ShowAlarmViewModel extends BaseViewModel {
             if (Grobal.getXmppManager().Connect()) {
                 username = Grobal.getInitConfigModel().getLoginUserName();
 
-                AlarmList tempAlarmlist = sleepcareforPhoneManage.GetSingleAlarmByLoginUser(username,"","","","001","","");
-                EquipmentList tempequipmentlist = sleepcareforPhoneManage.GetEquipmentsByLoginName(username);
-                ArrayList<EquipmentInfo> tempequipmentinfoList = tempequipmentlist.getEquipmentInfoList();
+                AlarmList tempAlarmlist = sleepcareforPhoneManage.GetAlarmByLoginUser("",username,"","","","001","","");
 
                 ArrayList<AlarmInfo> alarminfoList = tempAlarmlist.getAlarmInfoList();
                 for(int i=0;i<alarminfoList.size();i++){
@@ -90,13 +85,13 @@ public class ShowAlarmViewModel extends BaseViewModel {
                     String tempusercode=alarminfoList.get(i).getUserCode();
                     String tempid = "";
 
-                    for(int ii = 0;i<tempequipmentinfoList.size();ii++){
-                        if (tempequipmentinfoList.get(ii).getBedUserCode().equals(tempusercode)){
-                            tempid = tempequipmentinfoList.get(ii).getEquipmentID();
-                            break;
-                        }
-
-                    }
+//                    for(int ii = 0;i<tempequipmentinfoList.size();ii++){
+//                        if (tempequipmentinfoList.get(ii).getBedUserCode().equals(tempusercode)){
+//                            tempid = tempequipmentinfoList.get(ii).getEquipmentID();
+//                            break;
+//                        }
+//
+//                    }
                     map.put("equipmentid",tempid);
 
 
@@ -110,7 +105,7 @@ public class ShowAlarmViewModel extends BaseViewModel {
         }
         catch (EwellException ex) {
             //做消息弹窗提醒
-            Toast.makeText(parentactivity, ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(parentactivity,ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //做消息弹窗提醒
             e.printStackTrace();
@@ -124,8 +119,8 @@ public class ShowAlarmViewModel extends BaseViewModel {
             if (Grobal.getXmppManager().Connect()) {
                 String id = listItems.get(position).get("alarmcode").toString();
 
-                ServerResult result =  sleepcareforPhoneManage.DeleteAlarmMessage(id,username);
-                if (result.getResult()){
+                 sleepcareforPhoneManage.TransferAlarmMessage(id,"002");
+
                     //从unhandledcodes里删除
 ArrayList<String> tempalarmcodes=Grobal.getInitConfigModel().getUnhandledAlarmcodeList();
                     for(int i=0;i<tempalarmcodes.size();i++){
@@ -136,7 +131,7 @@ ArrayList<String> tempalarmcodes=Grobal.getInitConfigModel().getUnhandledAlarmco
                         }
                     }
                     flag = true;
-                }
+
 
             }
             else{
@@ -145,7 +140,7 @@ ArrayList<String> tempalarmcodes=Grobal.getInitConfigModel().getUnhandledAlarmco
         }
         catch (EwellException ex) {
             //做消息弹窗提醒
-            Toast.makeText(parentactivity, ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(parentactivity, ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //做消息弹窗提醒
             e.printStackTrace();

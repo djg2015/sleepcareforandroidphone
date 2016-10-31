@@ -2,10 +2,10 @@ package com.ewell.android.ibll;
 
 import com.ewell.android.common.exception.EwellException;
 import com.ewell.android.model.AlarmList;
-import com.ewell.android.model.BedUserInfo;
+import com.ewell.android.model.BedUserList;
 import com.ewell.android.model.EMLoginUser;
-import com.ewell.android.model.EquipmentList;
 import com.ewell.android.model.HRRange;
+import com.ewell.android.model.MainInfo;
 import com.ewell.android.model.RRRange;
 import com.ewell.android.model.ServerResult;
 import com.ewell.android.model.SleepQualityReport;
@@ -16,53 +16,8 @@ import com.ewell.android.model.WeekSleep;
  * Created by Dongjg on 2016-7-13.
  */
 public interface SleepcareforPhoneManage {
-    // 2登录认证
-    // 参数：loginName->登录账户
-    //      loginPassword->登录密码
-    EMLoginUser SingleLogin(String loginName, String loginPwd) throws EwellException;
-
-    //3.获取手机验证码
-    //参数： mobileNum－> 11位手机号
-    ServerResult GetVerificationCode(String mobileNum) throws EwellException;
-
-    //4 注册个人用户信息
-    //参数：loginName－>账户名（手机号）
-    //     loginPassword->密码
-    //     vcCode->验证码
-    //     equipmentID->设备id
-    ServerResult SingleRegist(String loginName, String loginPassword, String vcCode, String equipmentID) throws EwellException;
-
-    //5 修改账户信息
-    //参数：loginName－>账户名（手机号）
-    //     oldPassword->旧密码
-    //     newPassword->新密码
-    ServerResult ModifyAccount(String loginName, String oldPassword, String newPassword) throws EwellException;
-
-
-    //6设备编号认证
-    //参数：equipmentID
-    ServerResult CheckEquipmentID(String equipmentID) throws EwellException;
-
     //7 确认新密码（忘记密码）
     ServerResult ConfirmNewPassword(String loginName, String vcCode, String newPassword) throws EwellException;
-
-    //8 根据设备编号查询对应老人信息
-    //参数：equipmentID
-    BedUserInfo GetBedUserInfoByEquipmentID(String equipmentID) throws EwellException;
-
-    //9 完善老人信息
-    //参数：bedUserCode,bedUserName,sex,mobilePhone,address
-    ServerResult ModifyBedUserInfo(String bedUserCode, String bedUserName, String sex, String mobilePhone, String address) throws EwellException;
-
-    //10移除设备
-    //参数：loginName
-    //     equipmentIDs->要移除的设备编码。（多个用半角“，”隔开）
-    ServerResult RemoveEquipment(String loginName, String equipmentIDs) throws EwellException;
-
-    //11 获取登录账户绑定的设备(包括设备对应的老人信息 )
-    //参数：loginName
-    EquipmentList GetEquipmentsByLoginName(String loginName) throws EwellException;
-
 
     //12获取心率曲线图
     //参数：bedUserCode
@@ -90,22 +45,6 @@ public interface SleepcareforPhoneManage {
     //     reportDate ->查询时间yyyy-MM-dd
     WeekSleep GetWeekSleepofBedUser(String bedUserCode, String reportDate) throws EwellException;
 
-    //17根据当前登录用户、报警类型、时间段、处理状态等多条件获取关注老人的报警信息
-    //参数： loginName
-    //      schemaCode->报警类型
-    //      alarmTimeBegin,alarmTimeEnd->报警开始结束时间yyyy-MM-dd
-    //      transferTypeCode->报警处理类型 001未处理  002已处理  003误报警
-    //      from->开始记录序号 (为空表示查询全部）
-    //      max->返回最大记录数量 (为空表示查询全部 )
-    AlarmList GetSingleAlarmByLoginUser(String loginName, String schemaCode, String alarmTimeBegin, String alarmTimeEnd, String transferTypeCode, String from, String max) throws EwellException;
-
-
-    //18删除报警信息
-    ServerResult DeleteAlarmMessage(String alarmCodes, String loginName) throws EwellException;
-
-    //19添加设备
-    ServerResult BindEquipmentofUser(String equipmentID, String loginName) throws EwellException;
-
 
     //25 安卓版本更新
     //status 0.启用 1.禁用 注： value为“”代表所有
@@ -118,4 +57,53 @@ public interface SleepcareforPhoneManage {
     //28.	关闭远程通知(安卓手机)
     ServerResult CloseNotificationForAndroid(String deviceID, String loginName) throws EwellException;
 
+
+    //-----------------新增接口-----------------
+    //处理报警信息 "002"处理，“003”误报警
+    void TransferAlarmMessage(String alarmCode, String transferType) throws EwellException;
+
+
+    //根据当前登录用户、报警类型、时间段、处理状态等多条件获取关注老人的报警信息
+    //参数： loginName
+    //      schemaCode->报警类型
+    //      alarmTimeBegin,alarmTimeEnd->报警开始结束时间yyyy-MM-dd
+    //      transferTypeCode->报警处理类型 001未处理  002已处理  003误报警
+    //      from->开始记录序号 (为空表示查询全部）
+    //      max->返回最大记录数量 (为空表示查询全部 )
+    AlarmList GetAlarmByLoginUser(String mainCode, String loginName, String schemaCode, String alarmTimeBegin, String alarmTimeEnd, String transferTypeCode, String from, String max) throws EwellException;
+
+    // 2登录认证
+    // 参数：loginName->登录账户
+    //      loginPassword->登录密码
+    EMLoginUser Login(String loginName, String loginPwd) throws EwellException;
+
+
+    //根据医院/养老院编号获取楼层以及床位用户信息（排除已经关注的老人）
+    // 参数：loginName->登录账户
+    //      mainCode->医院/养老院编号
+    MainInfo GetPartInfoWithoutFollowBedUser(String loginName, String mainCode) throws EwellException;
+
+
+    // 确认关注床位用户信息
+    // 参数：loginName->登录账户
+    //      bedUserCode->床位用户编码
+    //      mainCode->医院/养老院编号
+    ServerResult FollowBedUser(String loginName,String bedUserCode,String mainCode) throws EwellException;
+
+    // 移除已关注的床位用户
+    // 参数：loginName->登录账户
+    //      bedUserCode->床位用户编码
+    ServerResult RemoveFollowBedUser(String loginName,String bedUserCode) throws EwellException;
+
+    // 根据当前登录用户获取所关注的床位用户
+    // 参数：loginName->登录账户
+    //      mainCode->医院/养老院编号
+    BedUserList GetBedUsersByLoginName(String loginName, String mainCode) throws EwellException;
+
+    // 修改登录用户密码和所属医院/养老院
+    // 参数：loginName->登录账户
+    //      oldPassword->旧的登录密码
+    //      newPassword->新的登录密码
+    //      mainCode->医院/养老院编码
+    ServerResult ModifyLoginUser(String loginName, String oldPassword, String newPassword,String mainCode) throws EwellException;
 }

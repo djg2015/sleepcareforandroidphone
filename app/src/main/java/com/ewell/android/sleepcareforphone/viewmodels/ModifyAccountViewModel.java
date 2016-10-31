@@ -66,7 +66,7 @@ public class ModifyAccountViewModel extends BaseViewModel{
                 }
 
 
-                ServerResult mresult = sleepcareforPhoneManage.ModifyAccount(this.username, this.oldpassword, this.newpassword);
+                ServerResult mresult = sleepcareforPhoneManage.ModifyLoginUser(this.username, this.oldpassword, this.newpassword,"");
                 if (mresult.getResult()) {
                     Grobal.getLogManager().LogInfo("修改账户密码成功！");
                 } else {
@@ -78,7 +78,7 @@ public class ModifyAccountViewModel extends BaseViewModel{
             }
         } catch (EwellException ex) {
             //做消息弹窗提醒
-            Toast.makeText(modifyaccountActivity, ex.getExceptionMsg(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(modifyaccountActivity,ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //做消息弹窗提醒
             e.printStackTrace();

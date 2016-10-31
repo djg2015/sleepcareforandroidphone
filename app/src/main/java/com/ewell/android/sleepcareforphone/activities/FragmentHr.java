@@ -1,8 +1,6 @@
 package com.ewell.android.sleepcareforphone.activities;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +27,6 @@ import com.ewell.android.sleepcareforphone.common.fancychart.Point;
 import com.ewell.android.sleepcareforphone.viewmodels.HRViewModel;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 public class FragmentHr extends Fragment implements View.OnClickListener, XmppMsgDelegate<EMRealTimeReport> {
 
@@ -39,13 +34,6 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
     private String BedUserName = "";
 
     private TextView patientname;
-    private Button b1;
-
-    private ArrayList<String> tempusercodelist = new ArrayList<String>();
-    private ArrayList<String> tempusernamelist = new ArrayList<String>();
-
-    private RadioOnClick radioOnClick = new RadioOnClick(0);
-    private ListView areaRadioListView;
 
     private ProgressView mProgressView;
 
@@ -68,8 +56,7 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
 
     private String currentHR;
     private String avgHR;
-    private TextView currentHR_text;
-    private TextView avgHR_text;
+
 
     private String onbedstatus = "";
     private ImageView onbedstatusImg;
@@ -80,6 +67,7 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
     private LinearLayout view2;
     private RelativeLayout view3;
     private RelativeLayout view4;
+    private Button back;
 
     //从父activty传参
     public static FragmentHr newInstance(String bedusercode, String bedusername) {
@@ -121,8 +109,7 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
         View v = inflater.inflate(R.layout.fragment_hr, container, false);
 
 //change patient button
-        b1 = (Button) v.findViewById(R.id.btn1);
-        b1.setOnClickListener(this);
+
         patientname = (TextView) v.findViewById(R.id.texttitle);
         patientname.setOnClickListener(this);
         if (!BedUserName.equals("")) {
@@ -132,8 +119,7 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
         onbedstatusImg = (ImageView) v.findViewById(R.id.onbedstatusimg);
         alarmImg = (ImageView) v.findViewById(R.id.alarmimg);
 
-        currentHR_text = (TextView) v.findViewById(R.id.currentHR);
-        avgHR_text = (TextView) v.findViewById(R.id.avgHR);
+
 
         //hr circle
         mProgressView = (ProgressView) v.findViewById(R.id.my_progress);
@@ -162,18 +148,14 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
         button3.setOnClickListener(this);
 
 
-        view1 = (RelativeLayout) v.findViewById(R.id.topview1);
-        view2 = (LinearLayout) v.findViewById(R.id.circleview);
-        view3 = (RelativeLayout) v.findViewById(R.id.centerview);
-        view4 = (RelativeLayout) v.findViewById(R.id.chartview);
-
-        //当前账户下没有设备,则隐藏子view,只显示背景图片
-        if (Grobal.getInitConfigModel().getEquipmentcodeList().size() == 0) {
-            view1.setVisibility(View.INVISIBLE);
-            view2.setVisibility(View.INVISIBLE);
-            view3.setVisibility(View.INVISIBLE);
-            view4.setVisibility(View.INVISIBLE);
-        }
+//        view1 = (RelativeLayout) v.findViewById(R.id.topview1);
+//        view2 = (LinearLayout) v.findViewById(R.id.circleview);
+//        view3 = (RelativeLayout) v.findViewById(R.id.centerview);
+//        view4 = (RelativeLayout) v.findViewById(R.id.chartview);
+//
+//
+        back=(Button)v.findViewById(R.id.btnClose);
+        back.setOnClickListener(this);
 
         return v;
     }
@@ -184,11 +166,9 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn1:
-                ClickChangeBtn();
-                break;
-            case R.id.texttitle:
-                ClickChangeBtn();
+            case R.id.btnClose:
+
+                getActivity().finish();
                 break;
             case R.id.button1:
                 button1.setTextColor(button_select);
@@ -218,100 +198,6 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
         }
 
     }
-
-    //------------------------------------ 切换老人---------------------------
-    public void ClickChangeBtn() {
-        Map<String, String> tempmap = Grobal.getInitConfigModel().getUserCodeNameMap();
-        tempusernamelist.clear();
-        tempusercodelist.clear();
-
-        // entrySet使用iterator遍历key和value
-        Iterator<Map.Entry<String, String>> it = tempmap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, String> entry = it.next();
-            tempusercodelist.add(entry.getKey());
-            tempusernamelist.add(entry.getValue());
-            //   System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
-        }
-
-        int count = tempusercodelist.size();
-        if (count > 0) {
-            int i = 0;
-            String[] usernamelist = new String[count];
-            while (i < count) {
-                usernamelist[i] = tempusernamelist.get(i);
-                i++;
-            }
-            //弹窗
-            AlertDialog ad = new AlertDialog.Builder(getActivity())
-                    .setTitle("选择老人")
-                    .setSingleChoiceItems(usernamelist, radioOnClick.getIndex(), radioOnClick)
-                    .create();
-
-
-            areaRadioListView = ad.getListView();
-            ad.show();
-
-            ad.getWindow().setLayout(500, 500);
-        } else {
-            Toast.makeText(getActivity(), "当前账户下没有关注老人!请先添加设备", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    /**
-     * 点击单选框事件
-     *
-     * @author xmz
-     */
-    class RadioOnClick implements DialogInterface.OnClickListener {
-        private int index;
-
-        public RadioOnClick(int index) {
-            this.index = index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void onClick(DialogInterface dialog, int whichButton) {
-            setIndex(whichButton);
-            patientname.setText(tempusernamelist.get(index));
-
-            BedUserCode = tempusercodelist.get(index);
-            Grobal.getInitConfigModel().setCurUserCode(tempusercodelist.get(index));
-            Grobal.getInitConfigModel().setCurUserName(tempusernamelist.get(index));
-            editor.putString("curusercode", tempusercodelist.get(index));
-            editor.putString("curusername", tempusernamelist.get(index));
-            editor.commit();
-            //   Toast.makeText(getActivity(), "您已经选择了： " + index + ":" + areas[index], Toast.LENGTH_SHORT).show();
-
-            //更新hr数据
-            hrViewModel.RefreshHRData();
-            switch (SelectedIndex) {
-                case 1:
-                    ShowHourChart();
-                    break;
-                case 2:
-                    ShowWeekChart();
-                    break;
-                case 3:
-                    ShowMonthChart();
-                    break;
-                default:
-                    break;
-            }
-
-
-            dialog.dismiss();
-        }
-    }
-
 
     //------------------------点击按钮选择查看chart类型
     public void ShowHourChart() {
@@ -392,9 +278,9 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
                     if (!avgHR.equals("")) {
                         mProgressView.setAvgCount(Float.parseFloat(avgHR));
                     }
-                    avgHR_text.setText(avgHR);
 
-                    currentHR_text.setText(currentHR);
+
+
                     if (!currentHR.equals("")) {
                         int score = Integer.parseInt(currentHR);
                         mProgressView.setCurrentCount(score);
@@ -436,6 +322,9 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
             });
         }
     }
+
+
+
 
 }
 

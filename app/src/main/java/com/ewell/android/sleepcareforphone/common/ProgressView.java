@@ -31,7 +31,7 @@ public class ProgressView extends View {
     private Paint mSubtextPaint;
     private int mWidth, mHeight;
 
-    private int innerWidth, innerHeight;
+
     private Paint innerPaint;
     private float avgCount;
     private int screenwidth;
@@ -89,12 +89,8 @@ defaultPaint = new Paint();
         canvas.drawText(score + "", mWidth / 2, mHeight / 2, mTextPaint);
         canvas.drawText("次/分", mWidth / 2, mHeight / 2 + 30, mSubtextPaint);
 
-        float innersection = avgCount / maxCount;
-        innerPaint.setColor(circle_green);
-        float tempwidth = (screenwidth - 790) / 20.7f;
-        RectF innerBg = new RectF(40, 40, innerWidth + tempwidth, innerHeight + tempwidth);
-        canvas.drawArc(innerBg, 90, innersection * 360, false, innerPaint);
-        canvas.drawArc(innerBg, 90+innersection * 360,  360, false, defaultinnerPaint);
+
+
 
         float section = currentCount / maxCount;
         if (section <= 1.0f / 3.0f) {
@@ -249,23 +245,28 @@ defaultPaint = new Paint();
         int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
-        if (widthSpecMode == MeasureSpec.EXACTLY
-                || widthSpecMode == MeasureSpec.AT_MOST) {
-            mWidth = widthSpecSize / 7 * 3;
-            innerWidth = mWidth / 10 * 9;
 
-        } else {
-            mWidth = 0;
-        }
         if (heightSpecMode == MeasureSpec.AT_MOST
                 || heightSpecMode == MeasureSpec.UNSPECIFIED) {
             mHeight = dipToPx(15);
         } else {
-            //	mHeight = heightSpecSize;
-            mHeight = mWidth;
-            innerHeight = innerWidth;
+            	mHeight = heightSpecSize;
+
+//            mHeight = mWidth;
+//            innerHeight = innerWidth;
 
         }
+        if (widthSpecMode == MeasureSpec.EXACTLY
+                || widthSpecMode == MeasureSpec.AT_MOST) {
+//            mWidth = widthSpecSize / 2;
+//            innerWidth = mWidth / 10 * 9;
+            mWidth = mHeight;
+
+
+        } else {
+            mWidth = 0;
+        }
+
         setMeasuredDimension(mWidth, mHeight);
     }
 

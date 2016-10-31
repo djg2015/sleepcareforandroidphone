@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/nodevice_background"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,23 +13,24 @@
 
         >
 
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="16dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/btn_back"
+            />
+
         <TextView
             android:id="@+id/texttitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="选择老人"
+            android:text="姓名"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btn1"
-            android:layout_width="20dp"
-            android:layout_height="10dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/texttitle"
-            android:background="@drawable/btn_downarrow" />
 
 
     </RelativeLayout>
@@ -37,7 +38,7 @@
     <RelativeLayout
         android:id="@+id/topview1"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:background="@color/white">
 
         <ImageView
@@ -64,7 +65,7 @@
         android:id="@+id/circleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.2"
+        android:layout_weight="1.05"
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
@@ -80,11 +81,40 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        >
+
+        <TextView
+            android:id="@+id/centerblock"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/centerblock"
+            android:text="睡眠时长"
+            android:textColor="@color/darkgrey"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/centerblock"
+            android:textColor="@color/blue"
+            android:text="0时0分"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/centerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:background="@color/white"
-        android:layout_weight="1.5">
+      >
 
         <TextView
             android:id="@+id/lightsleep"

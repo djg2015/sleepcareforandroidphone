@@ -1,13 +1,11 @@
 package com.ewell.android.sleepcareforphone.activities;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 
 import com.ewell.android.common.Crypt;
@@ -87,15 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void ClickForgetPwd(View view){
-        Intent intent = new Intent(this, ForgetPwdActivity.class);
-        this.startActivity(intent);
-
-    }
-    public void ClickRegistAccount(View view){
-       Intent intent = new Intent(this, RegistAccountActivity.class);
-        this.startActivity(intent);
-    }
 
 
 }

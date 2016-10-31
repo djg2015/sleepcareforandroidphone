@@ -35,7 +35,7 @@ public class ShowAlarmActivity extends Activity {
     private SwipeMenuListView mListView;
     private Context mContext = this;
     private SwipeMenuCreator creator ;
-    private final static String TAG = MyDevicesActivity.class.getSimpleName();
+
 
     private ShowAlarmViewModel alarms;
 

@@ -16,21 +16,17 @@
         android:theme="@style/AppTheme"
         >
         <activity android:name=".activities.UpdateActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.ForgetPwdActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.RegistAccountActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.ReadProtocolActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.ReadInfoActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.ReadTipsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.MipcaActivityCapture" android:screenOrientation="portrait" />
-        <activity android:name=".activities.BindPatientInfoActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.ModifyAccountActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.ModifyPatientInfoActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.AccountSettingActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.MyDevicesActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.ShowAlarmActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.TabbarActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.ShowWeekReportActivity" android:screenOrientation="portrait"  />
         <activity android:name=".activities.LoginActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.MyPatientsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.AddPatientActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.ServerSettingActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.MeActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activities.MainActivity" android:screenOrientation="portrait" >
             <intent-filter>

@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import javax.xml.parsers.SAXParser;
-
 /**
  * Created by Dongjg on 2016-7-12.
  */
@@ -21,21 +19,18 @@ public class EMLoginUser extends BaseMessage {
     }
 
     private String loginName = "";
-
     public String getLoginName() {
         return loginName;
     }
 
     private String loginPassWord = "";
-
     public String getLoginPassWord() {
         return loginPassWord;
     }
 
-    private String jid = "";
-
-    public String getJID() {
-        return jid;
+    private String mainCode = "";
+    public String getMainCode() {
+        return mainCode;
     }
 
     public static EMLoginUser XmlToMessage(String sujectXml, String bodyXml) throws JDOMException, IOException {
@@ -47,7 +42,7 @@ public class EMLoginUser extends BaseMessage {
 //        Element segment= user.getChild("LoginName");
 //        String email=book.getAttributeValue("email");
         result.loginName=root.getChildTextTrim("LoginName");
-        result.jid =root.getChildTextTrim("JID");
+        result.mainCode =root.getChildTextTrim("MainCode");
         result.loginPassWord =root.getChildTextTrim("LoginPassword");
         returnQuote.close();
         return result;

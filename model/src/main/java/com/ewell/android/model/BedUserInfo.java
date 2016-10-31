@@ -1,73 +1,60 @@
 package com.ewell.android.model;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-
 /**
  * Created by lillix on 7/20/16.
  */
-public class BedUserInfo extends BaseMessage {
+public class BedUserInfo {
 
-    public BedUserInfo(XmppMsgSubject subject) {
-        super(subject);
-    }
+
 
     private String BedUserCode = "";
-
     public String getBedUserCode() {
         return BedUserCode;
     }
+public void setBedUserCode(String bedusercode){BedUserCode = bedusercode;}
 
     private String BedUserName = "";
-
     public String getBedUserName() {
         return BedUserName;
     }
+public void setBedUserName(String bedusername){BedUserName = bedusername;}
 
-    //1 MALE; 2 FEMALE
-    private String Sex = "";
 
+    private String RoomNum = "";
+    public String getRoomNum() {
+        return RoomNum;
+    }
+    public void setRoomNum(String roomnum){RoomNum = roomnum;}
+
+    private String BedNum = "";
+    public String getBedNum() {
+        return BedNum;
+    }
+    public void setBedNum(String bednum){BedNum = bednum;}
+
+    private String BedCode = "";
+    public String getBedCode() {
+        return BedCode;
+    }
+    public void setBedCode(String bedcode){BedCode = bedcode;}
+
+    private String PartCode = "";
+    public String getPartCode() {
+        return PartCode;
+    }
+    public void setPartCode(String partcode){PartCode = partcode;}
+
+    private String EquipmentID = "";
+    public String getEquipmentID() {
+        return EquipmentID;
+    }
+    public void setEquipmentID(String id){EquipmentID = id;}
+
+
+    private String Sex= "";
     public String getSex() {
         return Sex;
     }
+    public void setSex(String sex){Sex = sex;}
 
-    private String MobilePhone = "";
-
-    public String getMobilePhone() {
-        return MobilePhone;
-    }
-
-    private String Address = "";
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public static BedUserInfo XmlToMessage(String sujectXml, String bodyXml) throws JDOMException, IOException {
-        SAXBuilder builder = new SAXBuilder(false);
-        BedUserInfo result = new BedUserInfo(XmppMsgSubject.PareXmlToSubject(sujectXml));
-        Reader returnQuote = new StringReader(bodyXml);
-        Document doc = builder.build(returnQuote);
-        Element root = doc.getRootElement();
-
-        result.BedUserCode=root.getChildTextTrim("BedUserCode");
-        result.BedUserName =root.getChildTextTrim("BedUserName");
-        result.Sex =root.getChildTextTrim("Sex");
-        result.MobilePhone =root.getChildTextTrim("MobilePhone");
-        result.Address =root.getChildTextTrim("Address");
-
-        returnQuote.close();
-        return result;
-    }
-
-    @Override
-    public String ToBodytXml() {
-        return null;
-    }
 }

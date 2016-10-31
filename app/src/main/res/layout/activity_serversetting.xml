@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/TitleView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/themeblue">
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/serversetting"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="16dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/btn_back"
+            android:onClick="ClickClose" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="服务器JID"
+            android:textSize="14sp"
+            android:layout_above="@+id/text2"
+            android:layout_marginBottom="33dp"
+            android:textColor="@color/darkgrey"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="11"
+            android:layout_toRightOf="@+id/text1"
+            android:layout_above="@+id/text2"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14sp"
+
+            />
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="服务器地址"
+            android:textSize="14sp"
+            android:layout_above="@+id/text3"
+            android:layout_marginBottom="33dp"
+            android:textColor="@color/darkgrey"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="11"
+            android:layout_toRightOf="@+id/text2"
+            android:layout_above="@+id/text3"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14sp"
+
+            />
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="服务器端口"
+            android:textSize="14sp"
+          android:layout_above="@+id/text4"
+            android:layout_marginBottom="33dp"
+            android:textColor="@color/darkgrey"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="11"
+            android:layout_toRightOf="@+id/text3"
+            android:layout_above="@+id/text4"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14sp"
+
+            />
+
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="服务器密码"
+            android:textSize="14sp"
+            android:layout_below="@+id/text4"
+            android:layout_marginTop="33dp"
+            android:textColor="@color/darkgrey"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="11"
+            android:layout_toRightOf="@+id/text5"
+            android:layout_below="@+id/text4"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14sp"
+
+            />
+
+<TextView
+    android:id="@+id/text4"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    android:text="服务器账号"
+    android:textSize="14sp"
+    android:layout_centerVertical="true"
+    android:textColor="@color/darkgrey"/>
+
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:text="11"
+    android:layout_toRightOf="@+id/text4"
+    android:textColor="@color/darkgrey"
+    android:textSize="14sp"
+    android:layout_centerVertical="true"
+    />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/text5"
+            android:background="@drawable/icon_loginbtn"
+            android:layout_marginTop="60dp"
+            android:text="确 认"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -48,6 +48,9 @@ public class AlarmList extends BaseMessage {
             tempAlarmInfo.setSchemaContent(alarm.getChildTextTrim("SchemaContent"));
             tempAlarmInfo.setAlarmTime(alarm.getChildTextTrim("AlarmTime"));
             tempAlarmInfo.setBedNumber(alarm.getChildTextTrim("BedNumber"));
+            tempAlarmInfo.setBedCode(alarm.getChildTextTrim("BedCode"));
+            tempAlarmInfo.setHandleFlag(alarm.getChildTextTrim("HandleFlag"));
+
 
             result.alarminfoList.add(tempAlarmInfo);
         }
