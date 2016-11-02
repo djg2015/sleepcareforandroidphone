@@ -101,6 +101,7 @@ public class LoginViewModel extends BaseViewModel {
                 EMLoginUser emLoginUser = sleepcareforPhoneManage.Login(this.loginName, this.password);
 
                 //记录在全局变量里
+                Grobal.getInitConfigModel().setMaincode(emLoginUser.getMainCode());
                 Grobal.getInitConfigModel().setLoginUserName(this.loginName);
                 Grobal.getInitConfigModel().setLoginUserPWD(this.password);
                 // 获取到一个参数文件的编辑器。

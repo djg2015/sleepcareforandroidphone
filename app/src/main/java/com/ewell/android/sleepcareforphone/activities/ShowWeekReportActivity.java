@@ -49,6 +49,7 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
         showweekreport.setParentactivity(this);
         showweekreport.InitData();
 
+
         ShowWeekReportBinder binding = DataBindingUtil.setContentView(this, R.layout.activity_showweekreport);
         binding.setShowweekreport(showweekreport);
 
@@ -107,6 +108,7 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
         ShowSleepChart();
 
         fragment = new DatePickerFragment();
+
 
     }
 

@@ -22,6 +22,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -46,11 +47,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_above="@+id/password"
-                android:drawableLeft="@drawable/icon_telephone"
+                android:drawableLeft="@drawable/icon_figure"
                 android:drawablePadding="20dp"
-                android:drawableStart="@drawable/icon_telephone"
+                android:drawableStart="@drawable/icon_figure"
                 android:hint="@string/loginusername"
-                android:inputType="number"
+                android:inputType="text"
                 android:text="@{user.loginName}"
                 android:textColor="@color/white"
                 android:textSize="20sp" />

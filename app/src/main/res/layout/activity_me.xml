@@ -49,8 +49,6 @@
             android:layout_marginTop="1dp"
             android:id="@+id/myself"
             android:drawableLeft="@drawable/icon_nurse"
-            android:drawableRight="@drawable/btn_rightarrow"
-            android:paddingRight="25dp"
             android:paddingLeft="26dp"
             android:drawablePadding="26dp"
             android:text=""

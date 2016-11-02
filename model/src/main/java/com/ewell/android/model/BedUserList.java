@@ -44,8 +44,8 @@ public class BedUserList extends BaseMessage {
 
             tempBeduserInfo.setBedUserCode(beduser.getChildTextTrim("BedUserCode"));
             tempBeduserInfo.setBedUserName(beduser.getChildTextTrim("BedUserName"));
-            tempBeduserInfo.setRoomNum(beduser.getChildTextTrim("RoomNum"));
-            tempBeduserInfo.setBedNum(beduser.getChildTextTrim("BedNum"));
+            tempBeduserInfo.setRoomNum(beduser.getChildTextTrim("RoomName"));
+            tempBeduserInfo.setBedNum(beduser.getChildTextTrim("BedNumber"));
             tempBeduserInfo.setPartCode(beduser.getChildTextTrim("PartCode"));
             tempBeduserInfo.setBedCode(beduser.getChildTextTrim("BedCode"));
             tempBeduserInfo.setEquipmentID(beduser.getChildTextTrim("EquipmentID"));

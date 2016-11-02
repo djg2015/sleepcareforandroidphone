@@ -83,14 +83,17 @@ public class ChartData {
         }
 
         double step = maxX / 10.0;
+
+
         for (double i = 0; Double.compare(i, maxX) < 0; i += step) {
-            String label = Integer.toString((int) i);
+           String label = Integer.toString((int) i);
             if (Double.compare(i, 0) < 0) {
                 label = String.format("%.2f", i);
             }
 
             xValues.add(new AxisValue(i, label));
         }
+
     }
 
     public void automaticallyAddYValues() {
@@ -103,20 +106,24 @@ public class ChartData {
 
 //修改:修正y轴值<10的情况
         double step = maxY / 10.0;
+        double i = 0;
+        String label = "";
         if (step < 1.0) {
             step = 1.0;
 
         }
        step = Math.ceil(step);
 
-        for (double i = 0; Double.compare(i, maxY) <= 0; i += step) {
-            String label = Integer.toString((int) i);
+        for ( i = 0; Double.compare(i, maxY) < 0; i += step) {
+            label = Integer.toString((int) i);
             if (Double.compare(i, 0) < 0) {
                 label = String.format("%.3f", i);
             }
 
             yValues.add(new AxisValue(i, label));
         }
+        label = Integer.toString((int) i);
+        yValues.add(new AxisValue(i, label));
 
         //y轴值全为0,则手动添加一个点:10
         if(yValues.size()==1){

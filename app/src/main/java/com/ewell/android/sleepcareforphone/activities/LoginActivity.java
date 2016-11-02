@@ -1,12 +1,16 @@
 package com.ewell.android.sleepcareforphone.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.ewell.android.common.Crypt;
 import com.ewell.android.sleepcareforphone.LoginBinder;
@@ -15,16 +19,18 @@ import com.ewell.android.sleepcareforphone.viewmodels.LoginViewModel;
 
 
 public class LoginActivity extends AppCompatActivity {
-
+private ImageView mLogo;
     private EditText mEmailView;
     private EditText mPasswordView;
     private LoginViewModel user = null;
 
     private SharedPreferences mSP;
+    private Context mcontext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mcontext = this;
         //mvvm绑定
         user = new LoginViewModel();
         //完成sp的初始化。
@@ -83,8 +89,16 @@ public class LoginActivity extends AppCompatActivity {
                 user.setPassword(s.toString());
             }
         });
+
+
+        mLogo = (ImageView)findViewById(R.id.logo);
+        mLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转下一页面
+                Intent intent = new Intent(mcontext, ServerSettingActivity.class);
+                mcontext.startActivity(intent);
+            }
+        });
     }
-
-
-
 }

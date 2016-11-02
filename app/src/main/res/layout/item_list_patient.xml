@@ -1,0 +1,173 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants">
+
+    <RelativeLayout
+        android:id="@+id/viewleft"
+        android:layout_width="110dp"
+        android:layout_height="100dp">
+
+
+        <TextView
+            android:id="@+id/txt_roomnum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+           android:layout_alignParentBottom="true"
+
+            android:layout_marginBottom="10dp"
+            android:text="100号"
+            android:textColor="@color/darkgrey"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_bednum"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+         android:layout_above="@+id/txt_roomnum"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="111"
+            android:textColor="@color/darkgrey"
+            android:textSize="26sp" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_above="@+id/txt_roomnum"
+           android:layout_toRightOf="@+id/txt_bednum"
+            android:layout_marginBottom="12dp"
+            android:text="床"
+            android:textColor="@color/darkgrey"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/viewtopright"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="35dp"
+        android:layout_toRightOf="@+id/viewleft"
+        android:layout_toLeftOf="@+id/alarmImg"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <Button
+            android:id="@+id/sex"
+            android:layout_width="24dp"
+            android:layout_height="22dp"
+            android:background="@drawable/sexbtn" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/sex"
+            android:text="张奶奶"
+            android:textColor="@color/darkgrey"
+            android:textSize="20sp"
+            />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/viewmiddleright"
+        android:orientation="horizontal"
+
+        android:layout_toRightOf="@+id/viewleft"
+        android:layout_below="@+id/viewtopright"
+        android:layout_toLeftOf="@+id/alarmImg"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+<TextView
+    android:id="@+id/txt_hr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+   android:gravity="center"
+    android:text="0"
+    android:textColor="@color/darkgrey"
+    android:textSize="18sp"
+    />
+
+        <TextView
+            android:id="@+id/txt_rr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/darkgrey"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/txt_status"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="确认中"
+            android:textColor="@color/darkgrey"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewbottomright"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@+id/viewleft"
+        android:layout_below="@+id/viewmiddleright"
+        android:layout_toLeftOf="@+id/alarmImg"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="心率"
+            android:textColor="@color/darkgrey"
+            android:textSize="18sp"
+            />
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="呼吸"
+            android:textColor="@color/darkgrey"
+            android:textSize="18sp"
+            />
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="状态"
+            android:textColor="@color/darkgrey"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+    
+    <ImageView
+        android:id="@+id/alarmImg"
+        android:layout_alignParentRight="true"
+        android:layout_width="70dp"
+        android:layout_height="58dp"
+        android:background="@drawable/ergent"
+        />
+</RelativeLayout>

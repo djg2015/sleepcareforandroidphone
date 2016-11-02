@@ -45,7 +45,7 @@ public class ModifyAccountViewModel extends BaseViewModel{
 
         SleepcareforPhoneManage sleepcareforPhoneManage = DataFactory.GetSleepcareforPhoneManage();
         try {
-            Grobal.getInitConfigModel().setXmppUserName("15716199610");
+           // Grobal.getInitConfigModel().setXmppUserName("15716199610");
             if (Grobal.getXmppManager().Connect()) {
                 //检查输入
                 if(this.oldpassword.equals("")){

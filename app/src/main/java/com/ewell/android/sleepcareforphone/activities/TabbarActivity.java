@@ -1,6 +1,5 @@
 package com.ewell.android.sleepcareforphone.activities;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -33,7 +32,7 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
     private FrameLayout rrFl, hrFl, sleepFl;//, meFl;
     private ImageView rrIv, hrIv, sleepIv;//, meIv;
 
-    private SharedPreferences mSP;
+
     private String curUserName;
     private String curUserCode;
 
@@ -142,8 +141,7 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         sleepIv = (ImageView) findViewById(R.id.image_sleep);
    //     meIv = (ImageView) findViewById(R.id.image_me);
 
-        //完成sp的初始化。
-        mSP = getSharedPreferences("config", MODE_PRIVATE);
+
 
     }
 
@@ -186,8 +184,8 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
     private void clickRrBtn() {
 
         // fragmentRr = new FragmentRr();
-        curUserCode = mSP.getString("curusercode", "");
-        curUserName = mSP.getString("curusername", "");
+        curUserCode = Grobal.getInitConfigModel().getCurUserCode();
+        curUserName = Grobal.getInitConfigModel().getCurUserName();
         fragmentRr = FragmentRr.newInstance(curUserCode, curUserName);
 
         FragmentTransaction fragmentTransaction = this
@@ -214,8 +212,8 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
 
 
         //  fragmentAuth = new FragmentAuth();
-        curUserCode = mSP.getString("curusercode", "");
-        curUserName = mSP.getString("curusername", "");
+        curUserCode = Grobal.getInitConfigModel().getCurUserCode();
+        curUserName = Grobal.getInitConfigModel().getCurUserName();
         fragmentHr = FragmentHr.newInstance(curUserCode, curUserName);
 
         FragmentTransaction fragmentTransaction = this
@@ -242,8 +240,8 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
     private void clickSleepBtn() {
 
         // fragmentSleep = new FragmentSleep();
-        curUserCode = mSP.getString("curusercode", "");
-        curUserName = mSP.getString("curusername", "");
+        curUserCode = Grobal.getInitConfigModel().getCurUserCode();
+        curUserName = Grobal.getInitConfigModel().getCurUserName();
         fragmentSleep = FragmentSleep.newInstance(curUserCode, curUserName);
 
         FragmentTransaction fragmentTransaction = this

@@ -80,7 +80,7 @@ private boolean firstlaunch;
     private String getServerversion() {
         SleepcareforPhoneManage sleepcareforPhoneManage = DataFactory.GetSleepcareforPhoneManage();
         String highestversion = "";
-        Grobal.getInitConfigModel().setXmppUserName("pad");
+       Grobal.getInitConfigModel().setXmppUserName("pad");
         try {
             if (Grobal.getXmppManager().Connect()) {
                 VersionList versionlist = sleepcareforPhoneManage.GetVersionForPhone("0", "3");

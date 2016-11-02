@@ -20,7 +20,7 @@ import com.ewell.android.sleepcareforphone.viewmodels.ModifyAccountViewModel;
  */
 public class ModifyAccountActivity extends Activity {
 
-private EditText mOldpaswword;
+    private EditText mOldpaswword;
     private EditText mNewpaswword;
     private EditText mConfirmnewpaswword;
 

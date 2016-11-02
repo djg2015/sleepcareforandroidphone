@@ -4,7 +4,6 @@ import android.databinding.Bindable;
 import android.widget.Toast;
 
 import com.ewell.android.bll.DataFactory;
-import com.ewell.android.common.Grobal;
 import com.ewell.android.common.exception.EwellException;
 import com.ewell.android.ibll.SleepcareforPhoneManage;
 import com.ewell.android.model.HRRRReport;
@@ -36,7 +35,9 @@ private ShowWeekReportActivity parentactivity;
 
     private String endDate = "";
     private String beginDate = "";
+
     private String reportDate = "";
+    public String getReportDate(){return reportDate;}
 
 
     private String titleDate = "";
@@ -357,92 +358,125 @@ private ShowWeekReportActivity parentactivity;
         this.reportDate = formatter.format(date);
 
 
-        bedusercode = Grobal.getInitConfigModel().getCurUserCode();
-        if (bedusercode.equals("")) {
+        // 弹窗选择病人
 
 
-        } else {
-            RefreshWeekreport(this.reportDate);
-        }
-
+        //初始化数据
+        RefreshWeekreport(reportDate);
     }
 
 
     public void RefreshWeekreport(String reportdate) {
         try {
-            this.reportDate = reportdate;
-            WeekSleep weeksleep = sleepcareforPhoneManage.GetWeekSleepofBedUser(bedusercode, reportdate);
-            beginDate = weeksleep.getBeginDate();
-            endDate = weeksleep.getEndDate();
-            setTitleDate(beginDate.replaceAll("-", "/") + "-" + endDate.replaceAll("-", "/"));
-            setWeekMaxHR(weeksleep.getWeekMaxHR());
-            setWeekMinHR(weeksleep.getWeekMinHR());
-            setWeekAvgHR(weeksleep.getWeekAvgHR());
-            setWeekMaxRR(weeksleep.getWeekMaxRR());
-            setWeekMinRR(weeksleep.getWeekMinRR());
-            setWeekAvgRR(weeksleep.getWeekAvgRR());
-
-            hrrrReports = weeksleep.getHRRRRange();
-            hrrr_xValues = new ArrayList<String>();
-            hr_yValues = new ArrayList<String>();
-            rr_yValues = new ArrayList<String>();
-            for (int i = 0; i < hrrrReports.size(); i++) {
-                HRRRReport temphrrr = hrrrReports.get(i);
-                hrrr_xValues.add(temphrrr.getWeekDay());
-                hr_yValues.add(temphrrr.getHR());
-                rr_yValues.add(temphrrr.getRR());
-
-            }
-
-            setLeaveBedSum(weeksleep.getLeaveBedSum());
-            leavebedReports = weeksleep.getLeaveBedRange();
-            leavebed_xValues = new ArrayList<String>();
-            leavebed_yValues = new ArrayList<String>();
-            for (int i = 0; i < leavebedReports.size(); i++) {
-                LeaveBedReport templeavebed = leavebedReports.get(i);
-                leavebed_xValues.add(templeavebed.getWeekDay());
-                leavebed_yValues.add(templeavebed.getLeaveBedTimes());
-            }
-
-            setWeekWakeHours(weeksleep.getWeekWakeHours());
-            setWeekLightSleepHours(weeksleep.getWeekLightSleepHours());
-            setWeekDeepSleepHours(weeksleep.getWeekDeepSleepHours());
-            setWeekSleepHours(weeksleep.getWeekSleepHours());
-
-            String temponbedbegintime = weeksleep.getOnbedBeginTime();
-            if (temponbedbegintime.length() > 11) {
-                setOnbedBeginTime(temponbedbegintime.substring(11));
-            } else {
-                setOnbedBeginTime("");
-            }
-
-            String temponbedendtime = weeksleep.getOnbedEndTime();
-            if (temponbedendtime.length() > 11) {
-                setOnbedEndTime(temponbedendtime.substring(11));
-            } else {
+            if(bedusercode.equals("")){
+               //所有数据置空
+                setTitleDate(reportDate);
+                setWeekMaxHR("");
+                setWeekMinHR("");
+                setWeekAvgHR("");
+                setWeekMaxRR("");
+                setWeekMinRR("");
+                setWeekAvgRR("");
+                hrrrReports = new ArrayList<HRRRReport>();
+                hrrr_xValues = new ArrayList<String>();
+                hr_yValues = new ArrayList<String>();
+                rr_yValues = new ArrayList<String>();
+                setLeaveBedSum("");
+                leavebedReports = new ArrayList<LeaveBedReport>();
+                leavebed_xValues = new ArrayList<String>();
+                leavebed_yValues = new ArrayList<String>();
+                setWeekWakeHours("");
+                setWeekLightSleepHours("");
+                setWeekDeepSleepHours("");
+                setWeekSleepHours("");
                 setOnbedEndTime("");
+                setOnbedBeginTime("");
+                sleepReports = new ArrayList<SleepReport>();
+                sleep_xValues = new ArrayList<String>();
+                lightsleep_yValues = new ArrayList<String>();
+                deepsleep_yValues = new ArrayList<String>();
+                awake_yValues = new ArrayList<String>();
+                setAvgLeaveBedSum("");
+                setAvgTurnTimes("");
+                setMaxLeaveBedHours("");
+                setTurnsRate("");
+                setSleepSuggest("");
             }
+            else {
+                this.reportDate = reportdate;
+                WeekSleep weeksleep = sleepcareforPhoneManage.GetWeekSleepofBedUser(bedusercode, reportdate);
+                beginDate = weeksleep.getBeginDate();
+                endDate = weeksleep.getEndDate();
+                setTitleDate(beginDate.replaceAll("-", "/") + "-" + endDate.replaceAll("-", "/"));
+                setWeekMaxHR(weeksleep.getWeekMaxHR());
+                setWeekMinHR(weeksleep.getWeekMinHR());
+                setWeekAvgHR(weeksleep.getWeekAvgHR());
+                setWeekMaxRR(weeksleep.getWeekMaxRR());
+                setWeekMinRR(weeksleep.getWeekMinRR());
+                setWeekAvgRR(weeksleep.getWeekAvgRR());
+
+                hrrrReports = weeksleep.getHRRRRange();
+                hrrr_xValues = new ArrayList<String>();
+                hr_yValues = new ArrayList<String>();
+                rr_yValues = new ArrayList<String>();
+                for (int i = 0; i < hrrrReports.size(); i++) {
+                    HRRRReport temphrrr = hrrrReports.get(i);
+                    hrrr_xValues.add(temphrrr.getWeekDay());
+                    hr_yValues.add(temphrrr.getHR());
+                    rr_yValues.add(temphrrr.getRR());
+
+                }
+
+                setLeaveBedSum(weeksleep.getLeaveBedSum());
+                leavebedReports = weeksleep.getLeaveBedRange();
+                leavebed_xValues = new ArrayList<String>();
+                leavebed_yValues = new ArrayList<String>();
+                for (int i = 0; i < leavebedReports.size(); i++) {
+                    LeaveBedReport templeavebed = leavebedReports.get(i);
+                    leavebed_xValues.add(templeavebed.getWeekDay());
+                    leavebed_yValues.add(templeavebed.getLeaveBedTimes());
+                }
+
+                setWeekWakeHours(weeksleep.getWeekWakeHours());
+                setWeekLightSleepHours(weeksleep.getWeekLightSleepHours());
+                setWeekDeepSleepHours(weeksleep.getWeekDeepSleepHours());
+                setWeekSleepHours(weeksleep.getWeekSleepHours());
+
+                String temponbedbegintime = weeksleep.getOnbedBeginTime();
+                if (temponbedbegintime.length() > 11) {
+                    setOnbedBeginTime(temponbedbegintime.substring(11));
+                } else {
+                    setOnbedBeginTime("");
+                }
+
+                String temponbedendtime = weeksleep.getOnbedEndTime();
+                if (temponbedendtime.length() > 11) {
+                    setOnbedEndTime(temponbedendtime.substring(11));
+                } else {
+                    setOnbedEndTime("");
+                }
 
 
-            sleepReports = weeksleep.getSleepRange();
-            sleep_xValues = new ArrayList<String>();
-            lightsleep_yValues = new ArrayList<String>();
-            deepsleep_yValues = new ArrayList<String>();
-            awake_yValues = new ArrayList<String>();
-            for (int i = 0; i < sleepReports.size(); i++) {
-                SleepReport tempsleep = sleepReports.get(i);
-                sleep_xValues.add(tempsleep.getWeekDay());
-                lightsleep_yValues.add(tempsleep.getLightHours());
-                deepsleep_yValues.add(tempsleep.getDeepHours());
-                awake_yValues.add(tempsleep.getWakeHours());
+                sleepReports = weeksleep.getSleepRange();
+                sleep_xValues = new ArrayList<String>();
+                lightsleep_yValues = new ArrayList<String>();
+                deepsleep_yValues = new ArrayList<String>();
+                awake_yValues = new ArrayList<String>();
+                for (int i = 0; i < sleepReports.size(); i++) {
+                    SleepReport tempsleep = sleepReports.get(i);
+                    sleep_xValues.add(tempsleep.getWeekDay());
+                    lightsleep_yValues.add(tempsleep.getLightHours());
+                    deepsleep_yValues.add(tempsleep.getDeepHours());
+                    awake_yValues.add(tempsleep.getWakeHours());
 
+                }
+
+                setAvgLeaveBedSum(weeksleep.getAvgLeaveBedSum());
+                setAvgTurnTimes(weeksleep.getAvgTurnTimes());
+                setMaxLeaveBedHours(weeksleep.getMaxLeaveBedHours());
+                setTurnsRate(weeksleep.getTurnsRate());
+                setSleepSuggest(weeksleep.getSleepSuggest());
             }
-
-            setAvgLeaveBedSum(weeksleep.getAvgLeaveBedSum());
-            setAvgTurnTimes(weeksleep.getAvgTurnTimes());
-            setMaxLeaveBedHours(weeksleep.getMaxLeaveBedHours());
-            setTurnsRate(weeksleep.getTurnsRate());
-            setSleepSuggest(weeksleep.getSleepSuggest());
 
         } catch (EwellException ex) {
             //做消息弹窗提醒

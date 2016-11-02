@@ -1,5 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class=".ServerSettingBinder">
+
+        <variable
+            name="serversetting"
+            type="com.ewell.android.sleepcareforphone.viewmodels.ServerSettingViewModel" />
+
+    </data>
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -47,13 +56,14 @@
             android:text="服务器JID"
             android:textSize="14sp"
             android:layout_above="@+id/text2"
-            android:layout_marginBottom="33dp"
+            android:layout_marginBottom="32dp"
             android:textColor="@color/darkgrey"/>
 
         <EditText
+            android:id="@+id/txt_serverjid"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="11"
+            android:text="@{serversetting.ServerJID}"
             android:layout_toRightOf="@+id/text1"
             android:layout_above="@+id/text2"
             android:layout_marginBottom="20dp"
@@ -69,13 +79,14 @@
             android:text="服务器地址"
             android:textSize="14sp"
             android:layout_above="@+id/text3"
-            android:layout_marginBottom="33dp"
+            android:layout_marginBottom="32dp"
             android:textColor="@color/darkgrey"/>
 
         <EditText
+            android:id="@+id/txt_serverip"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="11"
+            android:text="@{serversetting.ServerIP}"
             android:layout_toRightOf="@+id/text2"
             android:layout_above="@+id/text3"
             android:layout_marginBottom="20dp"
@@ -91,13 +102,14 @@
             android:text="服务器端口"
             android:textSize="14sp"
           android:layout_above="@+id/text4"
-            android:layout_marginBottom="33dp"
+            android:layout_marginBottom="32dp"
             android:textColor="@color/darkgrey"/>
 
         <EditText
+            android:id="@+id/txt_serverport"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="11"
+            android:text="@{serversetting.ServerPort}"
             android:layout_toRightOf="@+id/text3"
             android:layout_above="@+id/text4"
             android:layout_marginBottom="20dp"
@@ -117,9 +129,10 @@
             android:textColor="@color/darkgrey"/>
 
         <EditText
+            android:id="@+id/txt_serverpwd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="11"
+            android:text="@{serversetting.ServerPwd}"
             android:layout_toRightOf="@+id/text5"
             android:layout_below="@+id/text4"
             android:layout_marginTop="20dp"
@@ -138,9 +151,10 @@
     android:textColor="@color/darkgrey"/>
 
 <EditText
+    android:id="@+id/txt_serveruser"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:text="11"
+    android:text="@{serversetting.ServerUser}"
     android:layout_toRightOf="@+id/text4"
     android:textColor="@color/darkgrey"
     android:textSize="14sp"
@@ -154,8 +168,10 @@
             android:background="@drawable/icon_loginbtn"
             android:layout_marginTop="60dp"
             android:text="确 认"
+            android:onClick="@{serversetting.ConfirmCommand}"
             android:textSize="20sp"
             />
     </RelativeLayout>
 
 </LinearLayout>
+</layout>

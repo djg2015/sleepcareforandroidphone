@@ -1,8 +1,6 @@
 package com.ewell.android.common.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Dongjg on 2016-7-12.
@@ -65,6 +63,7 @@ public class InitConfigModel {
         return loginUserName;
     }
 
+
     public void setLoginUserName(String loginUserName) {
         this.loginUserName = loginUserName;
     }
@@ -78,13 +77,22 @@ public class InitConfigModel {
     public void setLoginUserPWD(String loginUserPWD) {
         this.loginUserPWD = loginUserPWD;
     }
+
+    private String maincode;
+
+    public String getMaincode() {
+        return maincode;
+    }
+    public void setMaincode(String _maincode){maincode = _maincode;}
+
+
     //----------自定义方法-----------
 
 
 
-   private Map<String, String> UserCodeNameMap = new HashMap<String,String>();
-    public  Map<String, String> getUserCodeNameMap(){return UserCodeNameMap;}
-    public void setUserCodeNameMap(Map<String, String> tempmap){UserCodeNameMap = tempmap;}
+//   private Map<String, String> UserCodeNameMap = new HashMap<String,String>();
+//    public  Map<String, String> getUserCodeNameMap(){return UserCodeNameMap;}
+//    public void setUserCodeNameMap(Map<String, String> tempmap){UserCodeNameMap = tempmap;}
 
     private String curUserCode;
     public String getCurUserCode(){return curUserCode;}
@@ -94,9 +102,7 @@ public class InitConfigModel {
     public String getCurUserName(){return curUserName;}
     public void setCurUserName(String curusername){curUserName = curusername;}
 
-    private ArrayList<String> equipmentcodeList=new ArrayList<String>();
-    public ArrayList<String> getEquipmentcodeList(){return equipmentcodeList;}
-    public void setEquipmentcodeList(ArrayList<String> equipmentcodelist){equipmentcodeList = equipmentcodelist;}
+
 
 
     private ArrayList<String> bedusercodeList=new ArrayList<String>();

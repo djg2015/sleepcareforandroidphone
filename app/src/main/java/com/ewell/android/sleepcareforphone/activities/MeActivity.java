@@ -22,6 +22,12 @@ public class MeActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_me);
 
+txtAlarms = (TextView)findViewById(R.id.myalarms);
+        txtAlarms.setOnClickListener(this);
+        txtWeekreport = (TextView)findViewById(R.id.weekreport);
+        txtWeekreport.setOnClickListener(this);
+        txtSetting = (TextView)findViewById(R.id.accountsetting);
+        txtSetting.setOnClickListener(this);
 
     }
 
