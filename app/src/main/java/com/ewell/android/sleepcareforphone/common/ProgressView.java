@@ -85,9 +85,9 @@ defaultPaint = new Paint();
         RectF rectBlackBg = new RectF(25, 25, mWidth - 25, mHeight - 25);
         canvas.drawArc(rectBlackBg, 0, 360, false, mPaint);
         mPaint.setColor(Color.BLACK);
-        mTextPaint.setTextSize(50);
+        mTextPaint.setTextSize(55);
         canvas.drawText(score + "", mWidth / 2, mHeight / 2, mTextPaint);
-        canvas.drawText("次/分", mWidth / 2, mHeight / 2 + 30, mSubtextPaint);
+        canvas.drawText("次/分", mWidth / 2, mHeight / 2 + 40, mSubtextPaint);
 
 
 

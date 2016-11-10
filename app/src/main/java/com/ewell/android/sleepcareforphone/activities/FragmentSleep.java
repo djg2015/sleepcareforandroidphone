@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,13 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ewell.android.common.Grobal;
-import com.ewell.android.common.xmpp.XmppMsgDelegate;
+import com.ewell.android.common.GetRealtimeDataDelegate;
+import com.ewell.android.common.RealTimeHelper;
 import com.ewell.android.model.EMRealTimeReport;
 import com.ewell.android.sleepcareforphone.R;
 import com.ewell.android.sleepcareforphone.common.SleepProgressView;
@@ -35,9 +32,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Map;
 
 
-public class FragmentSleep extends Fragment implements View.OnClickListener, XmppMsgDelegate<EMRealTimeReport> {
+public class FragmentSleep extends Fragment implements View.OnClickListener, GetRealtimeDataDelegate {
+        //, XmppMsgDelegate<EMRealTimeReport> {
     private String BedUserCode = "";
     private String BedUserName = "";
 
@@ -51,7 +50,7 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
     private static TextView deepsleeptxt;
     private static TextView awakesleeptxt;
 
-
+    private static TextView sleephourtxt;
 
     private DatePickerFragment fragment;
 
@@ -66,12 +65,6 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
     private String reportDate = "";
 
     private static SleepViewModel sleepViewModel;
-
-
-    private RelativeLayout view1;
-    private LinearLayout view2;
-    private RelativeLayout view3;
-    private RelativeLayout view4;
 
     private Button back;
 
@@ -93,17 +86,8 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
         BedUserCode = getArguments().getString("bedusercode", "");
         //初始化数据
         BedUserName = getArguments().getString("bedusername", "");
-        // 在我的设备里删除当前关注的老人,返回此页面,需要将bedusercode/name置空
-        if(Grobal.getInitConfigModel().getCurUserCode().equals("")){
-            BedUserCode="";
-            BedUserName ="";
-        }
 
         fragment = new DatePickerFragment();
-
-        sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
-        editor = sp.edit();
-
         Date date = new Date();//取时间
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
@@ -116,8 +100,8 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
         sleepViewModel = new SleepViewModel();
         sleepViewModel.RefreshSleepData(reportDate);
 
-        Grobal.getXmppManager().SetXmppMsgDelegate(this);
-
+      //  Grobal.getXmppManager().SetXmppMsgDelegate(this);
+        RealTimeHelper.GetInstance().SetDelegate("realtimedelegate",this);
     }
 
 
@@ -125,13 +109,12 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sleep, container, false);
-//change patient button
+        //change patient button
 
         patientname = (TextView) v.findViewById(R.id.texttitle);
         patientname.setOnClickListener(this);
-        if (!BedUserName.equals("")) {
-            patientname.setText(BedUserName);
-        }
+        patientname.setText(BedUserName);
+
 
         //change date
         txtdate = (TextView) v.findViewById(R.id.choosedate);
@@ -148,13 +131,15 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
         awakesleeptxt = (TextView) v.findViewById(R.id.awakesleep);
         awakesleeptxt.setText(sleepViewModel.getAwakeningTimespan());
 
+        sleephourtxt  = (TextView)v.findViewById(R.id.sleephour);
+        sleephourtxt.setText(sleepViewModel.getSleepTimespan());
 
         mSleepProgressView = (SleepProgressView) v.findViewById(R.id.my_sleepprogress);
         mSleepProgressView.setMaxCount(24.0f);
         mSleepProgressView.setDeepsleepCount(sleepViewModel.getDeepSleepTimespanFloat());
         mSleepProgressView.setLightsleepCount(sleepViewModel.getLightSleepTimespanFloat());
         mSleepProgressView.setAwakeCount(sleepViewModel.getAwakeningTimespanFloat());
-        mSleepProgressView.setScore(sleepViewModel.getSleepTimespan());
+        mSleepProgressView.setScore(sleepViewModel.getSleepQuality());
 
         chart = (FancyChart) v.findViewById(R.id.my_sleepchart);
         chart.setOnPointClickListener(new FancyChartPointListener() {
@@ -266,10 +251,12 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
         deepsleeptxt.setText(sleepViewModel.getDeepSleepTimespan());
         awakesleeptxt.setText(sleepViewModel.getAwakeningTimespan());
 
+        sleephourtxt.setText(sleepViewModel.getSleepTimespan());
+
         mSleepProgressView.setDeepsleepCount(sleepViewModel.getDeepSleepTimespanFloat());
         mSleepProgressView.setLightsleepCount(sleepViewModel.getLightSleepTimespanFloat());
         mSleepProgressView.setAwakeCount(sleepViewModel.getAwakeningTimespanFloat());
-        mSleepProgressView.setScore(sleepViewModel.getSleepTimespan());
+        mSleepProgressView.setScore(sleepViewModel.getSleepQuality());
 
         chart.clearValues();
         ArrayList<Float> tempyvalues = sleepViewModel.getSleeptimeValues();
@@ -304,9 +291,45 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
         }
     }
 
+//    @Override
+//    public void ReciveMessage(EMRealTimeReport emRealTimeReport) {
+//        if (!BedUserCode.equals("") && BedUserCode.equals(emRealTimeReport.getBedUserCode())) {
+//            onbedstatus = emRealTimeReport.getOnBedStatus();
+//            onbedstatusimg.post(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//                    switch (onbedstatus) {
+//                        case "在床":
+//                            onbedstatusimg.setBackgroundResource(R.drawable.icon_onbed);
+//                            break;
+//                        case "离床":
+//                            onbedstatusimg.setBackgroundResource(R.drawable.icon_offbed);
+//                            break;
+//
+//                        case "请假":
+//                            onbedstatusimg.setBackgroundResource(R.drawable.icon_offduty);
+//                            break;
+//
+//                        case "异常":
+//                            onbedstatusimg.setBackgroundResource(R.drawable.icon_innormal);
+//                            break;
+//
+//                        default:
+//                            onbedstatusimg.setBackgroundResource(R.drawable.icon_offline);
+//                            break;
+//                    }
+//                }
+//            });
+//
+//        }
+//    }
+
     @Override
-    public void ReciveMessage(EMRealTimeReport emRealTimeReport) {
-        if (!BedUserCode.equals("") && BedUserCode.equals(emRealTimeReport.getBedUserCode())) {
+    public void GetRealtimeData(Map<String, EMRealTimeReport> realtimeData) {
+        for (EMRealTimeReport emRealTimeReport : realtimeData.values()) {
+
+            if (BedUserCode.equals(emRealTimeReport.getBedUserCode())) {
             onbedstatus = emRealTimeReport.getOnBedStatus();
             onbedstatusimg.post(new Runnable() {
 
@@ -335,9 +358,9 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Xmp
                 }
             });
 
+                System.out.print(BedUserCode + "实时数据===============\n");
+                break;
+            }
         }
     }
-
-
-
 }

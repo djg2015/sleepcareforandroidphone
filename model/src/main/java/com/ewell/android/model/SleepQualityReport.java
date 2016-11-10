@@ -95,19 +95,21 @@ public class SleepQualityReport extends BaseMessage {
         Document doc = builder.build(returnQuote);
         Element root = doc.getRootElement();
 
-        result.SleepQuality = root.getChildTextTrim("SleepQuality");
 
+
+        result.SleepQuality = root.getChildTextTrim("SleepQuality")==null?"无":root.getChildTextTrim("SleepQuality");
+System.out.print(result.SleepQuality+"睡眠得分==========\n");
         String tempsleeptime = root.getChildTextTrim("SleepTimespan");
         if (tempsleeptime != null && !tempsleeptime.equals("")) {
             String hour = tempsleeptime.substring(0, 2);
             String min = tempsleeptime.substring(3, 5);
             Float tempfloatvalue = Float.parseFloat(hour) + Float.parseFloat(min) / 60;
 
-            result.SleepTimespan = hour + "/" + min;
+            result.SleepTimespan = hour + "时" + min + "分";
             result.SleepTimespanFloat = tempfloatvalue;
 
         } else {
-            result.SleepTimespan = "0";
+            result.SleepTimespan = "0时0分";
             result.SleepTimespanFloat = 0.0f;
         }
 
@@ -117,10 +119,10 @@ public class SleepQualityReport extends BaseMessage {
             String min = tempdeepsleep.substring(3, 5);
             Float tempfloatvalue = Float.parseFloat(hour) + Float.parseFloat(min) / 60;
 
-            result.DeepSleepTimespan = hour + "/" + min;
+            result.DeepSleepTimespan = hour + "时" + min + "分";
             result.DeepSleepTimespanFloat = tempfloatvalue;
         } else {
-            result.DeepSleepTimespan = "00/00";
+            result.DeepSleepTimespan = "0时0分";
             result.DeepSleepTimespanFloat = 0.0f;
         }
 
@@ -130,11 +132,11 @@ public class SleepQualityReport extends BaseMessage {
             String min = templightsleep.substring(3, 5);
             Float tempfloatvalue = Float.parseFloat(hour) + Float.parseFloat(min) / 60;
 
-            result.LightSleepTimespan = hour + "/" + min;
+            result.LightSleepTimespan = hour + "时" + min + "分";
             result.LightSleepTimespanFloat = tempfloatvalue;
 
         } else {
-            result.LightSleepTimespan = "00/00";
+            result.LightSleepTimespan = "0时0分";
             result.LightSleepTimespanFloat = 0.0f;
         }
 
@@ -144,10 +146,10 @@ public class SleepQualityReport extends BaseMessage {
             String min = tempawake.substring(3, 5);
             Float tempfloatvalue = Float.parseFloat(hour) + Float.parseFloat(min) / 60;
 
-            result.AwakeningTimespan = hour + "/" + min;
+            result.AwakeningTimespan = hour + "时" + min + "分";
             result.AwakeningTimespanFloat = tempfloatvalue;
         } else {
-            result.AwakeningTimespan = "00/00";
+            result.AwakeningTimespan = "0时0分";
             result.AwakeningTimespanFloat = 0.0f;
         }
 

@@ -1,6 +1,5 @@
 package com.ewell.android.common;
 
-import com.ewell.android.common.xmpp.XmppManager;
 import com.ewell.android.common.xmpp.XmppMsgDelegate;
 import com.ewell.android.model.EMRealTimeReport;
 
@@ -29,7 +28,7 @@ private Map<String, GetRealtimeDataDelegate> delegatelist = null;
             _realtimehelper.realtimeCashes = new HashMap<String, EMRealTimeReport>();
             _realtimehelper.delegatelist = new HashMap<String, GetRealtimeDataDelegate>();
 
-            XmppManager.GetInstance(Grobal.getInitConfigModel()).SetXmppMsgDelegate(_realtimehelper);
+
         }
         return _realtimehelper;
     }
@@ -38,14 +37,11 @@ private Map<String, GetRealtimeDataDelegate> delegatelist = null;
     * 设置事件处理委托
     * */
     public void SetDelegate(String name, GetRealtimeDataDelegate delegate) {
+
         this.delegatelist.put( name, delegate);
+        Grobal.getXmppManager().SetXmppMsgDelegate(this);
     }
 
-    //每隔2秒从缓冲区中取数据，让代理处理需要显示的数据
-    public void startRealTimer(){
-
-
-    }
 
    public void ShowRealTimeData(){
         for (String key: delegatelist.keySet()){
@@ -62,9 +58,15 @@ private Map<String, GetRealtimeDataDelegate> delegatelist = null;
     public void ReciveMessage(EMRealTimeReport emRealTimeReport) {
         String reportkey = emRealTimeReport.getBedUserCode();
         ArrayList<String> tempbeduserlist = Grobal.getInitConfigModel().getBedusercodeList();
-        if(tempbeduserlist.contains(reportkey)){
-         realtimeCashes.put(reportkey,emRealTimeReport);
 
+        if(tempbeduserlist.contains(reportkey)){
+                realtimeCashes.put(reportkey, emRealTimeReport);
+           // System.out.print(reportkey+"关注老人的实时数据"+emRealTimeReport+"==============\n");
+        }
+        else{
+            if(realtimeCashes.get(reportkey)!=null){
+                realtimeCashes.remove(reportkey);
+            }
         }
 
     }

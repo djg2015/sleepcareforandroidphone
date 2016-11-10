@@ -12,6 +12,11 @@ import java.util.ArrayList;
  * Created by lillix on 8/1/16.
  */
 public class SleepViewModel extends BaseViewModel {
+    private String sleepQuality="";
+    public String getSleepQuality() {
+        return sleepQuality;
+    }
+
 
     private String sleepTimespan="";
 
@@ -80,13 +85,14 @@ public class SleepViewModel extends BaseViewModel {
             if (Grobal.getXmppManager().Connect()) {
                 bedusercode = Grobal.getInitConfigModel().getCurUserCode();
                 if (bedusercode.equals("")) {
-                    sleepTimespan = "0";
+                    sleepQuality = "无";
+                    sleepTimespan = "0时0分";
                     sleepTimespanFloat = 0.0f;
-                    deepSleepTimespan = "0";
+                    deepSleepTimespan = "0时0分";
                     deepSleepTimespanFloat = 0.0f;
-                    lightSleepTimespan = "0";
+                    lightSleepTimespan = "0时0分";
                     lightSleepTimespanFloat = 0.0f;
-                    awakeningTimespan = "0";
+                    awakeningTimespan = "0时0分";
                     awakeningTimespanFloat = 0.0f;
                     weekdayValues = new ArrayList<String>();
                     sleeptimeValues = new ArrayList<Float>();
@@ -94,7 +100,7 @@ public class SleepViewModel extends BaseViewModel {
                 } else {
                     SleepQualityReport sleepreport = sleepcareforPhoneManage.GetSleepQualityofBedUser(bedusercode, reportdate);
 
-
+                    sleepQuality = sleepreport.getSleepQuality();
                     sleepTimespan = sleepreport.getSleepTimespan();
                     sleepTimespanFloat = sleepreport.getSleepTimespanFloat();
                     deepSleepTimespan = sleepreport.getDeepSleepTimespan();
@@ -105,6 +111,8 @@ public class SleepViewModel extends BaseViewModel {
                     awakeningTimespanFloat = sleepreport.getAwakeningTimespanFloat();
                     weekdayValues = sleepreport.getWeekdayValues();
                     sleeptimeValues = sleepreport.getSleeptimeValues();
+
+
                 }
             } else {
 

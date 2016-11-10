@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ewell.android.common.Grobal;
 import com.ewell.android.sleepcareforphone.R;
 
 /**
@@ -21,6 +22,10 @@ public class MeActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_me);
+
+        txtMyself = (TextView)findViewById(R.id.myself);
+        String accountname = Grobal.getInitConfigModel().getLoginUserName();
+        txtMyself.setText(accountname);
 
 txtAlarms = (TextView)findViewById(R.id.myalarms);
         txtAlarms.setOnClickListener(this);

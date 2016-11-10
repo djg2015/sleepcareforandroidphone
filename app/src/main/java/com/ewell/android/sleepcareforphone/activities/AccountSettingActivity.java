@@ -51,14 +51,14 @@ private SharedPreferences.Editor editor;
                     editor.putBoolean("notificationflag",true);
                     editor.commit();
                     DataFactory.GetSleepcareforPhoneManage().OpenNotificationForAndroid(deviceid, loginname);
-                    PushService.actionStart(AccountSettingActivity.this);
+                  //  PushService.actionStart(AccountSettingActivity.this);
 
                 }else{
                     //未选中
                     editor.putBoolean("notificationflag",false);
                     editor.commit();
                     DataFactory.GetSleepcareforPhoneManage().CloseNotificationForAndroid(deviceid, loginname);
-                    PushService.actionStop(AccountSettingActivity.this);
+                  //  PushService.actionStop(AccountSettingActivity.this);
                 }
                 }catch (EwellException ex) {
                     Toast.makeText(AccountSettingActivity.this,ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
@@ -83,7 +83,9 @@ private SharedPreferences.Editor editor;
 
 
     public void ClickClose(View view) {
-
+if(getSharedPreferences("config", MODE_PRIVATE).getBoolean("notificationflag",true)){
+    PushService.actionStart(AccountSettingActivity.this);
+}
         this.finish();
     }
 

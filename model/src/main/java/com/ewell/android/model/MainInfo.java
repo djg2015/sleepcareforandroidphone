@@ -44,27 +44,37 @@ public class MainInfo extends BaseMessage {
             tempPartInfo.setPartName(part.getChildTextTrim("PartName"));
             tempPartInfo.setMainName(part.getChildTextTrim("MainName"));
 
-            List bedlist = part.getChild("BedInfoList").getChildren();
+           List bedlist = part.getChild("BedInfoList").getChildren();
             ArrayList<BedInfo> tempBedInfolist = new ArrayList<BedInfo>();
+
+
             for(int j = 0; j < bedlist.size(); j++){
-
-                BedInfo tempBedInfo = new BedInfo();
                 Element bed = (Element)bedlist.get(j);
-
-                tempBedInfo.setRoomNumber(bed.getChildTextTrim("RoomNumber"));
+                BedInfo tempBedInfo = new BedInfo();
+                tempBedInfo.setRoomNumber(bed.getChildTextTrim("RoomName"));
                 tempBedInfo.setBedCode(bed.getChildTextTrim("BedCode"));
                 tempBedInfo.setBedNumber(bed.getChildTextTrim("BedNumber"));
-                tempBedInfo.setBedUserCode(bed.getChildTextTrim("RoomNumber"));
-                tempBedInfo.setBedUserName(bed.getChildTextTrim("RoomNumber"));
-                tempBedInfo.setEquipmentID(bed.getChildTextTrim("RoomNumber"));
-
+                tempBedInfo.setBedUserCode(bed.getChildTextTrim("BedUserCode"));
+                tempBedInfo.setBedUserName(bed.getChildTextTrim("BedUserName"));
+                String id = bed.getChildTextTrim("EquipmentID") == null ? "未绑定" : bed.getChildTextTrim("EquipmentID");
+                tempBedInfo.setEquipmentID(id);
                tempBedInfolist.add(tempBedInfo);
             }
             tempPartInfo.setBedInfoList(tempBedInfolist);
 
+
             result.partinfoList.add(tempPartInfo);
         }
 
+//       for(int i=0;i< result.partinfoList.size();i++) {
+//
+//           PartInfo part = result.partinfoList.get(i);
+//           ArrayList<BedInfo> bedlist = part.getBedInfoList();
+//
+//           for(int j=0;j<bedlist.size();j++) {
+//               System.out.print(bedlist.get(j).getBedUserName() + "===========\n");
+//           }
+//       }
 
         returnQuote.close();
         return result;

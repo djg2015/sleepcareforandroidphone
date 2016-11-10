@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+   >
 
     <RelativeLayout
         android:id="@+id/TitleView"
@@ -36,43 +36,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/TitleView"
+        android:layout_above="@+id/confirmBtn"
         android:orientation="horizontal"
         android:baselineAligned="false">
 
         <ListView
-            android:id="@+id/listviewleft"
+            android:id="@+id/classify_mainlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:divider="#fff"
+            android:dividerHeight="0.5px"
+          >
         </ListView>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1">
 
+        <ListView
+            android:id="@+id/classify_morelist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_above="@+id/confirmBtn"
+            android:divider="#ffebebeb"
+            android:dividerHeight="0.5px"
+            >
+        </ListView>
 
-    <ListView
-        android:id="@+id/listviewright"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/confirmBtn">
-    </ListView>
+    </LinearLayout>
 
     <Button
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="35dp"
-        android:text="确认"
+        android:text="确 认"
         android:textSize="20sp"
         android:id="@+id/confirmBtn"
         android:background="@drawable/icon_loginbtn"
         android:textColor="@color/white"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-       android:layout_centerHorizontal="true"
-         />
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="AddPatient"
+        />
 </RelativeLayout>
-
-
-    </LinearLayout>
-
-</LinearLayout>

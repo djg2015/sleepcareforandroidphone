@@ -27,10 +27,17 @@ private ShowWeekReportActivity parentactivity;
     public void setParentactivity(ShowWeekReportActivity activity){parentactivity = activity;}
 
     private String bedusercode = "";
-
     public String getBedusercode() {
-        return this.bedusercode;
+        return bedusercode;
     }
+public void setBedusercode(String usercode){bedusercode = usercode;}
+
+
+    private String bedusername = "";
+    public String getBedusername() {
+        return bedusername;
+    }
+    public void setBedusername(String username){bedusername = username;}
 
 
     private String endDate = "";

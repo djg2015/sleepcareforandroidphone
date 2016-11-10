@@ -1,6 +1,5 @@
 package com.ewell.android.sleepcareforphone.activities;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ewell.android.common.Grobal;
-import com.ewell.android.common.xmpp.XmppMsgDelegate;
+import com.ewell.android.common.GetRealtimeDataDelegate;
+import com.ewell.android.common.RealTimeHelper;
 import com.ewell.android.model.EMRealTimeReport;
 import com.ewell.android.sleepcareforphone.R;
 import com.ewell.android.sleepcareforphone.common.ProgressView;
@@ -27,8 +24,10 @@ import com.ewell.android.sleepcareforphone.common.fancychart.Point;
 import com.ewell.android.sleepcareforphone.viewmodels.HRViewModel;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-public class FragmentHr extends Fragment implements View.OnClickListener, XmppMsgDelegate<EMRealTimeReport> {
+public class FragmentHr extends Fragment implements View.OnClickListener, GetRealtimeDataDelegate{
+        //XmppMsgDelegate<EMRealTimeReport> {
 
     private String BedUserCode = "";
     private String BedUserName = "";
@@ -63,10 +62,6 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
     private ImageView alarmImg;
 
 
-    private RelativeLayout view1;
-    private LinearLayout view2;
-    private RelativeLayout view3;
-    private RelativeLayout view4;
     private Button back;
 
     //从父activty传参
@@ -86,20 +81,11 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
 
         BedUserCode = getArguments().getString("bedusercode", "");
         BedUserName = getArguments().getString("bedusername", "");
-        // 在我的设备里删除当前关注的老人,返回此页面,需要将bedusercode/name置空
-        if (Grobal.getInitConfigModel().getCurUserCode().equals("")) {
-            BedUserCode = "";
-            BedUserName = "";
-        }
-
-
-        sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
-        editor = sp.edit();
-
         hrViewModel = new HRViewModel();
         hrViewModel.RefreshHRData();
 
-        Grobal.getXmppManager().SetXmppMsgDelegate(this);
+      //  Grobal.getXmppManager().SetXmppMsgDelegate(this);
+        RealTimeHelper.GetInstance().SetDelegate("realtimedelegate",this);
     }
 
 
@@ -112,9 +98,8 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
 
         patientname = (TextView) v.findViewById(R.id.texttitle);
         patientname.setOnClickListener(this);
-        if (!BedUserName.equals("")) {
             patientname.setText(BedUserName);
-        }
+
 
         onbedstatusImg = (ImageView) v.findViewById(R.id.onbedstatusimg);
         alarmImg = (ImageView) v.findViewById(R.id.alarmimg);
@@ -147,20 +132,11 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
         button3 = (TextView) v.findViewById(R.id.button3);
         button3.setOnClickListener(this);
 
-
-//        view1 = (RelativeLayout) v.findViewById(R.id.topview1);
-//        view2 = (LinearLayout) v.findViewById(R.id.circleview);
-//        view3 = (RelativeLayout) v.findViewById(R.id.centerview);
-//        view4 = (RelativeLayout) v.findViewById(R.id.chartview);
-//
-//
         back=(Button)v.findViewById(R.id.btnClose);
         back.setOnClickListener(this);
 
         return v;
     }
-
-
 
 
     @Override
@@ -262,11 +238,73 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
         }
     }
 
-    @Override
-    public void ReciveMessage(EMRealTimeReport emRealTimeReport) {
-        if (!BedUserCode.equals("") && BedUserCode.equals(emRealTimeReport.getBedUserCode())) {
+//    @Override
+//    public void ReciveMessage(EMRealTimeReport emRealTimeReport) {
+//        if (!BedUserCode.equals("") && BedUserCode.equals(emRealTimeReport.getBedUserCode())) {
+//
+//            currentHR = emRealTimeReport.getHR();
+//            avgHR = emRealTimeReport.getLastedAvgHR();
+//            onbedstatus = emRealTimeReport.getOnBedStatus();
+//
+//
+//            mProgressView.post(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//                    if (!avgHR.equals("")) {
+//                        mProgressView.setAvgCount(Float.parseFloat(avgHR));
+//                    }
+//
+//
+//
+//                    if (!currentHR.equals("")) {
+//                        int score = Integer.parseInt(currentHR);
+//                        mProgressView.setCurrentCount(score);
+//                        mProgressView.setScore(score);
+//                        if (onbedstatus.equals("在床")) {
+//                            if (score > 80 || score < 20) {
+//                                alarmImg.setBackgroundResource(R.drawable.img_alarm);
+//                            } else {
+//                                alarmImg.setBackgroundResource(R.drawable.img_noalarm);
+//                            }
+//                        }
+//                    }
+//
+//
+//                    switch (onbedstatus) {
+//                        case "在床":
+//                            onbedstatusImg.setBackgroundResource(R.drawable.icon_onbed);
+//                            break;
+//                        case "离床":
+//                            onbedstatusImg.setBackgroundResource(R.drawable.icon_offbed);
+//                            break;
+//
+//                        case "请假":
+//                            onbedstatusImg.setBackgroundResource(R.drawable.icon_offduty);
+//                            break;
+//
+//                        case "异常":
+//                            onbedstatusImg.setBackgroundResource(R.drawable.icon_innormal);
+//                            break;
+//
+//                        default:
+//                            onbedstatusImg.setBackgroundResource(R.drawable.icon_offline);
+//                            break;
+//                    }
+//
+//
+//                }
+//
+//            });
+//        }
+//    }
 
-            currentHR = emRealTimeReport.getHR();
+    @Override
+    public void GetRealtimeData(Map<String, EMRealTimeReport> realtimeData) {
+        for(EMRealTimeReport emRealTimeReport: realtimeData.values()){
+
+            if ( BedUserCode.equals(emRealTimeReport.getBedUserCode())) {
+                currentHR = emRealTimeReport.getHR();
             avgHR = emRealTimeReport.getLastedAvgHR();
             onbedstatus = emRealTimeReport.getOnBedStatus();
 
@@ -320,9 +358,11 @@ public class FragmentHr extends Fragment implements View.OnClickListener, XmppMs
                 }
 
             });
+                System.out.print(BedUserCode + "实时数据===============\n");
+             break;
+             }
         }
     }
-
 
 
 

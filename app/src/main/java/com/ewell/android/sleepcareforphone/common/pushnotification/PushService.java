@@ -129,7 +129,7 @@ public class PushService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        log("Creating service");
+        log("Creating service============\n");
         mStartTime = System.currentTimeMillis();
 
         try {
@@ -167,7 +167,7 @@ public class PushService extends Service {
 
     @Override
     public void onDestroy() {
-        log("Service destroyed (started=" + mStarted + ")");
+        log("Service destroyed (started=" + mStarted + ")========\n");
 
         // Stop the services, if it has been started
         if (mStarted) {
@@ -189,7 +189,8 @@ public class PushService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        log("Service started with intent=" + intent);
+        log("========" +
+                "Service started with intent=" + intent);
 
         // Do an appropriate action based on the intent.
         if (intent.getAction().equals(ACTION_STOP) == true) {
@@ -434,44 +435,46 @@ public class PushService extends Service {
 
     // Display the topbar notification
     private void showNotification(String text) {
+//如果通知开关打开,则进行对应的消息提醒
+       if( getSharedPreferences("config", MODE_PRIVATE).getBoolean("notificationflag", true)) {
+           // Simply open the parent activity
+           //在执行了点击通知之后要跳转到指定的Activity的时候，可以设置以下方法来相应点击事件
+           PendingIntent pi;
+           if (getSharedPreferences("config", MODE_PRIVATE).getBoolean("isLogin", false)) {
+               pi = PendingIntent.getActivity(this, 0,
+                       new Intent(this, ShowAlarmActivity.class), 0);
+           } else {
+               pi = PendingIntent.getActivity(this, 0,
+                       new Intent(this, MainActivity.class), 0);
+           }
 
+           NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+           String title = "";
+           String content = "";
 
-        // Simply open the parent activity
-        //在执行了点击通知之后要跳转到指定的Activity的时候，可以设置以下方法来相应点击事件
-        PendingIntent pi;
-        if (getSharedPreferences("config", MODE_PRIVATE).getBoolean("isLogin", false)) {
-            pi = PendingIntent.getActivity(this, 0,
-                    new Intent(this, ShowAlarmActivity.class), 0);
-        } else {
-            pi = PendingIntent.getActivity(this, 0,
-                    new Intent(this, MainActivity.class), 0);
-        }
+           try {
+               JSONObject jsonObject = new JSONObject(text);
+               title = jsonObject.getString("Title");
+               content = jsonObject.getString("Content");
+           } catch (JSONException e) {
+               e.printStackTrace();
+           }
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        String title = "";
-        String content = "";
-
-        try {
-            JSONObject jsonObject = new JSONObject(text);
-            title = jsonObject.getString("Title");
-            content = jsonObject.getString("Content");
-        }catch(JSONException e){e.printStackTrace();}
-
-        mBuilder.setContentTitle(title)//设置通知栏标题
-                .setContentText(content)
-                .setContentIntent(pi) //设置通知栏点击意图
-                // .setNumber(10) //设置通知集合的数量
-                .setTicker("智能床通知提醒") //通知首次出现在通知栏，带上升动画效果的
-                .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
-                .setPriority(Notification.PRIORITY_DEFAULT) //设置该通知优先级
+           mBuilder.setContentTitle(title)//设置通知栏标题
+                   .setContentText(content)
+                   .setContentIntent(pi) //设置通知栏点击意图
+                   // .setNumber(10) //设置通知集合的数量
+                   .setTicker("智能床通知提醒") //通知首次出现在通知栏，带上升动画效果的
+                   .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
+                   .setPriority(Notification.PRIORITY_DEFAULT) //设置该通知优先级
 //  .setAutoCancel(true)//设置这个标志当用户单击面板就可以让通知将自动取消
-                .setOngoing(false)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
-                .setDefaults(Notification.DEFAULT_VIBRATE)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
-                //Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND 添加声音 // requires VIBRATE permission
-                .setSmallIcon(R.drawable.ic_notification);//设置通知小ICON
+                   .setOngoing(false)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
+                   .setDefaults(Notification.DEFAULT_VIBRATE)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
+                   //Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND 添加声音 // requires VIBRATE permission
+                   .setSmallIcon(R.drawable.ic_notification);//设置通知小ICON
 
-        mNotifMan.notify(NOTIF_CONNECTED, mBuilder.build());
-
+           mNotifMan.notify(NOTIF_CONNECTED, mBuilder.build());
+       }
     }
 
 

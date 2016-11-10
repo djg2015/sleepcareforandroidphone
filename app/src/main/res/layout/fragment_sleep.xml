@@ -101,6 +101,7 @@
             />
 
         <TextView
+            android:id="@+id/sleephour"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/centerblock"
@@ -118,69 +119,68 @@
 
         <TextView
             android:id="@+id/lightsleep"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/lightsleeptitle"
             android:layout_centerHorizontal="true"
-            android:text="00/00"
+            android:text="0时0分"
+            android:gravity="center"
             android:textColor="@color/green"
             android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/lightsleeptitle"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="浅睡"
+            android:gravity="center"
+            android:textColor="@color/darkgrey"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/deepsleeptitle"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/lightsleeptitle"
-            android:layout_marginRight="63dp"
-
             android:text="深睡"
+            android:gravity="center"
             android:textColor="@color/darkgrey"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/deepsleep"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/lightsleep"
-            android:layout_marginRight="50dp"
             android:layout_above="@id/deepsleeptitle"
-            android:text="00/00"
+            android:text="0时0分"
+            android:gravity="center"
             android:textColor="@color/blue"
             android:textSize="14sp" />
 
 
-        <TextView
-            android:id="@+id/lightsleeptitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_centerInParent="true"
-            android:text="浅睡"
-            android:textColor="@color/darkgrey"
-            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/awakesleep"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/lightsleep"
-            android:layout_marginLeft="50dp"
            android:layout_above="@+id/awaketitle"
-            android:text="00/00"
+            android:text="0时0分"
+            android:gravity="center"
             android:textColor="@color/lightgreen"
             android:textSize="14sp" />
 
 
         <TextView
             android:id="@+id/awaketitle"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:gravity="center"
             android:layout_toRightOf="@+id/lightsleeptitle"
-
-            android:layout_marginLeft="63dp"
             android:text="清醒"
             android:textColor="@color/darkgrey"
             android:textSize="12sp" />

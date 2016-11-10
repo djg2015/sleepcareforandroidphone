@@ -1,18 +1,22 @@
 package com.ewell.android.sleepcareforphone.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ewell.android.common.Grobal;
 import com.ewell.android.sleepcareforphone.R;
 import com.ewell.android.sleepcareforphone.ShowWeekReportBinder;
 import com.ewell.android.sleepcareforphone.common.fancychart.ChartData;
@@ -23,6 +27,8 @@ import com.ewell.android.sleepcareforphone.viewmodels.ShowWeekReportViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by lillix on 7/29/16.
@@ -41,12 +47,53 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
     private DatePickerFragment fragment;
 
 
+    private ArrayList<String> tempusercodelist = new ArrayList<String>();
+    private ArrayList<String> tempusernamelist = new ArrayList<String>();
+    //private String[] areas = new String[]{"张奶奶", "王奶奶", "王爷爷", "李爷爷", "123"};
+    private RadioOnClick radioOnClick = new RadioOnClick(0);
+    private ListView areaRadioListView;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         showweekreport = new ShowWeekReportViewModel();
         showweekreport.setParentactivity(this);
+
+
+        //
+        Map<String, String> tempmap = Grobal.getInitConfigModel().getUserCodeNameMap();
+// entrySet使用iterator遍历key和value
+        Iterator<Map.Entry<String, String>> it = tempmap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> entry = it.next();
+            tempusercodelist.add(entry.getKey());
+            tempusernamelist.add(entry.getValue());
+            //   System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+        }
+        int count = tempusercodelist.size();
+        if (count > 0) {
+            int i = 0;
+            String[] usernamelist = new String[count];
+            while (i < count) {
+                usernamelist[i] = tempusernamelist.get(i);
+                i++;
+            }
+
+
+//弹窗
+            AlertDialog ad = new AlertDialog.Builder(this)
+                    .setTitle("选择病人")
+                    .setSingleChoiceItems(usernamelist, radioOnClick.getIndex(), radioOnClick)
+                    .create();
+            areaRadioListView = ad.getListView();
+            ad.show();
+            int tempwidth = getResources().getDisplayMetrics().widthPixels;
+            ad.getWindow().setLayout(tempwidth - 50, 500);
+        }
+
+        //
         showweekreport.InitData();
 
 
@@ -272,4 +319,31 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
             Toast.makeText(this, "发送失败!请再试一次", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    class RadioOnClick implements DialogInterface.OnClickListener {
+        private int index;
+
+        public RadioOnClick(int index) {
+            this.index = index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void onClick(DialogInterface dialog, int whichButton) {
+            setIndex(whichButton);
+            showweekreport.setBedusername(tempusernamelist.get(index));
+           showweekreport.setBedusercode(tempusercodelist.get(index));
+            //   Toast.makeText(getActivity(), "您已经选择了： " + index + ":" + areas[index], Toast.LENGTH_SHORT).show();
+
+            dialog.dismiss();
+        }
+    }
+
 }

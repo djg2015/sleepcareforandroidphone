@@ -43,20 +43,6 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            >
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center_vertical|center_horizontal"
-
-                android:src="@drawable/icon_logo_1" />
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -189,7 +175,7 @@
                 android:layout_below="@+id/confirmnewpassword"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="45dp"
                 android:background="@drawable/icon_loginbtn"
                 android:onClick="@{modifyaccount.ConfirmCommand}"
                 android:text="@string/confirm"

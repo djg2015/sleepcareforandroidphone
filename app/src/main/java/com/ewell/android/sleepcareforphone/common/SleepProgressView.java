@@ -57,7 +57,7 @@ public class SleepProgressView extends View {
 
        // mTextPaint.setTextSize(48);
         canvas.drawText(score, mWidth / 2, mHeight / 2, mTextPaint);
-        canvas.drawText("小时/分", mWidth / 2, mHeight / 2+40, mSubtextPaint);
+        canvas.drawText("睡眠得分", mWidth / 2, mHeight / 2+40, mSubtextPaint);
 
 
         RectF rectBlackBg = new RectF(25, 25, mWidth - 25, mHeight -25);

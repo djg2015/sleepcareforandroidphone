@@ -29,6 +29,15 @@
                 android:background="@drawable/btn_back"
                 android:onClick="ClickClose" />
 
+            <ImageView
+                android:id="@+id/changepatient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+              android:layout_toRightOf="@+id/btnClose"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/btn_email" />
+
             <TextView
                 android:id="@+id/textdate"
                 android:layout_width="wrap_content"
@@ -42,20 +51,12 @@
             <Button
                 android:layout_width="16dp"
                 android:layout_height="10dp"
-                android:layout_centerVertical="true"
+             android:layout_marginTop="26dp"
                 android:layout_marginLeft="2dp"
                 android:layout_toRightOf="@+id/textdate"
                 android:background="@drawable/btn_downarrow" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
-                android:layout_toLeftOf="@+id/textdate"
-                android:text="@string/weekreport"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+
 
             <ImageView
                 android:id="@+id/sendemail"

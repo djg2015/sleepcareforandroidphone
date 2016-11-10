@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.ewell.android.bll.DataFactory;
 import com.ewell.android.common.Grobal;
@@ -16,7 +15,6 @@ import com.ewell.android.ibll.SleepcareforPhoneManage;
 import com.ewell.android.model.AlarmInfo;
 import com.ewell.android.model.AlarmList;
 import com.ewell.android.sleepcareforphone.R;
-import com.ewell.android.sleepcareforphone.common.pushnotification.PushService;
 
 import java.util.ArrayList;
 
@@ -75,21 +73,6 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
 
         clickHrBtn();
 
-        //开关远程通知
-        String deviceid = getSharedPreferences(PushService.TAG, MODE_PRIVATE).getString("deviceID","");
-        String loginname = Grobal.getInitConfigModel().getLoginUserName();
-        try {
-            if (getSharedPreferences("config", MODE_PRIVATE).getBoolean("notificationflag", true)) {
-                DataFactory.GetSleepcareforPhoneManage().OpenNotificationForAndroid(deviceid, loginname);
-                //PushService.actionStart(TabbarActivity.this);
-            } else {
-                DataFactory.GetSleepcareforPhoneManage().CloseNotificationForAndroid(deviceid, loginname);
-              //  PushService.actionStop(TabbarActivity.this);
-            }
-        }catch (EwellException ex) {
-
-            Toast.makeText(TabbarActivity.this,ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
-        }
 
         //"me"上的报警数字提醒
 //        badge = new BadgeView(this, meFl);
@@ -133,15 +116,10 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         rrFl = (FrameLayout) findViewById(R.id.layout_rr);
         hrFl = (FrameLayout) findViewById(R.id.layout_hr);
         sleepFl = (FrameLayout) findViewById(R.id.layout_sleep);
-//        meFl = (FrameLayout) findViewById(R.id.layout_me);
-
 
         rrIv = (ImageView) findViewById(R.id.image_rr);
         hrIv = (ImageView) findViewById(R.id.image_hr);
         sleepIv = (ImageView) findViewById(R.id.image_sleep);
-   //     meIv = (ImageView) findViewById(R.id.image_me);
-
-
 
     }
 
@@ -150,9 +128,6 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         rrFl.setOnClickListener(this);
         hrFl.setOnClickListener(this);
         sleepFl.setOnClickListener(this);
-     //   meFl.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -171,10 +146,6 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
                 clickSleepBtn();
                 break;
 
-//            case R.id.layout_me:
-//                clickMeBtn();
-//                break;
-
             default:
                 System.out.print("============================none");
                 break;
@@ -183,7 +154,6 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
 
     private void clickRrBtn() {
 
-        // fragmentRr = new FragmentRr();
         curUserCode = Grobal.getInitConfigModel().getCurUserCode();
         curUserName = Grobal.getInitConfigModel().getCurUserName();
         fragmentRr = FragmentRr.newInstance(curUserCode, curUserName);
@@ -204,14 +174,10 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         sleepFl.setSelected(false);
         sleepIv.setSelected(false);
 
-//        meFl.setSelected(false);
-//        meIv.setSelected(false);
     }
 
     private void clickHrBtn() {
 
-
-        //  fragmentAuth = new FragmentAuth();
         curUserCode = Grobal.getInitConfigModel().getCurUserCode();
         curUserName = Grobal.getInitConfigModel().getCurUserName();
         fragmentHr = FragmentHr.newInstance(curUserCode, curUserName);
@@ -233,13 +199,10 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         sleepFl.setSelected(false);
         sleepIv.setSelected(false);
 
-//        meFl.setSelected(false);
-//        meIv.setSelected(false);
     }
 
     private void clickSleepBtn() {
 
-        // fragmentSleep = new FragmentSleep();
         curUserCode = Grobal.getInitConfigModel().getCurUserCode();
         curUserName = Grobal.getInitConfigModel().getCurUserName();
         fragmentSleep = FragmentSleep.newInstance(curUserCode, curUserName);
@@ -260,36 +223,10 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
         sleepFl.setSelected(true);
         sleepIv.setSelected(true);
 
-//        meFl.setSelected(false);
-//        meIv.setSelected(false);
     }
 
 
-//    private void clickMeBtn() {
-//
-//        // fragmentMore = new FragmentMore();
-//        curUserCode = mSP.getString("curusercode", "");
-//        fragmentMe = FragmentMe.newInstance(curUserCode);
-//
-//        FragmentTransaction fragmentTransaction = this
-//                .getSupportFragmentManager().beginTransaction();
-//
-//        fragmentTransaction.replace(R.id.frame_content, fragmentMe);
-//
-//        fragmentTransaction.commit();
-//
-//        rrFl.setSelected(false);
-//        rrIv.setSelected(false);
-//
-//        hrFl.setSelected(false);
-//        hrIv.setSelected(false);
-//
-//        sleepFl.setSelected(false);
-//        sleepIv.setSelected(false);
-//
-//        meFl.setSelected(true);
-//        meIv.setSelected(true);
-//    }
+
 
     private void LoadUnhandledAlarms() {
         SleepcareforPhoneManage sleepcareforPhoneManage = DataFactory.GetSleepcareforPhoneManage();

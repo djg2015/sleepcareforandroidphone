@@ -16,12 +16,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ewell.android.bll.DataFactory;
 import com.ewell.android.common.GetRealtimeDataDelegate;
 import com.ewell.android.common.Grobal;
 import com.ewell.android.common.RealTimeHelper;
+import com.ewell.android.common.exception.EwellException;
 import com.ewell.android.model.EMRealTimeReport;
 import com.ewell.android.sleepcareforphone.R;
+import com.ewell.android.sleepcareforphone.common.pushnotification.PushService;
 import com.ewell.android.sleepcareforphone.common.widgets.SwipeMenu;
 import com.ewell.android.sleepcareforphone.common.widgets.SwipeMenuCreator;
 import com.ewell.android.sleepcareforphone.common.widgets.SwipeMenuItem;
@@ -44,10 +48,10 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
     private SwipeMenuListView mListView;
     private Context mContext = this;
     private SwipeMenuCreator creator ;
-
+private Boolean firstflag= true;
 
     private MyPatientsViewModel patients;
-    private List<Map<String, Object>> mHolderList;
+    private Map<String, Object> mHolderList;
 
     private Thread mThread = null;
 
@@ -66,7 +70,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
         public void run() {
             //run()在新的线程中运行
             while (mThread != null ) {
-mHandler.obtainMessage(1).sendToTarget();
+                   mHandler.obtainMessage(1).sendToTarget();
 
 
                 try {
@@ -91,16 +95,63 @@ mHandler.obtainMessage(1).sendToTarget();
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        this.finish();
+        mThread = null;
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        if(!firstflag) {
+            patients.InitData();
+            mAppList = patients.getList();
+            mAdapter.notifyDataSetChanged();
+        }
+
+        firstflag = false;
+        RealTimeHelper.GetInstance().SetDelegate("realtimedelegate",this);
+
+        if(mThread==null) {
+            mThread = new Thread(runnable);
+            mThread.start();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //开关远程通知
+        String deviceid = getSharedPreferences(PushService.TAG, MODE_PRIVATE).getString("deviceID","");
+        String loginname = Grobal.getInitConfigModel().getLoginUserName();
+        try {
+            if (getSharedPreferences("config", MODE_PRIVATE).getBoolean("notificationflag", true)) {
+                DataFactory.GetSleepcareforPhoneManage().OpenNotificationForAndroid(deviceid, loginname);
+                PushService.actionStart(mContext);
+            } else {
+                DataFactory.GetSleepcareforPhoneManage().CloseNotificationForAndroid(deviceid, loginname);
+                PushService.actionStop(mContext);
+            }
+        }catch (EwellException ex) {
+
+            Toast.makeText(mContext,ex.get_exceptionMsg(), Toast.LENGTH_SHORT).show();
+        }
+
+        //  初始化listview数据
         patients = new MyPatientsViewModel();
         patients.setParentactivity(this);
-        patients.InitData();
-        setContentView(R.layout.activity_mypatients);
 
-        mHolderList = new ArrayList<Map<String,Object>>();
+        setContentView(R.layout.activity_mypatients);
+        patients.InitData();
         mAppList = patients.getList();
 
+
+        mHolderList = new HashMap<String,Object>();
         mListView = (SwipeMenuListView) findViewById(R.id.patientlistView);
         mAdapter = new MyPatientsAdapter();
         mListView.setAdapter(mAdapter);
@@ -120,19 +171,24 @@ mHandler.obtainMessage(1).sendToTarget();
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public void onMenuItemClick(int position, SwipeMenu menu, int index) {
+                String deletecode = mAppList.get(position).get("bedusercode").toString();
                 //调用接口
-                Boolean flag =  patients.DeletePatient(position);
-                //本地list中删除
+                Boolean flag =  patients.DeletePatient(deletecode);
+
                 if (flag) {
+                    //更新bedusercodeList,UserCodeNameMap
+                    Map<String,String> tempmap = Grobal.getInitConfigModel().getUserCodeNameMap();
+                    ArrayList<String> templist =  Grobal.getInitConfigModel().getBedusercodeList();
+                    tempmap.remove(deletecode);
+                    templist.remove(deletecode);
+                    Grobal.getInitConfigModel().setUserCodeNameMap(tempmap);
+                    Grobal.getInitConfigModel().setBedusercodeList(templist);
+
+                    //本地list中删除
+                    mHolderList.remove(deletecode);
                     mAppList.remove(position);
                     mAdapter.notifyDataSetChanged();
                 }
-                else{
-
-
-                }
-
-
             }
         });
 
@@ -149,16 +205,6 @@ mHandler.obtainMessage(1).sendToTarget();
                 // swipe end
             }
         });
-
-//        // test item long click
-//        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getApplicationContext(), position + " long click", Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -168,15 +214,13 @@ mHandler.obtainMessage(1).sendToTarget();
                 String bedusername = mAppList.get(arg2).get("bedusername").toString();
                 Grobal.getInitConfigModel().setCurUserCode(bedusercode);
                 Grobal.getInitConfigModel().setCurUserName(bedusername);
+
                 //跳转下一页面
                 Intent intent = new Intent(mContext, TabbarActivity.class);
                 mContext.startActivity(intent);
             }
         });
 
-        RealTimeHelper.GetInstance().SetDelegate("mypatients",this);
-           mThread = new Thread(runnable);
-           mThread.start();
     }
 
 
@@ -218,10 +262,6 @@ mHandler.obtainMessage(1).sendToTarget();
                 layout = new SwipeMenuLayout(convertView, menuView, listView.getCloseInterpolator(), listView.getOpenInterpolator());
                 layout.setPosition(position);
                 layout.setTag(holder);
-
-                Map<String, Object> tempHolder = new HashMap<String, Object>();
-                tempHolder.put(item.get("bedusercode").toString(),holder);
-                mHolderList.add(tempHolder);
             } else {
                 layout = (SwipeMenuLayout) convertView;
                 layout.closeMenu();
@@ -229,9 +269,9 @@ mHandler.obtainMessage(1).sendToTarget();
                 holder = (PatientViewHolder)layout.getTag();
             }
 
+            mHolderList.put(item.get("bedusercode").toString(),holder);
 
-
-
+            holder.bedusercode = item.get("bedusercode").toString();
             String sex = item.get("sex").toString();
             if (sex.equals("0")) {
                 holder.sex.setSelected(false);
@@ -247,12 +287,11 @@ mHandler.obtainMessage(1).sendToTarget();
 
         class PatientViewHolder {
 
-
+            String bedusercode;
             Button sex;
             TextView roomnum;
             TextView bednum;
             TextView name;
-
             TextView hr;
             TextView rr;
             TextView status;
@@ -295,40 +334,32 @@ mHandler.obtainMessage(1).sendToTarget();
     }
 
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        this.finish();
-        mThread = null;
-
-    }
-
-
     @Override
     public void GetRealtimeData(Map<String, EMRealTimeReport> realtimeData) {
          for(EMRealTimeReport emRealTimeReport: realtimeData.values()){
 
-        String currentBedusercode =  emRealTimeReport.getBedUserCode();
+             String currentBedusercode =  emRealTimeReport.getBedUserCode();
+             if( mHolderList.get(currentBedusercode)!=null) {
+             MyPatientsAdapter.PatientViewHolder itemHolder = (MyPatientsAdapter.PatientViewHolder) mHolderList.get(currentBedusercode);
 
-        for(int i=0;i< mHolderList.size();i++) {
-            if (mHolderList.get(i).get(currentBedusercode) != null) {
-                MyPatientsAdapter.PatientViewHolder itemHolder = (MyPatientsAdapter.PatientViewHolder) mHolderList.get(i).get(currentBedusercode);
-                itemHolder.hr.setText(emRealTimeReport.getHR());
-                itemHolder.rr.setText(emRealTimeReport.getRR());
-                itemHolder.status.setText(emRealTimeReport.getOnBedStatus());
-                //  mAdapter.notifyDataSetChanged();
-                   System.out.print(currentBedusercode+"===============\n");
-                break;
-            }
+                 itemHolder.hr.setText(emRealTimeReport.getHR());
+                 itemHolder.rr.setText(emRealTimeReport.getRR());
+                 itemHolder.status.setText(emRealTimeReport.getOnBedStatus());
+                // System.out.print(currentBedusercode + "实时数据===============\n");
+             }
         }
-        }
+        // mAdapter.notifyDataSetChanged();
     }
 
     public void ClickMe(View view) {
         Intent intent = new Intent(mContext, MeActivity.class);
         mContext.startActivity(intent);
 
+    }
+
+    public void ClickAddPatient(View v){
+
+        Intent intent = new Intent(mContext, AddPatientActivity.class);
+        mContext.startActivity(intent);
     }
 }

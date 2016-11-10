@@ -42,7 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:background="@drawable/icon_add"
-            android:onClick="" />
+            android:onClick="ClickAddPatient" />
 
     </RelativeLayout>
 
@@ -52,8 +52,8 @@
         android:layout_height="match_parent"
         android:background="@color/backgroundandseperator"
         android:dividerHeight="12dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:paddingTop="10dp" />
 
     </LinearLayout>
