@@ -55,6 +55,7 @@ private static final String tag_weekreport="<WeekSleep";
                 return ServerResult.XmlToMessage(subjectXml, bodyXml);
             }
             else if(bodyXml.indexOf(tag_alarminfoList) == 0){
+
                 return AlarmList.XmlToMessage(subjectXml, bodyXml);
             }
             else if(bodyXml.indexOf(tag_weekreport) == 0){

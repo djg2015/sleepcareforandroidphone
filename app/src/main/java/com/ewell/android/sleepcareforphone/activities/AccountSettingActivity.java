@@ -90,7 +90,7 @@ if(getSharedPreferences("config", MODE_PRIVATE).getBoolean("notificationflag",tr
     }
 
     public void ClickLogout(View view) {
-        Grobal.getXmppManager().SetXmppMsgDelegate(null);
+        Grobal.getXmppManager().SetXmppRealtimeDelegate(null);
         editor.putBoolean("isLogin",false);
         editor.commit();
 

@@ -35,10 +35,12 @@ public class EMServiceException extends  BaseMessage {
         Reader returnQuote = new StringReader(bodyXml);
         Document doc = builder.build(returnQuote);
         Element user = doc.getRootElement();
+
+       System.out.print(bodyXml+"========== error\n");
 //        Element segment= user.getChild("LoginName");
 //        String email=book.getAttributeValue(“email”);
-        result.code=user.getChildTextTrim("code");
-        result.message =user.getChildTextTrim("message");
+        result.code=user.getAttributeValue("code");
+        result.message =user.getAttributeValue("message");
         returnQuote.close();
         return result;
     }

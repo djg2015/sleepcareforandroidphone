@@ -39,11 +39,13 @@ public class EMLoginUser extends BaseMessage {
         Reader returnQuote = new StringReader(bodyXml);
         Document doc = builder.build(returnQuote);
         Element root = doc.getRootElement();
-//        Element segment= user.getChild("LoginName");
-//        String email=book.getAttributeValue("email");
+
+
         result.loginName=root.getChildTextTrim("LoginName");
         result.mainCode =root.getChildTextTrim("MainCode");
         result.loginPassWord =root.getChildTextTrim("LoginPassword");
+       // System.out.print(result.mainCode +"   loginuser============\n");
+
         returnQuote.close();
         return result;
     }

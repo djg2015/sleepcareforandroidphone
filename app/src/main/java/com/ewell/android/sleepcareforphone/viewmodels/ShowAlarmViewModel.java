@@ -23,13 +23,18 @@ public class ShowAlarmViewModel extends BaseViewModel {
     public void setParentactivity(ShowAlarmActivity activity){parentactivity = activity;}
 
     private List<Map<String,Object>> listItems=new ArrayList<Map<String,Object>>();
-
     public List<Map<String, Object>> getList() {
         return listItems;
     }
 
+    private String CurrentBedUserCode="";
+    public void setCurrentBedUserCode(String code){CurrentBedUserCode = code;}
+
     private SleepcareforPhoneManage sleepcareforPhoneManage;
     private  String username="";
+    private String maincode ="";
+
+
 
     public void InitData() {
         sleepcareforPhoneManage = DataFactory.GetSleepcareforPhoneManage();
@@ -37,67 +42,68 @@ public class ShowAlarmViewModel extends BaseViewModel {
         try {
             if (Grobal.getXmppManager().Connect()) {
                 username = Grobal.getInitConfigModel().getLoginUserName();
-
-                AlarmList tempAlarmlist = sleepcareforPhoneManage.GetAlarmByLoginUser("",username,"","","","001","","");
-
+                maincode = Grobal.getInitConfigModel().getMaincode();
+                AlarmList tempAlarmlist = sleepcareforPhoneManage.GetAlarmByLoginUser(maincode,username,"","","","001","","");
                 ArrayList<AlarmInfo> alarminfoList = tempAlarmlist.getAlarmInfoList();
-                for(int i=0;i<alarminfoList.size();i++){
 
-                    Map<String, Object> map = new HashMap<String,Object>();
-                    map.put("alarmcode", alarminfoList.get(i).getAlarmCode());
-                    map.put("timeanddate",alarminfoList.get(i).getAlarmTime());
-                    map.put("username", alarminfoList.get(i).getUserName());
-                    map.put("sex", alarminfoList.get(i).getUserSex());
-                    map.put("bednumber", alarminfoList.get(i).getBedNumber());
-                    map.put("alarmcontent", alarminfoList.get(i).getSchemaContent());
-                    String type="";
-                    switch(alarminfoList.get(i).getSchemaCode()){
-                        case "ALM_TEMPERATURE":
-                            type = "体温";
-                            break;
-                        case "ALM_HEARTBEAT":
-                            type = "心率";
-                            break;
-                        case "ALM_BREATH":
-                            type = "呼吸";
-                            break;
-                        case "ALM_BEDSTATUS":
-                            type = "在离床";
-                            break;
-                        case  "ALM_FALLINGOUTOFBED":
-                            type = "坠床风险";
-                            break;
-                        case  "ALM_BEDSORE":
-                            type = "褥疮风险";
-                            break;
-                        case  "ALM_CALL":
-                            type = "呼叫";
-                            break;
-                        default:
-                            type = "";
-                            break;
+                System.out.print(alarminfoList+"  获取服务器未处理报警============\n");
+                Map<String,String> tempuserequipmentMap =  Grobal.getInitConfigModel().getUserCodeEquipmentMap();
 
-                    }
-                    map.put("alarmtype",type);
+                for(int i=0;i<alarminfoList.size();i++) {
 
+                    if (CurrentBedUserCode.equals("") || alarminfoList.get(i).getUserCode().equals(CurrentBedUserCode)) {
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("alarmcode", alarminfoList.get(i).getAlarmCode());
+                        map.put("timeanddate", alarminfoList.get(i).getAlarmTime());
+                        map.put("username", alarminfoList.get(i).getUserName());
+                        map.put("sex", alarminfoList.get(i).getUserSex());
+                        map.put("bednumber", alarminfoList.get(i).getBedNumber());
+                        map.put("alarmcontent", alarminfoList.get(i).getSchemaContent());
+                        String type = "";
+                        switch (alarminfoList.get(i).getSchemaCode()) {
+                            case "ALM_TEMPERATURE":
+                                type = "体温";
+                                break;
+                            case "ALM_HEARTBEAT":
+                                type = "心率";
+                                break;
+                            case "ALM_BREATH":
+                                type = "呼吸";
+                                break;
+                            case "ALM_BEDSTATUS":
+                                type = "在离床";
+                                break;
+                            case "ALM_FALLINGOUTOFBED":
+                                type = "坠床风险";
+                                break;
+                            case "ALM_BEDSORE":
+                                type = "褥疮风险";
+                                break;
+                            case "ALM_CALL":
+                                type = "呼叫";
+                                break;
+                            default:
+                                type = "";
+                                break;
 
-                    //EQUIPEMENTID
-                    String tempusercode=alarminfoList.get(i).getUserCode();
-                    String tempid = "";
+                        }
+                        map.put("alarmtype", type);
+                        //EQUIPEMENTID
+                        String tempusercode = alarminfoList.get(i).getUserCode();
+                        String tempid = "";
+                        for (String key :
+                                tempuserequipmentMap.keySet()) {
+                            if (key.equals(tempusercode)) {
+                                tempid = tempuserequipmentMap.get(key);
 
-//                    for(int ii = 0;i<tempequipmentinfoList.size();ii++){
-//                        if (tempequipmentinfoList.get(ii).getBedUserCode().equals(tempusercode)){
-//                            tempid = tempequipmentinfoList.get(ii).getEquipmentID();
-//                            break;
-//                        }
-//
-//                    }
-                    map.put("equipmentid",tempid);
-
-
-                    this.listItems.add(map);
+                                System.out.print(tempid + "  ============\n");
+                                break;
+                            }
+                        }
+                        map.put("equipmentid", tempid);
+                        this.listItems.add(map);
+                    }//end for
                 }
-                System.out.print(listItems);
             }
             else{
                 Toast.makeText(parentactivity,"无法连接服务器!", Toast.LENGTH_SHORT).show();
@@ -118,21 +124,8 @@ public class ShowAlarmViewModel extends BaseViewModel {
         try {
             if (Grobal.getXmppManager().Connect()) {
                 String id = listItems.get(position).get("alarmcode").toString();
-
                  sleepcareforPhoneManage.TransferAlarmMessage(id,"002");
-
-                    //从unhandledcodes里删除
-ArrayList<String> tempalarmcodes=Grobal.getInitConfigModel().getUnhandledAlarmcodeList();
-                    for(int i=0;i<tempalarmcodes.size();i++){
-                        if(tempalarmcodes.get(i).equals(id)){
-                            tempalarmcodes.remove(i);
-                            Grobal.getInitConfigModel().setUnhandledAlarmcodeList(tempalarmcodes);
-                            break;
-                        }
-                    }
                     flag = true;
-
-
             }
             else{
                 Toast.makeText(parentactivity,"无法连接服务器!", Toast.LENGTH_SHORT).show();

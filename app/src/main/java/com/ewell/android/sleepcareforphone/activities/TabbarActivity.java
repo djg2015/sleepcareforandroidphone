@@ -7,13 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.ewell.android.bll.DataFactory;
 import com.ewell.android.common.Grobal;
-import com.ewell.android.common.exception.EwellException;
-import com.ewell.android.common.xmpp.XmppMsgDelegate;
-import com.ewell.android.ibll.SleepcareforPhoneManage;
-import com.ewell.android.model.AlarmInfo;
-import com.ewell.android.model.AlarmList;
 import com.ewell.android.sleepcareforphone.R;
 
 import java.util.ArrayList;
@@ -21,7 +15,8 @@ import java.util.ArrayList;
 /**
  * Created by lillix on 7/29/16.
  */
-public class TabbarActivity extends FragmentActivity implements View.OnClickListener, XmppMsgDelegate<AlarmList> {
+public class TabbarActivity extends FragmentActivity implements View.OnClickListener{
+        //, XmppMsgDelegate<AlarmList> {
     private FragmentRr fragmentRr;
     private FragmentHr fragmentHr;
     private FragmentSleep fragmentSleep;
@@ -79,7 +74,7 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
 //        badge.setTextSize(12);
 //        badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         //从服务器获取当前账户下未处理的报警数
-        LoadUnhandledAlarms();
+
 
 
         //新线程,每3秒刷新报警数
@@ -228,78 +223,6 @@ public class TabbarActivity extends FragmentActivity implements View.OnClickList
 
 
 
-    private void LoadUnhandledAlarms() {
-        SleepcareforPhoneManage sleepcareforPhoneManage = DataFactory.GetSleepcareforPhoneManage();
-
-        try {
-            if (Grobal.getXmppManager().Connect()) {
-                String username = Grobal.getInitConfigModel().getLoginUserName();
-
-                AlarmList tempAlarmlist = sleepcareforPhoneManage.GetAlarmByLoginUser("",username, "", "", "", "001", "", "");
-                ArrayList<AlarmInfo> alarminfoList = tempAlarmlist.getAlarmInfoList();
-                for (int i = 0; i < alarminfoList.size(); i++) {
-                    unhandledCodes.add(alarminfoList.get(i).getAlarmCode());
-
-                }
-                Grobal.getInitConfigModel().setUnhandledAlarmcodeList(unhandledCodes);
-            }
-        } catch (EwellException ex) {
-            //做消息弹窗提醒
-        } catch (Exception e) {
-            //做消息弹窗提醒
-
-        }
-
-    }
-
-    @Override
-    public void ReciveMessage(AlarmList alarmlist) {
-        //通过bedusercodelist过滤为需要的报警信息
-        ArrayList<String> bedusercodelist = Grobal.getInitConfigModel().getBedusercodeList();
-        if (bedusercodelist.size() > 0) {
-            ArrayList<AlarmInfo> alarminfolist = alarmlist.getAlarmInfoList();
-            for (int i = 0; i < alarminfolist.size(); i++) {
-                for (String tempbedusercode : bedusercodelist) {
-                    //过滤出当前关注的bedusercode的报警信息
-                    String tempalarmcode = alarminfolist.get(i).getAlarmCode();
-                    if (tempbedusercode.equals(alarminfolist.get(i).getUserCode())) {
-                        //若unhandledcodes里存在,则通过handleflag检查是否需要从列表里删除
-                        if (isCodeExist(tempalarmcode)) {
-                            if (alarminfolist.get(i).getHandleFlag().equals("1") || alarminfolist.get(i).getHandleFlag().equals("2")) {
-                                for (int j = 0; j < unhandledCodes.size(); j++) {
-                                    if (unhandledCodes.get(j).equals(tempalarmcode)) {
-                                        unhandledCodes.remove(j);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        //若不存在,则加入到unhandledcodes列表中
-                        else {
-                            if (alarminfolist.get(i).getHandleFlag().equals("0")) {
-                                unhandledCodes.add(tempalarmcode);
-                            }
-                        }
-                        Grobal.getInitConfigModel().setUnhandledAlarmcodeList(unhandledCodes);
-                        break;
-                    }
-                }
-            }
-        }
-
-    }
-
-    public boolean isCodeExist(String code) {
-        if (unhandledCodes.size() > 0) {
-            for (String tempcode : unhandledCodes) {
-                if (tempcode.equals(code)) {
-                    return true;
-                }
-
-            }
-        }
-        return false;
-    }
 
 
 }

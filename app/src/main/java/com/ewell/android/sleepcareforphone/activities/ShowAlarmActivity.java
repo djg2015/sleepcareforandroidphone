@@ -56,13 +56,19 @@ public class ShowAlarmActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getIntent().getExtras();
+        String currentusercode = bundle.getString("currentusercode","");
+        System.out.print(currentusercode+" 当前查看报警信息的病人编号=======\n");
 
         alarms = new ShowAlarmViewModel();
         alarms.setParentactivity(this);
-        alarms.InitData();
+        alarms.setCurrentBedUserCode(currentusercode);
         setContentView(R.layout.activity_showalarm);
 
+        alarms.InitData();
+
         mAppList = alarms.getList();
+
 
         mListView = (SwipeMenuListView) findViewById(R.id.alarmlistView);
         mAdapter = new AppAdapter();
@@ -95,8 +101,6 @@ public class ShowAlarmActivity extends Activity {
 
 
                 }
-
-
             }
         });
 

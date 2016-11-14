@@ -27,7 +27,7 @@ public class MeActivity extends Activity implements View.OnClickListener{
         String accountname = Grobal.getInitConfigModel().getLoginUserName();
         txtMyself.setText(accountname);
 
-txtAlarms = (TextView)findViewById(R.id.myalarms);
+        txtAlarms = (TextView)findViewById(R.id.myalarms);
         txtAlarms.setOnClickListener(this);
         txtWeekreport = (TextView)findViewById(R.id.weekreport);
         txtWeekreport.setOnClickListener(this);
@@ -59,6 +59,9 @@ txtAlarms = (TextView)findViewById(R.id.myalarms);
     public void onClickAlarm(){
         //  Toast.makeText(getActivity(), "点击了报警信息", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, ShowAlarmActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("currentusercode", "");
+        intent.putExtras(bundle);
        this.startActivity(intent);
     }
 

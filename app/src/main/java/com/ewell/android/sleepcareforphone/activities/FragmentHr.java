@@ -1,8 +1,11 @@
 package com.ewell.android.sleepcareforphone.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import com.ewell.android.common.GetRealtimeDataDelegate;
 import com.ewell.android.common.RealTimeHelper;
 import com.ewell.android.model.EMRealTimeReport;
 import com.ewell.android.sleepcareforphone.R;
+import com.ewell.android.sleepcareforphone.common.AlarmHelper;
 import com.ewell.android.sleepcareforphone.common.ProgressView;
 import com.ewell.android.sleepcareforphone.common.fancychart.ChartData;
 import com.ewell.android.sleepcareforphone.common.fancychart.FancyChart;
@@ -33,9 +37,7 @@ public class FragmentHr extends Fragment implements View.OnClickListener, GetRea
     private String BedUserName = "";
 
     private TextView patientname;
-
     private ProgressView mProgressView;
-
     private FancyChart chart;
 
     private TextView button1;
@@ -44,25 +46,52 @@ public class FragmentHr extends Fragment implements View.OnClickListener, GetRea
     private int button_select = Color.parseColor("#56a3fd");
     private int button_default = Color.parseColor("#929292");
 
-
     private SharedPreferences sp;
     // 获取到一个参数文件的编辑器。
     private SharedPreferences.Editor editor;
-
 
     private HRViewModel hrViewModel;
     private int SelectedIndex = 1;
 
     private String currentHR;
     private String avgHR;
-
-
     private String onbedstatus = "";
     private ImageView onbedstatusImg;
     private ImageView alarmImg;
 
-
     private Button back;
+
+    private Thread mThread = null;
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {//此方法在ui线程运行
+            switch (msg.what) {
+                case 2:
+                   // System.out.print("hr=========\n");
+                    if(AlarmHelper.GetInstance().getUnhandledAlarm().values().contains(BedUserCode)){
+                        alarmImg.setBackgroundResource(R.drawable.img_alarm);
+                    }
+                    else{
+                        alarmImg.setBackgroundResource(R.drawable.img_noalarm);
+                    }
+                    break;
+            }
+        }
+    };
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            //run()在新的线程中运行
+            while (mThread != null ) {
+                mHandler.obtainMessage(2).sendToTarget();
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     //从父activty传参
     public static FragmentHr newInstance(String bedusercode, String bedusername) {
@@ -72,6 +101,24 @@ public class FragmentHr extends Fragment implements View.OnClickListener, GetRea
         args.putString("bedusername", bedusername);
         fragmentHr.setArguments(args);
         return fragmentHr;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mThread = null;
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        if(mThread==null) {
+            mThread = new Thread(runnable);
+            mThread.start();
+        }
     }
 
 
@@ -94,16 +141,27 @@ public class FragmentHr extends Fragment implements View.OnClickListener, GetRea
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_hr, container, false);
 
-//change patient button
+         //change patient button
 
         patientname = (TextView) v.findViewById(R.id.texttitle);
         patientname.setOnClickListener(this);
-            patientname.setText(BedUserName);
+        patientname.setText(BedUserName);
 
 
         onbedstatusImg = (ImageView) v.findViewById(R.id.onbedstatusimg);
-        alarmImg = (ImageView) v.findViewById(R.id.alarmimg);
 
+
+        alarmImg = (ImageView) v.findViewById(R.id.alarmimg);
+        alarmImg.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), ShowAlarmActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("currentusercode", BedUserCode);
+        intent.putExtras(bundle);
+        getActivity().startActivity(intent);
+    }
+});
 
 
         //hr circle
@@ -323,13 +381,13 @@ public class FragmentHr extends Fragment implements View.OnClickListener, GetRea
                         int score = Integer.parseInt(currentHR);
                         mProgressView.setCurrentCount(score);
                         mProgressView.setScore(score);
-                        if (onbedstatus.equals("在床")) {
-                            if (score > 80 || score < 20) {
-                                alarmImg.setBackgroundResource(R.drawable.img_alarm);
-                            } else {
-                                alarmImg.setBackgroundResource(R.drawable.img_noalarm);
-                            }
-                        }
+//                        if (onbedstatus.equals("在床")) {
+//                            if (score > 80 || score < 20) {
+//                                alarmImg.setBackgroundResource(R.drawable.img_alarm);
+//                            } else {
+//                                alarmImg.setBackgroundResource(R.drawable.img_noalarm);
+//                            }
+//                        }
                     }
 
 

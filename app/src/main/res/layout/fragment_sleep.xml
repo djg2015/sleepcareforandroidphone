@@ -31,7 +31,14 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-
+        <ImageView
+            android:id="@+id/alarmimg"
+            android:layout_width="23dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/img_noalarm" />
 
     </RelativeLayout>
 

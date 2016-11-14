@@ -40,7 +40,8 @@ public class MyPatientsViewModel extends BaseViewModel {
         sleepcareforPhoneManage = DataFactory.GetSleepcareforPhoneManage();
         username = Grobal.getInitConfigModel().getLoginUserName();
         maincode = Grobal.getInitConfigModel().getMaincode();
-        this.listItems =new ArrayList<Map<String,Object>>();
+        this.listItems = new ArrayList<Map<String,Object>>();
+
         try {
             if (Grobal.getXmppManager().Connect()) {
 
@@ -48,6 +49,7 @@ public class MyPatientsViewModel extends BaseViewModel {
                 ArrayList<BedUserInfo> beduserinfoList = tempBeduserlist.getBeduserinfoInfoList();
                 ArrayList<String> _bedusercodelist = new ArrayList<String>();
                 Map<String, String> namecodemap = new HashMap<String, String>();
+                Map<String,String> userequipmentmap = new HashMap<String,String>();
 
                 for(int i=0;i<beduserinfoList.size();i++) {
                     Map<String, Object> map = new HashMap<String, Object>();
@@ -64,9 +66,12 @@ public class MyPatientsViewModel extends BaseViewModel {
                     this.listItems.add(map);
                     _bedusercodelist.add(beduserinfoList.get(i).getBedUserCode());
                     namecodemap.put(beduserinfoList.get(i).getBedUserCode(),beduserinfoList.get(i).getBedUserName());
+                    userequipmentmap.put(beduserinfoList.get(i).getBedUserCode(),beduserinfoList.get(i).getEquipmentID());
                 }
                 Grobal.getInitConfigModel().setBedusercodeList(_bedusercodelist);
                 Grobal.getInitConfigModel().setUserCodeNameMap(namecodemap);
+                Grobal.getInitConfigModel().setUserCodeEquipmentMap(userequipmentmap);
+               // System.out.print(userequipmentmap+"病人对应设备编号===========\n");
             }
             else{
                 Toast.makeText(parentactivity,"无法连接服务器!", Toast.LENGTH_SHORT).show();

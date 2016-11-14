@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,19 +44,15 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Get
     private static TextView txtdate;
     private ImageView onbedstatusimg;
     private String onbedstatus = "";
-
     private TextView patientname;
 
     private static TextView lightsleeptxt;
     private static TextView deepsleeptxt;
     private static TextView awakesleeptxt;
-
     private static TextView sleephourtxt;
 
     private DatePickerFragment fragment;
-
     private static SleepProgressView mSleepProgressView;
-
     private static FancyChart chart;
 
     private SharedPreferences sp;
@@ -63,11 +60,9 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Get
     private SharedPreferences.Editor editor;
 
     private String reportDate = "";
-
     private static SleepViewModel sleepViewModel;
-
     private Button back;
-
+    private ImageView alarmImg;
 
     //从父activty传参
     public static FragmentSleep newInstance(String bedusercode, String bedusername) {
@@ -122,6 +117,18 @@ public class FragmentSleep extends Fragment implements View.OnClickListener, Get
         txtdate.setOnClickListener(this);
 
         onbedstatusimg = (ImageView) v.findViewById(R.id.onbedstatusimg);
+
+        alarmImg = (ImageView) v.findViewById(R.id.alarmimg);
+        alarmImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ShowAlarmActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("currentusercode", BedUserCode);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            }
+        });
 
 
         lightsleeptxt = (TextView) v.findViewById(R.id.lightsleep);

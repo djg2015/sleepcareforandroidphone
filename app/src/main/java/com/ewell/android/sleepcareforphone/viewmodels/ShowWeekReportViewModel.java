@@ -23,14 +23,14 @@ import java.util.GregorianCalendar;
  * Created by lillix on 7/29/16.
  */
 public class ShowWeekReportViewModel extends BaseViewModel {
-private ShowWeekReportActivity parentactivity;
+    private ShowWeekReportActivity parentactivity;
     public void setParentactivity(ShowWeekReportActivity activity){parentactivity = activity;}
 
     private String bedusercode = "";
     public String getBedusercode() {
         return bedusercode;
     }
-public void setBedusercode(String usercode){bedusercode = usercode;}
+    public void setBedusercode(String usercode){bedusercode = usercode;}
 
 
     private String bedusername = "";
@@ -363,20 +363,13 @@ public void setBedusercode(String usercode){bedusercode = usercode;}
         date = calendar.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         this.reportDate = formatter.format(date);
-
-
-        // 弹窗选择病人
-
-
-        //初始化数据
-        RefreshWeekreport(reportDate);
     }
 
 
     public void RefreshWeekreport(String reportdate) {
         try {
             if(bedusercode.equals("")){
-               //所有数据置空
+                //所有数据置空
                 setTitleDate(reportDate);
                 setWeekMaxHR("");
                 setWeekMinHR("");

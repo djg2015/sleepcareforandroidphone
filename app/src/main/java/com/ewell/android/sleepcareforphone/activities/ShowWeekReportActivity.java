@@ -38,6 +38,7 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
 
     private static TextView TextTitleDate;
     private ImageView ImgSendEmail;
+    private ImageView ImgChangePatient;
 
     private static FancyChart hrrrchart;
     private static FancyChart leavebedchart;
@@ -52,7 +53,7 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
     //private String[] areas = new String[]{"张奶奶", "王奶奶", "王爷爷", "李爷爷", "123"};
     private RadioOnClick radioOnClick = new RadioOnClick(0);
     private ListView areaRadioListView;
-
+    private String[] usernamelist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,8 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
         showweekreport.setParentactivity(this);
 
 
-        //
         Map<String, String> tempmap = Grobal.getInitConfigModel().getUserCodeNameMap();
-// entrySet使用iterator遍历key和value
+        // entrySet使用iterator遍历key和value
         Iterator<Map.Entry<String, String>> it = tempmap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, String> entry = it.next();
@@ -75,22 +75,15 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
         int count = tempusercodelist.size();
         if (count > 0) {
             int i = 0;
-            String[] usernamelist = new String[count];
+            usernamelist = new String[count];
             while (i < count) {
                 usernamelist[i] = tempusernamelist.get(i);
                 i++;
             }
 
 
-//弹窗
-            AlertDialog ad = new AlertDialog.Builder(this)
-                    .setTitle("选择病人")
-                    .setSingleChoiceItems(usernamelist, radioOnClick.getIndex(), radioOnClick)
-                    .create();
-            areaRadioListView = ad.getListView();
-            ad.show();
-            int tempwidth = getResources().getDisplayMetrics().widthPixels;
-            ad.getWindow().setLayout(tempwidth - 50, 500);
+            //弹窗选择病人
+            ChangePatient();
         }
 
         //
@@ -113,7 +106,7 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
             @Override
             public void onClick(View v) {
                 if(showweekreport.getBedusercode().equals("")){
-
+                    Toast.makeText(ShowWeekReportActivity.this, "请先选择病人", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     showLoginDialog();
@@ -122,6 +115,14 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
             }
         });
 
+
+        ImgChangePatient = (ImageView)findViewById(R.id.changepatient);
+        ImgChangePatient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangePatient();
+            }
+        });
 
         hrrrchart = (FancyChart) findViewById(R.id.my_hrrrchart);
         hrrrchart.setOnPointClickListener(new FancyChartPointListener() {
@@ -236,6 +237,19 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
 
     }
 
+    //-----------------------选择病人-----------
+    public void ChangePatient(){
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setTitle("选择病人")
+                .setSingleChoiceItems(usernamelist, radioOnClick.getIndex(), radioOnClick)
+                .create();
+        areaRadioListView = ad.getListView();
+        ad.show();
+        int tempwidth = getResources().getDisplayMetrics().widthPixels;
+        ad.getWindow().setLayout(tempwidth - 50, 500);
+
+    }
+
     //----------------------选择日期--------------------------
     private void showDatePickerFragemnt() {
 
@@ -282,9 +296,7 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
             }
 
 
-            ShowHrrrChart();
-            ShowLeavebedChart();
-            ShowSleepChart();
+            Refresh();
 
         }
 
@@ -299,6 +311,12 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
 
     }
 
+    public static void Refresh(){
+        ShowHrrrChart();
+        ShowLeavebedChart();
+        ShowSleepChart();
+
+    }
 
     public void showLoginDialog()
     {
@@ -310,9 +328,9 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
     @Override
     public void onInputComplete(String emailaddress)
     {
-       // Toast.makeText(this, "邮箱：" + address, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "邮箱：" + address, Toast.LENGTH_SHORT).show();
 
-       Boolean flag = showweekreport.ClickSendEmail(emailaddress);
+        Boolean flag = showweekreport.ClickSendEmail(emailaddress);
         if(flag){
             Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
         }else{
@@ -339,8 +357,10 @@ public class ShowWeekReportActivity extends Activity implements SendEmailFragmen
         public void onClick(DialogInterface dialog, int whichButton) {
             setIndex(whichButton);
             showweekreport.setBedusername(tempusernamelist.get(index));
-           showweekreport.setBedusercode(tempusercodelist.get(index));
+            showweekreport.setBedusercode(tempusercodelist.get(index));
             //   Toast.makeText(getActivity(), "您已经选择了： " + index + ":" + areas[index], Toast.LENGTH_SHORT).show();
+            showweekreport.RefreshWeekreport(showweekreport.getReportDate());
+            Refresh();
 
             dialog.dismiss();
         }

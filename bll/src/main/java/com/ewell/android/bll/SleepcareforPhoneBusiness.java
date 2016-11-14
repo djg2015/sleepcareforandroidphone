@@ -191,7 +191,6 @@ public SleepQualityReport GetSleepQualityofBedUser(String bedUserCode, String re
 
             EMProperties param = new EMProperties("GetAlarmByLoginUser", "sleepcareforpad");
             param.AddKeyValue("mainCode", mainCode);
-
             param.AddKeyValue("loginName", loginName);
             param.AddKeyValue("schemaCode", schemaCode);
             param.AddKeyValue("alarmTimeBegin", alarmTimeBegin);
@@ -202,9 +201,11 @@ public SleepQualityReport GetSleepQualityofBedUser(String bedUserCode, String re
 
             BaseMessage result = Grobal.getXmppManager().Send(param);
 
+
         if (result.getClass().equals(EMServiceException.class)) {
             throw new EwellException(((EMServiceException) result).getMessage());
         }
+
         return (AlarmList) result;
 
     }

@@ -10,12 +10,12 @@ public class XmppMsgSubject {
     private String _authCode = "1234567890";
     private String _version = "1.0";
     private String _bizCode = "sleepcareforiphone";
+
     private String _operate = "";
 public String get_operate(){return this._operate;}
 
 
     private String _requestID = null;
-
     public String getRequestID() {
         return _requestID;
     }

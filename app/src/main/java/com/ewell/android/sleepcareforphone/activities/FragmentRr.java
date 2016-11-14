@@ -1,5 +1,6 @@
 package com.ewell.android.sleepcareforphone.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -33,13 +34,8 @@ public class FragmentRr extends Fragment implements View.OnClickListener, GetRea
 	private String BedUserName = "";
 
 	private TextView patientname;
-
-
 	private Button back;
-
 	private ProgressView mProgressView;
-
-
 	private FancyChart chart;
 
 	private TextView button1;
@@ -99,13 +95,22 @@ public class FragmentRr extends Fragment implements View.OnClickListener, GetRea
 
 		patientname = (TextView) v.findViewById(R.id.texttitle);
 		patientname.setOnClickListener(this);
-
-			patientname.setText(BedUserName);
+		patientname.setText(BedUserName);
 
 
 		onbedstatusImg = (ImageView) v.findViewById(R.id.onbedstatusimg);
-		alarmImg = (ImageView) v.findViewById(R.id.alarmimg);
 
+		alarmImg = (ImageView) v.findViewById(R.id.alarmimg);
+		alarmImg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), ShowAlarmActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("currentusercode", BedUserCode);
+				intent.putExtras(bundle);
+				getActivity().startActivity(intent);
+			}
+		});
 
 
 		//hr circle
@@ -323,13 +328,13 @@ public class FragmentRr extends Fragment implements View.OnClickListener, GetRea
 						int score = Integer.parseInt(currentRR);
 						mProgressView.setCurrentCount(score);
 						mProgressView.setScore(score);
-						if (onbedstatus.equals("在床")) {
-							if (score > 40 || score < 15) {
-								alarmImg.setBackgroundResource(R.drawable.img_alarm);
-							} else {
-								alarmImg.setBackgroundResource(R.drawable.img_noalarm);
-							}
-						}
+//						if (onbedstatus.equals("在床")) {
+//							if (score > 40 || score < 15) {
+//								alarmImg.setBackgroundResource(R.drawable.img_alarm);
+//							} else {
+//								alarmImg.setBackgroundResource(R.drawable.img_noalarm);
+//							}
+//						}
 					}
 
 					switch (onbedstatus) {

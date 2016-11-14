@@ -32,9 +32,10 @@ public class AlarmList extends BaseMessage {
         Document doc = builder.build(returnQuote);
         Element root = doc.getRootElement();
 
+        result.alarminfoList = new ArrayList<AlarmInfo>();
+
         Element list = root.getChild("AlarmList");
         List alarmlist = list.getChildren();
-        result.alarminfoList = new ArrayList<AlarmInfo>();
 
         for (int i = 0; i < alarmlist.size(); i++) {
             AlarmInfo tempAlarmInfo = new AlarmInfo();
@@ -50,12 +51,10 @@ public class AlarmList extends BaseMessage {
             tempAlarmInfo.setBedNumber(alarm.getChildTextTrim("BedNumber"));
             tempAlarmInfo.setBedCode(alarm.getChildTextTrim("BedCode"));
             tempAlarmInfo.setHandleFlag(alarm.getChildTextTrim("HandleFlag"));
-
-
             result.alarminfoList.add(tempAlarmInfo);
         }
 
-
+       // System.out.print(result.alarminfoList+"  xml解析报警============\n");
         returnQuote.close();
         return result;
     }

@@ -17,7 +17,8 @@ public class XmppManager implements XmppMsgDelegate<String> {
     private static XmppManager _xmppManager = null;
     private XmppHelper xmppHelper;
     private HashMap requestQuene = null;
-    private XmppMsgDelegate xmppMsgDelegate = null;
+    private XmppRealtimeDelegate xmppRealtimeDelegate = null;
+    private XmppAlarmDelegate xmppAlarmDelegate = null;
 
     private XmppManager() {
     }
@@ -34,10 +35,13 @@ public class XmppManager implements XmppMsgDelegate<String> {
     /*
     * 设置事件处理委托
     * */
-    public void SetXmppMsgDelegate(XmppMsgDelegate xmppMsgDelegate) {
-        this.xmppMsgDelegate = xmppMsgDelegate;
+    public void SetXmppRealtimeDelegate(XmppRealtimeDelegate m_xmppRealtimeDelegate) {
+        this.xmppRealtimeDelegate = m_xmppRealtimeDelegate;
     }
 
+    public void SetXmppAlarmDelegate(XmppAlarmDelegate m_xmppAlarmDelegate){
+        this.xmppAlarmDelegate = m_xmppAlarmDelegate;
+    }
 
     /*
     * 连接服务器
@@ -67,15 +71,15 @@ public class XmppManager implements XmppMsgDelegate<String> {
                 Date run = new Date();
                 long between = (run.getTime() - curNow.getTime()) / 1000;
                 if (between >= 10) {
-                    throw new EwellException(ExceptionEnum.TimeOutError);
+                    throw new EwellException(ExceptionEnum.TimeOutError,"获取数据超时");
                 }
 
-               // Thread.sleep(10);
+                // Thread.sleep(10);
             }
             result = this.requestQuene.get(key);
             this.requestQuene.remove(key);
         } catch (Exception e) {
-            throw new EwellException(ExceptionEnum.TimeOutError);
+            throw new EwellException(ExceptionEnum.TimeOutError,"获取数据超时");
         }
 
         return (BaseMessage) result;
@@ -106,13 +110,14 @@ public class XmppManager implements XmppMsgDelegate<String> {
 
             if (msg != null) {
                 if (msg.getClass().isAssignableFrom(EMRealTimeReport.class)) {
-                    if (this.xmppMsgDelegate != null) {
-                        xmppMsgDelegate.ReciveMessage((EMRealTimeReport)msg);
+                    if (this.xmppRealtimeDelegate != null) {
+                        xmppRealtimeDelegate.ReceiveRealtime((EMRealTimeReport)msg);
                     }
                 }
-                else if(msg.getClass().isAssignableFrom(AlarmList.class) && !msg.getSubject().get_operate().equals("sleepcareforiphone")){
-                    if (this.xmppMsgDelegate != null) {
-                        xmppMsgDelegate.ReciveMessage((AlarmList)msg);
+                else if(msg.getClass().isAssignableFrom(AlarmList.class) && !msg.getSubject().get_operate().equals("sleepcareforpad")){
+                    System.out.print(msg.getSubject().get_operate()+"test1=============\n");
+                    if (this.xmppAlarmDelegate != null) {
+                        xmppAlarmDelegate.ReceiveAlarm((AlarmList)msg);
                     }
                 }
                 else {

@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
     };
 
     private void RefreshBadgeNumber() {
-        count = Grobal.getInitConfigModel().getUnhandledAlarmcodeList().size();
+        count = Grobal.getInitConfigModel().getUnhandledAlarmCount();
         if (Build.MANUFACTURER.equalsIgnoreCase("Xiaomi")) {
             BadgeUtil.setBadgeCount(MainActivity.this, count, BadgeUtil.Platform.mi);
         } else if (Build.MANUFACTURER.equalsIgnoreCase("samsung")) {

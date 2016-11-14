@@ -1,6 +1,6 @@
 package com.ewell.android.common;
 
-import com.ewell.android.common.xmpp.XmppMsgDelegate;
+import com.ewell.android.common.xmpp.XmppRealtimeDelegate;
 import com.ewell.android.model.EMRealTimeReport;
 
 import java.util.ArrayList;
@@ -10,11 +10,11 @@ import java.util.Map;
 /**
  * Created by lillix on 11/2/16.
  */
-public class RealTimeHelper implements XmppMsgDelegate<EMRealTimeReport>{
+public class RealTimeHelper implements XmppRealtimeDelegate<EMRealTimeReport> {
 
     private static RealTimeHelper _realtimehelper = null;
-private Map<String, EMRealTimeReport> realtimeCashes = null;
-private Map<String, GetRealtimeDataDelegate> delegatelist = null;
+    private Map<String, EMRealTimeReport> realtimeCashes = null;
+    private Map<String, GetRealtimeDataDelegate> delegatelist = null;
 
     private  Runnable runnable ;
 
@@ -28,6 +28,7 @@ private Map<String, GetRealtimeDataDelegate> delegatelist = null;
             _realtimehelper.realtimeCashes = new HashMap<String, EMRealTimeReport>();
             _realtimehelper.delegatelist = new HashMap<String, GetRealtimeDataDelegate>();
 
+            Grobal.getXmppManager().SetXmppRealtimeDelegate(_realtimehelper);
 
         }
         return _realtimehelper;
@@ -38,12 +39,11 @@ private Map<String, GetRealtimeDataDelegate> delegatelist = null;
     * */
     public void SetDelegate(String name, GetRealtimeDataDelegate delegate) {
 
-        this.delegatelist.put( name, delegate);
-        Grobal.getXmppManager().SetXmppMsgDelegate(this);
+        this.delegatelist.put(name, delegate);
+
     }
 
-
-   public void ShowRealTimeData(){
+    public void ShowRealTimeData(){
         for (String key: delegatelist.keySet()){
             if (delegatelist.get(key) != null){
                 delegatelist.get(key).GetRealtimeData(realtimeCashes);
@@ -55,13 +55,13 @@ private Map<String, GetRealtimeDataDelegate> delegatelist = null;
 
 
     @Override
-    public void ReciveMessage(EMRealTimeReport emRealTimeReport) {
+    public void ReceiveRealtime(EMRealTimeReport emRealTimeReport) {
         String reportkey = emRealTimeReport.getBedUserCode();
         ArrayList<String> tempbeduserlist = Grobal.getInitConfigModel().getBedusercodeList();
 
         if(tempbeduserlist.contains(reportkey)){
-                realtimeCashes.put(reportkey, emRealTimeReport);
-           // System.out.print(reportkey+"关注老人的实时数据"+emRealTimeReport+"==============\n");
+            realtimeCashes.put(reportkey, emRealTimeReport);
+          //  System.out.print(reportkey+"关注老人的实时数据"+emRealTimeReport+"==============\n");
         }
         else{
             if(realtimeCashes.get(reportkey)!=null){

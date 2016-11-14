@@ -36,7 +36,7 @@
     <RelativeLayout
         android:id="@+id/row1"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/TitleView"
         android:layout_marginTop="15dp"
         android:background="@color/white"
@@ -67,7 +67,7 @@
     <RelativeLayout
         android:id="@+id/row2"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/row1"
         android:layout_marginTop="1dp"
         android:background="@color/white"
@@ -96,7 +96,7 @@
     <RelativeLayout
         android:id="@+id/row3"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/row2"
         android:layout_marginTop="1dp"
         android:background="@color/white">
@@ -133,7 +133,7 @@
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/row3"
    android:layout_marginTop="40dp"
         android:layout_marginLeft="35dp"

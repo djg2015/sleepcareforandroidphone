@@ -25,6 +25,7 @@ import com.ewell.android.common.RealTimeHelper;
 import com.ewell.android.common.exception.EwellException;
 import com.ewell.android.model.EMRealTimeReport;
 import com.ewell.android.sleepcareforphone.R;
+import com.ewell.android.sleepcareforphone.common.AlarmHelper;
 import com.ewell.android.sleepcareforphone.common.pushnotification.PushService;
 import com.ewell.android.sleepcareforphone.common.widgets.SwipeMenu;
 import com.ewell.android.sleepcareforphone.common.widgets.SwipeMenuCreator;
@@ -48,10 +49,12 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
     private SwipeMenuListView mListView;
     private Context mContext = this;
     private SwipeMenuCreator creator ;
-private Boolean firstflag= true;
+    private Boolean firstflag= true;
 
     private MyPatientsViewModel patients;
     private Map<String, Object> mHolderList;
+
+    private Button me;
 
     private Thread mThread = null;
 
@@ -60,6 +63,7 @@ private Boolean firstflag= true;
             switch (msg.what) {
                 case 1:
                 RealTimeHelper.GetInstance().ShowRealTimeData();
+                    CheckAlarmTimer();
                     break;
             }
         }
@@ -135,7 +139,7 @@ private Boolean firstflag= true;
                 PushService.actionStart(mContext);
             } else {
                 DataFactory.GetSleepcareforPhoneManage().CloseNotificationForAndroid(deviceid, loginname);
-                PushService.actionStop(mContext);
+              //  PushService.actionStop(mContext);
             }
         }catch (EwellException ex) {
 
@@ -176,6 +180,9 @@ private Boolean firstflag= true;
                 Boolean flag =  patients.DeletePatient(deletecode);
 
                 if (flag) {
+                    //删除该病人的报警信息
+                    AlarmHelper.GetInstance().DeleteAlarmAfterRemovePatient(deletecode);
+
                     //更新bedusercodeList,UserCodeNameMap
                     Map<String,String> tempmap = Grobal.getInitConfigModel().getUserCodeNameMap();
                     ArrayList<String> templist =  Grobal.getInitConfigModel().getBedusercodeList();
@@ -220,6 +227,9 @@ private Boolean firstflag= true;
                 mContext.startActivity(intent);
             }
         });
+
+
+        me = (Button)findViewById(R.id.meBtn);
 
     }
 
@@ -351,6 +361,26 @@ private Boolean firstflag= true;
         // mAdapter.notifyDataSetChanged();
     }
 
+    public void CheckAlarmTimer(){
+        int totalcount = AlarmHelper.GetInstance().getUnhandledAlarm().size();
+            //检查每个病人是否有报警:有,则在右上角显示"紧急"
+            for (String usercode : mHolderList.keySet()) {
+                MyPatientsAdapter.PatientViewHolder tempholder = (MyPatientsAdapter.PatientViewHolder) mHolderList.get(usercode);
+                if (AlarmHelper.GetInstance().getUnhandledAlarm().values().contains(usercode)) {
+                    tempholder.alarmImg.setVisibility(View.VISIBLE);
+                } else {
+                    tempholder.alarmImg.setVisibility(View.INVISIBLE);
+                }
+            }
+             //"我的"图标上显示总的报警数
+             if(totalcount>0){
+             me.setText("   报警数"+ Integer.toString(totalcount));
+              }
+             else{
+              me.setText("");
+              }
+    }
+
     public void ClickMe(View view) {
         Intent intent = new Intent(mContext, MeActivity.class);
         mContext.startActivity(intent);
@@ -358,8 +388,8 @@ private Boolean firstflag= true;
     }
 
     public void ClickAddPatient(View v){
-
         Intent intent = new Intent(mContext, AddPatientActivity.class);
         mContext.startActivity(intent);
     }
+
 }

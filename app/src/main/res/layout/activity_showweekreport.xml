@@ -25,7 +25,7 @@
                 android:layout_width="16dp"
                 android:layout_height="24dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:background="@drawable/btn_back"
                 android:onClick="ClickClose" />
 
@@ -33,10 +33,10 @@
                 android:id="@+id/changepatient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-              android:layout_toRightOf="@+id/btnClose"
+                android:layout_toRightOf="@+id/btnClose"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/btn_email" />
+                android:src="@drawable/changepatient" />
 
             <TextView
                 android:id="@+id/textdate"
@@ -51,7 +51,7 @@
             <Button
                 android:layout_width="16dp"
                 android:layout_height="10dp"
-             android:layout_marginTop="26dp"
+                android:layout_marginTop="26dp"
                 android:layout_marginLeft="2dp"
                 android:layout_toRightOf="@+id/textdate"
                 android:background="@drawable/btn_downarrow" />
@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+
                 android:layout_marginRight="20dp"
                 android:src="@drawable/btn_email" />
 

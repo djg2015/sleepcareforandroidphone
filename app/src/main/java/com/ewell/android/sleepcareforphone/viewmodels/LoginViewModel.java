@@ -16,6 +16,7 @@ import com.ewell.android.ibll.SleepcareforPhoneManage;
 import com.ewell.android.model.EMLoginUser;
 import com.ewell.android.sleepcareforphone.activities.LoginActivity;
 import com.ewell.android.sleepcareforphone.activities.MyPatientsActivity;
+import com.ewell.android.sleepcareforphone.common.AlarmHelper;
 
 //import com.ewell.android.sleepcareforphone.BR;
 
@@ -82,12 +83,12 @@ public class LoginViewModel extends BaseViewModel {
 
 
     //登录
-    public void btnCommand(View view) {
+    public void btnCommand(final View view) {
         SleepcareforPhoneManage sleepcareforPhoneManage = DataFactory.GetSleepcareforPhoneManage();
         try {
             Grobal.getInitConfigModel().setXmppUserName(this.loginName);
             if (Grobal.getXmppManager().Connect()) {
-//检查输入
+                 //检查输入
                 if (this.loginName.equals("")) {
                     Toast.makeText(loginActivity, "登录名不能为空!", Toast.LENGTH_SHORT).show();
                     return;
@@ -97,13 +98,14 @@ public class LoginViewModel extends BaseViewModel {
                     return;
                 }
 
-                Toast.makeText(loginActivity, "正在登录...", Toast.LENGTH_SHORT).show();
-                EMLoginUser emLoginUser = sleepcareforPhoneManage.Login(this.loginName, this.password);
 
+                EMLoginUser emLoginUser = sleepcareforPhoneManage.Login(this.loginName, this.password);
+                Toast.makeText(loginActivity, "正在登录,请稍后...", Toast.LENGTH_SHORT).show();
                 //记录在全局变量里
                 Grobal.getInitConfigModel().setMaincode(emLoginUser.getMainCode());
                 Grobal.getInitConfigModel().setLoginUserName(this.loginName);
                 Grobal.getInitConfigModel().setLoginUserPWD(this.password);
+
                 // 获取到一个参数文件的编辑器。
                 Editor editor = sp.edit();
                 //记住用户名和密码
@@ -115,39 +117,42 @@ public class LoginViewModel extends BaseViewModel {
                     editor.putString("password", "");
                 }
                 editor.putBoolean("isSavePassword", this.isSavepassword);
-
-
                 //记录日志
                 Grobal.getLogManager().LogInfo("登录成功！");
                 editor.putBoolean("isLogin",true);
-
-
-                //获取当前账户下的设备列表,当前关注的老人code/name
-//                EquipmentList tempequipmentlist = sleepcareforPhoneManage.GetEquipmentsByLoginName(this.loginName);
-//                ArrayList<EquipmentInfo> tempequipmentinfoList = tempequipmentlist.getEquipmentInfoList();
-//
-//
-//                Map<String, String> map = new HashMap<String, String>();
-//                ArrayList<String> list = new ArrayList<String>();
-//                ArrayList<String> list2 = new ArrayList<String>();
-//                for (int i = 0; i < tempequipmentinfoList.size(); i++) {
-//                    map.put(tempequipmentinfoList.get(i).getBedUserCode(), tempequipmentinfoList.get(i).getBedUserName());
-//                    list.add(tempequipmentinfoList.get(i).getEquipmentID());
-//                    list2.add(tempequipmentinfoList.get(i).getBedUserCode());
-//                }
-//                Grobal.getInitConfigModel().setUserCodeNameMap(map);
-//                Grobal.getInitConfigModel().setEquipmentcodeList(list);
-//                Grobal.getInitConfigModel().setBedusercodeList(list2);
-
-                //获取curusercode,curusername,进行验证
-
-
                 // 把数据给保存到sp里面
                 editor.commit();
 
-                //跳转下一页面
-                Intent intent = new Intent(this.loginActivity, MyPatientsActivity.class);
-                this.loginActivity.startActivity(intent);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        // 线程阻塞优化：post方法
+                        view.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //开报警
+                                AlarmHelper.GetInstance().ReloadAlarms();
+                                //跳转下一页面
+                                Intent intent = new Intent(loginActivity, MyPatientsActivity.class);
+                                loginActivity.startActivity(intent);
+
+                                System.out.println("post执行---线程id = "+ Thread.currentThread().getId());
+                            }
+                        });
+
+                    }
+                }).start();
+
+
+
 
             } else {
                 //弹出连接失败消息
@@ -167,12 +172,4 @@ public class LoginViewModel extends BaseViewModel {
     }
 
 
-
-
-//    @Override
-//    public void ReciveMessage(EMRealTimeReport emRealTimeReport) {
-//        this.setHr(emRealTimeReport.getHR());
-//        this.setRr(emRealTimeReport.getRR());
-//        this.setTime(emRealTimeReport.getTime());
-//    }
 }

@@ -85,11 +85,14 @@ public class InitConfigModel {
     public String getMaincode() {
         return maincode;
     }
-    public void setMaincode(String _maincode){maincode = _maincode;}
+    public void setMaincode(String maincode){this.maincode = maincode;}
 
 
     //----------自定义方法-----------
 
+    private Map<String, String> UserCodeEquipmentMap = new HashMap<String, String>();
+    public  Map<String, String> getUserCodeEquipmentMap(){return UserCodeEquipmentMap;}
+    public void setUserCodeEquipmentMap(Map<String, String> tempmap){UserCodeEquipmentMap = tempmap;}
 
 
    private Map<String, String> UserCodeNameMap = new HashMap<String, String>();
@@ -105,14 +108,13 @@ public class InitConfigModel {
     public void setCurUserName(String curusername){curUserName = curusername;}
 
 
-
+private Integer unhandledAlarmCount=0;
+    public Integer getUnhandledAlarmCount(){return unhandledAlarmCount;}
+    public void setUnhandledAlarmCount(Integer count){unhandledAlarmCount = count;}
 
     private ArrayList<String> bedusercodeList=new ArrayList<String>();
     public ArrayList<String> getBedusercodeList(){return bedusercodeList;}
     public void setBedusercodeList(ArrayList<String> bedusercodelist){bedusercodeList = bedusercodelist;}
 
-    private ArrayList<String> unhandledAlarmcodeList=new ArrayList<String>();
-    public ArrayList<String> getUnhandledAlarmcodeList(){return unhandledAlarmcodeList;}
-    public void setUnhandledAlarmcodeList(ArrayList<String> unhandledalarmcodes){unhandledAlarmcodeList = unhandledalarmcodes;}
 
 }

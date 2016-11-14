@@ -1,9 +1,5 @@
 package com.ewell.android.model;
 
-import org.jdom.JDOMException;
-
-import java.io.IOException;
-
 /**
  * Created by Dongjg on 2016-7-12.
  */
@@ -41,7 +37,7 @@ public abstract class BaseMessage {
     /*
    * 模型转为xml
    * */
-    public   String ToSubjectXml()
+    public String ToSubjectXml()
     {
         return  this.getSubject().ToSubjectXml();
     }
