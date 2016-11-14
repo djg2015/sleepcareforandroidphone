@@ -2,6 +2,7 @@ package com.ewell.android.common.config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -117,4 +118,7 @@ private Integer unhandledAlarmCount=0;
     public void setBedusercodeList(ArrayList<String> bedusercodelist){bedusercodeList = bedusercodelist;}
 
 
+    private List<Map<String, String>> addpatientitemList = new ArrayList<>();
+    public  List<Map<String, String>> getAddpatientitemList(){return addpatientitemList;}
+    public void setAddpatientitemList( List<Map<String, String>> addpatientlist){addpatientitemList = addpatientlist;}
 }

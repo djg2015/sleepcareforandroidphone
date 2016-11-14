@@ -50,8 +50,8 @@ private String mloginname="";
         mmaincode = Grobal.getInitConfigModel().getMaincode();
 
     try {
-        addUserCodeList = new HashMap<String,String>();
-        List<PartandPatientEntity> temppartandPatientDic = new ArrayList<PartandPatientEntity>();
+        addUserCodeList = new HashMap<>();
+        List<PartandPatientEntity> temppartandPatientDic = new ArrayList<>();
 
         if (Grobal.getXmppManager().Connect()) {
             MainInfo maininfo = sleepcareforPhoneManage.GetPartInfoWithoutFollowBedUser(mloginname,mmaincode);
@@ -62,7 +62,7 @@ for(int i=0;i<temppartinfolist.size();i++){
 
     PartandPatientEntity temppartandpatient = new PartandPatientEntity();
     temppartandpatient.setPartname(temppartinfolist.get(i).getPartName());
-    List<patientEntity> temppatientlist = new ArrayList<patientEntity>();
+    List<patientEntity> temppatientlist = new ArrayList<>();
 
    // System.out.print(temppartinfolist.get(i).getPartName()+"===========\n");
 
@@ -72,10 +72,12 @@ for(int i=0;i<temppartinfolist.size();i++){
 
         patientEntity temppatient = new patientEntity();
         temppatient.setBedusercode(tempbedinfolist.get(j).getBedUserCode());
-        temppatient.setBedusername("姓名:"+tempbedinfolist.get(j).getBedUserName());
-        temppatient.setBednum("床号:"+tempbedinfolist.get(j).getBedNumber());
-        temppatient.setRoomnum("房号:"+tempbedinfolist.get(j).getRoomNumber());
-        temppatient.setEquipmentid( "设备编号:"+tempbedinfolist.get(j).getEquipmentID());
+        temppatient.setBedusername(tempbedinfolist.get(j).getBedUserName());
+        temppatient.setBednum(tempbedinfolist.get(j).getBedNumber());
+        temppatient.setRoomnum(tempbedinfolist.get(j).getRoomNumber());
+        temppatient.setEquipmentid(tempbedinfolist.get(j).getEquipmentID());
+        temppatient.setBedcode(tempbedinfolist.get(j).getBedCode());
+        temppatient.setSex(tempbedinfolist.get(j).getSex());
         temppatientlist.add(temppatient);
     }
     temppartandpatient.setPatientList(temppatientlist);
@@ -100,7 +102,7 @@ for(int i=0;i<temppartinfolist.size();i++){
                 ArrayList<String> tempbedusercodes = Grobal.getInitConfigModel().getBedusercodeList();
                Map<String,String> tempmap = Grobal.getInitConfigModel().getUserCodeNameMap();
 
-for(String code : usercodelist.keySet()) {
+                for(String code : usercodelist.keySet()) {
     // 更新服务端
     sleepcareforPhoneManage.FollowBedUser(mloginname, code,mmaincode);
 
@@ -112,9 +114,35 @@ for(String code : usercodelist.keySet()) {
                 Grobal.getInitConfigModel().setBedusercodeList(tempbedusercodes);
                 Grobal.getInitConfigModel().setUserCodeNameMap(tempmap);
 
+
+                //把要增加的mypatients列表元素记录在全局变量AddpatientitemList里
+                //更新全局变量UserCodeEquipmentMap
+                List<Map<String, String>> addpatientList = new ArrayList<>();
+                Map<String, String> tempequipmentmap = Grobal.getInitConfigModel().getUserCodeEquipmentMap();
+
+                for (PartandPatientEntity dicvalue:partandPatientDic) {
+                    List<patientEntity> partpatientlist = dicvalue.getPatient();
+                    for (patientEntity patient:partpatientlist) {
+                        if(usercodelist.keySet().contains(patient.getBedusercode())){
+                            Map<String,String> newpatient = new HashMap<>();
+                            newpatient.put("bedusercode",patient.getBedusercode());
+                            newpatient.put("sex",patient.getSex());
+                            newpatient.put("roomnum",patient.getRoomnum());
+                            newpatient.put("bednum",patient.getBednum());
+                            newpatient.put("bedusername",patient.getBedusername());
+                            newpatient.put("bedcode",patient.getBedcode());
+                            newpatient.put("equipmentid",patient.getEquipmentid());
+                            addpatientList.add(newpatient);
+
+                            tempequipmentmap.put(patient.getBedusercode(),patient.getEquipmentid());
+                        }
+                    }
+                }
+Grobal.getInitConfigModel().setAddpatientitemList(addpatientList);
+Grobal.getInitConfigModel().setUserCodeEquipmentMap(tempequipmentmap);
+
+                //返回我的病人列表
                 Toast.makeText(parentactivity,"添加成功!返回我的病人", Toast.LENGTH_SHORT).show();
-
-
                 parentactivity.finish();
             }//end if
 
@@ -149,6 +177,10 @@ for(String code : usercodelist.keySet()) {
     }
 
     public class patientEntity{
+        private String sex="";
+        public String getSex(){return sex;}
+        public void setSex(String s){sex = s;}
+
         private String bedusername="";
         public String getBedusername(){return bedusername;}
         public void setBedusername(String mbedusername){bedusername = mbedusername;}
@@ -164,6 +196,11 @@ for(String code : usercodelist.keySet()) {
         private String bednum="";
         public String getBednum(){return bednum;}
         public void setBednum(String mbednum){bednum = mbednum;}
+
+        private String bedcode="";
+        public String getBedcode(){return bedcode;}
+        public void setBedcode(String mbedcode){bedcode = mbedcode;}
+
 
         private String equipmentid="";
         public String getEquipmentid(){return equipmentid;}

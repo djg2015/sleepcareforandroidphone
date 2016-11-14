@@ -29,4 +29,9 @@ public class BedInfo {
     public void setEquipmentID(String id){EquipmentID = id;}
     public String getEquipmentID(){return EquipmentID;}
 
+
+    private String Sex = "";
+    public void setSex(String sex){Sex= sex;}
+    public String getSex(){return Sex;}
+
 }

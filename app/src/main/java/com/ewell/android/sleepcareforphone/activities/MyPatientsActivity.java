@@ -44,7 +44,7 @@ import java.util.Map;
  * Created by lillix on 10/28/16.
  */
 public class MyPatientsActivity extends Activity implements GetRealtimeDataDelegate {
-    private List<Map<String, Object>> mAppList;
+    private List<Map<String, String>> mAppList;
     private MyPatientsAdapter mAdapter;
     private SwipeMenuListView mListView;
     private Context mContext = this;
@@ -102,29 +102,38 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
     protected void onDestroy() {
         super.onDestroy();
 
-        this.finish();
         mThread = null;
-
+        this.finish();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
 
-        if(!firstflag) {
-            patients.InitData();
-            mAppList = patients.getList();
-            mAdapter.notifyDataSetChanged();
-        }
-
-        firstflag = false;
         RealTimeHelper.GetInstance().SetDelegate("realtimedelegate",this);
-
         if(mThread==null) {
             mThread = new Thread(runnable);
             mThread.start();
         }
+
+        if(Grobal.getInitConfigModel().getAddpatientitemList().size()>0){
+            //        if(!firstflag) {
+//            patients.InitData();
+//            mAppList = patients.getList();
+//            mAdapter.notifyDataSetChanged();
+//        }
+//
+//        firstflag = false;
+
+            System.out.print("刷新病人列表============\n");
+            patients.AddPatient(Grobal.getInitConfigModel().getAddpatientitemList());
+            mAppList = patients.getList();
+            mAdapter.notifyDataSetChanged();
+            Grobal.getInitConfigModel().setAddpatientitemList(new ArrayList<Map<String, String>>());
+        }
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +164,8 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
         mAppList = patients.getList();
 
 
-        mHolderList = new HashMap<String,Object>();
+
+        mHolderList = new HashMap<>();
         mListView = (SwipeMenuListView) findViewById(R.id.patientlistView);
         mAdapter = new MyPatientsAdapter();
         mListView.setAdapter(mAdapter);
@@ -175,7 +185,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public void onMenuItemClick(int position, SwipeMenu menu, int index) {
-                String deletecode = mAppList.get(position).get("bedusercode").toString();
+                String deletecode = mAppList.get(position).get("bedusercode");
                 //调用接口
                 Boolean flag =  patients.DeletePatient(deletecode);
 
@@ -217,8 +227,8 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                String bedusercode = mAppList.get(arg2).get("bedusercode").toString();
-                String bedusername = mAppList.get(arg2).get("bedusername").toString();
+                String bedusercode = mAppList.get(arg2).get("bedusercode");
+                String bedusername = mAppList.get(arg2).get("bedusername");
                 Grobal.getInitConfigModel().setCurUserCode(bedusercode);
                 Grobal.getInitConfigModel().setCurUserName(bedusername);
 
@@ -243,7 +253,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
         }
 
         @Override
-        public Map<String, Object> getItem(int position) {
+        public Map<String, String> getItem(int position) {
             return mAppList.get(position);
         }
 
@@ -255,10 +265,10 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             //获取数据源
-            Map<String, Object> item = getItem(position);
+            Map<String, String> item = getItem(position);
 
-            PatientViewHolder holder = null;
-            SwipeMenuLayout layout = null;
+            PatientViewHolder holder;
+            SwipeMenuLayout layout;
             if (convertView == null) {
                 convertView = View.inflate(getApplicationContext(), R.layout.item_list_patient, null);
                 holder = new PatientViewHolder(convertView);
@@ -279,18 +289,18 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
                 holder = (PatientViewHolder)layout.getTag();
             }
 
-            mHolderList.put(item.get("bedusercode").toString(),holder);
+            mHolderList.put(item.get("bedusercode"),holder);
 
-            holder.bedusercode = item.get("bedusercode").toString();
-            String sex = item.get("sex").toString();
+            holder.bedusercode = item.get("bedusercode");
+            String sex = item.get("sex");
             if (sex.equals("0")) {
                 holder.sex.setSelected(false);
             } else if (sex.equals("1")) {
                 holder.sex.setSelected(true);
             }
-            holder.roomnum.setText(item.get("roomnum").toString());
-            holder.bednum.setText(item.get("bednum").toString());
-            holder.name.setText(item.get("bedusername").toString());
+            holder.roomnum.setText(item.get("roomnum"));
+            holder.bednum.setText(item.get("bednum"));
+            holder.name.setText(item.get("bedusername"));
 
             return layout;
         }
@@ -355,7 +365,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
                  itemHolder.hr.setText(emRealTimeReport.getHR());
                  itemHolder.rr.setText(emRealTimeReport.getRR());
                  itemHolder.status.setText(emRealTimeReport.getOnBedStatus());
-                // System.out.print(currentBedusercode + "实时数据===============\n");
+                 System.out.print(currentBedusercode + "实时数据===============\n");
              }
         }
         // mAdapter.notifyDataSetChanged();
@@ -374,7 +384,8 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
             }
              //"我的"图标上显示总的报警数
              if(totalcount>0){
-             me.setText("   报警数"+ Integer.toString(totalcount));
+                 String textstring = "   报警数"+ Integer.toString(totalcount);
+             me.setText(textstring);
               }
              else{
               me.setText("");
@@ -389,6 +400,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
 
     public void ClickAddPatient(View v){
         Intent intent = new Intent(mContext, AddPatientActivity.class);
+
         mContext.startActivity(intent);
     }
 

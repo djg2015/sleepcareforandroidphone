@@ -29,7 +29,7 @@
             android:gravity="center"
          android:layout_above="@+id/txt_roomnum"
             android:layout_marginLeft="5dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="7dp"
             android:text="11"
             android:textColor="@color/darkgrey"
             android:textSize="25sp" />

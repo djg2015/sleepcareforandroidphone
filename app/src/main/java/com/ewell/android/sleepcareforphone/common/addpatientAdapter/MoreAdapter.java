@@ -47,10 +47,14 @@ public class MoreAdapter extends BaseAdapter {
 		} else {
 			hold = (Holder) view.getTag();
 		}
-		hold.bedusernametxt.setText(lists.get(arg0).getBedusername());
-		hold.bednumtxt.setText(lists.get(arg0).getBednum());
-		hold.roomnumtxt.setText(lists.get(arg0).getRoomnum());
-		hold.equipmentidtxt.setText(lists.get(arg0).getEquipmentid());
+		String name = "姓名:"+lists.get(arg0).getBedusername();
+		hold.bedusernametxt.setText(name);
+		String bednum = "床号:"+lists.get(arg0).getBednum();
+		hold.bednumtxt.setText(bednum);
+		String roomnum = "房号:"+lists.get(arg0).getRoomnum();
+		hold.roomnumtxt.setText(roomnum);
+		String id = "设备编号:"+lists.get(arg0).getEquipmentid();
+		hold.equipmentidtxt.setText(id);
 		hold.check.setChecked(lists.get(arg0).getIsChoosed());
 		//hold.img.setImageResource(Integer.parseInt(list.get(arg0).getCustId()));
 
