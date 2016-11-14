@@ -9,7 +9,6 @@ import android.provider.Settings;
 import com.ewell.android.common.Grobal;
 import com.ewell.android.sleepcareforphone.R;
 import com.ewell.android.sleepcareforphone.common.BadgeUtil;
-import com.ewell.android.sleepcareforphone.common.CheckUpdate;
 import com.ewell.android.sleepcareforphone.common.pushnotification.PushService;
 
 
@@ -36,8 +35,8 @@ public class MainActivity extends Activity {
             editor.commit();
         }
 
-        CheckUpdate ck = new CheckUpdate(this, true, MainActivity.this);
-        ck.CheckVersionTask();
+       // CheckUpdate ck = new CheckUpdate(this, true, MainActivity.this);
+       // ck.CheckVersionTask();
 
         badgeThread = new Thread(runbadge);
         badgeThread.start();

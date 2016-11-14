@@ -154,25 +154,25 @@ private boolean firstlaunch;
 
 
         localversion = getLocalVersion();
-        serverversion = getServerversion();
+      //  serverversion = getServerversion();
 
 
-        if (!serverversion.equals("")) {
-            if (localversion.compareTo(serverversion)>=0) {
-             //   Toast.makeText(context, "当前为最新版本!不需要更新", Toast.LENGTH_SHORT).show();
-                if(firstlaunch) {
-                    LoginAction();
-                }
-            } else {
-                //对话框通知用户升级程序
-                showUpdataDialog();
-            }
-        }
-        else{
-            if(firstlaunch) {
-                LoginAction();
-            }
-        }
+//        if (!serverversion.equals("")) {
+//            if (localversion.compareTo(serverversion)>=0) {
+//             //   Toast.makeText(context, "当前为最新版本!不需要更新", Toast.LENGTH_SHORT).show();
+//                if(firstlaunch) {
+//                    LoginAction();
+//                }
+//            } else {
+//                //对话框通知用户升级程序
+//                showUpdataDialog();
+//            }
+//        }
+//        else{
+//            if(firstlaunch) {
+//                LoginAction();
+//            }
+//        }
 
     }
 

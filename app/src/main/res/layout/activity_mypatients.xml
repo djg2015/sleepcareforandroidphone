@@ -11,13 +11,13 @@
     <RelativeLayout
         android:id="@+id/TitleView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/themeblue">
 
         <TextView
             android:id="@+id/titleText"
             android:layout_width="170dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
 
             android:layout_centerHorizontal="true"
             android:gravity="center_vertical|center_horizontal"

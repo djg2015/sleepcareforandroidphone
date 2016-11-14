@@ -30,7 +30,7 @@ public class UpdateActivity extends Activity {
         ck.CheckVersionTask();
 
         currentversionTxt.setText("当前版本: "+ck.getLocalversion());
-        lastestversionTxt.setText("最新版本: "+ck.getLatestversion());
+       // lastestversionTxt.setText("最新版本: "+ck.getLatestversion());
 
     }
 

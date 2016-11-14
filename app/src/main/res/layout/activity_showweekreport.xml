@@ -17,16 +17,16 @@
         <RelativeLayout
             android:id="@+id/topview"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@color/themeblue">
 
             <Button
                 android:id="@+id/btnClose"
-                android:layout_width="16dp"
-                android:layout_height="24dp"
+                android:layout_width="34dp"
+                android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/btn_back"
+                android:background="@drawable/btn_back1"
                 android:onClick="ClickClose" />
 
             <ImageView
@@ -41,7 +41,7 @@
             <TextView
                 android:id="@+id/textdate"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:text="@{showweekreport.titleDate}"
@@ -51,7 +51,7 @@
             <Button
                 android:layout_width="16dp"
                 android:layout_height="10dp"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="23dp"
                 android:layout_marginLeft="2dp"
                 android:layout_toRightOf="@+id/textdate"
                 android:background="@drawable/btn_downarrow" />
