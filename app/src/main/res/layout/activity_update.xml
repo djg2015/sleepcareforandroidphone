@@ -8,16 +8,16 @@
     <RelativeLayout
         android:id="@+id/TitleView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/themeblue">
 
         <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:gravity="center_vertical|center_horizontal"
+            android:gravity="center"
             android:text="@string/softwareupdate"
             android:textSize="22sp"
             android:textColor="@color/white"
@@ -25,10 +25,10 @@
 
         <Button
             android:id="@+id/btnClose"
-            android:layout_width="16dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/btn_back"
             android:onClick="ClickClose" />
 

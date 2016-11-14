@@ -17,10 +17,10 @@
         <TextView
             android:id="@+id/titleText"
             android:layout_width="170dp"
-            android:layout_height="50dp"
-
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:gravity="center_vertical|center_horizontal"
+            android:gravity="center"
             android:text="@string/mypatientlist"
             android:textColor="@color/white"
             android:textSize="22sp" />

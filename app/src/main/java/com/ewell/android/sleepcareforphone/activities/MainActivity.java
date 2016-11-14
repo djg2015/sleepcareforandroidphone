@@ -1,6 +1,7 @@
 package com.ewell.android.sleepcareforphone.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +38,9 @@ public class MainActivity extends Activity {
 
        // CheckUpdate ck = new CheckUpdate(this, true, MainActivity.this);
        // ck.CheckVersionTask();
+        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+        MainActivity.this.startActivity(intent);
+
 
         badgeThread = new Thread(runbadge);
         badgeThread.start();
