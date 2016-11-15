@@ -60,9 +60,9 @@
 
         <Button
             android:id="@+id/sex"
-            android:layout_width="22dp"
+            android:layout_width="18dp"
             android:layout_height="18dp"
-            android:layout_marginTop="2dp"
+android:layout_marginTop="2dp"
             android:background="@drawable/sexbtn" />
 
         <TextView

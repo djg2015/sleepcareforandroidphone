@@ -82,7 +82,7 @@ defaultPaint = new Paint();
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         initPaint();
-        RectF rectBlackBg = new RectF(25, 25, mWidth - 25, mHeight - 25);
+        RectF rectBlackBg = new RectF(10, 10, mWidth - 10, mHeight - 10);
         canvas.drawArc(rectBlackBg, 0, 360, false, mPaint);
         mPaint.setColor(Color.BLACK);
         mTextPaint.setTextSize(55);

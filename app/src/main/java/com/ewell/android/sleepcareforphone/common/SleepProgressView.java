@@ -60,7 +60,7 @@ public class SleepProgressView extends View {
         canvas.drawText("睡眠得分", mWidth / 2, mHeight / 2+40, mSubtextPaint);
 
 
-        RectF rectBlackBg = new RectF(25, 25, mWidth - 25, mHeight -25);
+        RectF rectBlackBg = new RectF(10, 10, mWidth - 10, mHeight - 10);
         canvas.drawArc(rectBlackBg, 0, 360, false, mPaint);
 
         float section1 = deepsleepCount / maxCount;

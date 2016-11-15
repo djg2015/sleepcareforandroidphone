@@ -92,6 +92,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
+
         >
 
         <TextView
@@ -106,6 +107,7 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/centerblock"
             android:text="睡眠时长"
+            android:gravity="center"
             android:textColor="@color/darkgrey"
             />
 
@@ -115,6 +117,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/centerblock"
             android:textColor="@color/blue"
+            android:gravity="center"
             android:text="0时0分"
             />
     </RelativeLayout>

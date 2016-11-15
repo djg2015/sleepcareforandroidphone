@@ -126,7 +126,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
 //
 //        firstflag = false;
 
-            System.out.print("刷新病人列表============\n");
+          //  System.out.print("刷新病人列表============\n");
             patients.AddPatient(Grobal.getInitConfigModel().getAddpatientitemList());
             mAppList = patients.getList();
             mAdapter.notifyDataSetChanged();
@@ -285,7 +285,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
                 layout = new SwipeMenuLayout(convertView, menuView, listView.getCloseInterpolator(), listView.getOpenInterpolator());
                 layout.setPosition(position);
                 layout.setTag(holder);
-                System.out.print(position+"===============pos new\n");
+              //  System.out.print(position+"===============pos new\n");
 
 
 
@@ -294,7 +294,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
                 layout.closeMenu();
                 layout.setPosition(position);
                 holder = (PatientViewHolder)layout.getTag();
-                System.out.print(position+"===============pos old\n");
+              //  System.out.print(position+"===============pos old\n");
 
 
             }
@@ -391,7 +391,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
                          break;
                      }
                  }
-                 System.out.print(currentBedusercode + "实时数据===============\n");
+                // System.out.print(currentBedusercode + "实时数据===============\n");
              }
         }
         // mAdapter.notifyDataSetChanged();
