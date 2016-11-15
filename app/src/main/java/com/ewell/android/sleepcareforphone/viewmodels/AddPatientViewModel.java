@@ -132,6 +132,11 @@ for(int i=0;i<temppartinfolist.size();i++){
                             newpatient.put("bedusername",patient.getBedusername());
                             newpatient.put("bedcode",patient.getBedcode());
                             newpatient.put("equipmentid",patient.getEquipmentid());
+
+                            newpatient.put("hr","0");
+                            newpatient.put("rr","0");
+                            newpatient.put("onbedstatus","检测中");
+
                             addpatientList.add(newpatient);
 
                             tempequipmentmap.put(patient.getBedusercode(),patient.getEquipmentid());

@@ -63,6 +63,9 @@ public class MyPatientsViewModel extends BaseViewModel {
                     map.put("equipmentid",beduserinfoList.get(i).getEquipmentID());
                     map.put("sex", beduserinfoList.get(i).getSex());
 
+                    map.put("hr","0");
+                    map.put("rr","0");
+                    map.put("onbedstatus","检测中");
                     this.listItems.add(map);
 
 

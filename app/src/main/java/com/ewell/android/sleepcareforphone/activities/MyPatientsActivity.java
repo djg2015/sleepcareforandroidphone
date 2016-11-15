@@ -54,6 +54,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
     private MyPatientsViewModel patients;
     private Map<String, Object> mHolderList;
 
+
     private Button me;
 
     private Thread mThread = null;
@@ -164,7 +165,6 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
         mAppList = patients.getList();
 
 
-
         mHolderList = new HashMap<>();
         mListView = (SwipeMenuListView) findViewById(R.id.patientlistView);
         mAdapter = new MyPatientsAdapter();
@@ -204,6 +204,7 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
                     //本地list中删除
                     mHolderList.remove(deletecode);
                     mAppList.remove(position);
+
                     mAdapter.notifyDataSetChanged();
                 }
             }
@@ -269,6 +270,8 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
 
             PatientViewHolder holder;
             SwipeMenuLayout layout;
+
+
             if (convertView == null) {
                 convertView = View.inflate(getApplicationContext(), R.layout.item_list_patient, null);
                 holder = new PatientViewHolder(convertView);
@@ -282,12 +285,22 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
                 layout = new SwipeMenuLayout(convertView, menuView, listView.getCloseInterpolator(), listView.getOpenInterpolator());
                 layout.setPosition(position);
                 layout.setTag(holder);
+                System.out.print(position+"===============pos new\n");
+
+
+
             } else {
                 layout = (SwipeMenuLayout) convertView;
                 layout.closeMenu();
                 layout.setPosition(position);
                 holder = (PatientViewHolder)layout.getTag();
+                System.out.print(position+"===============pos old\n");
+
+
             }
+
+
+
 
             mHolderList.put(item.get("bedusercode"),holder);
 
@@ -301,6 +314,10 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
             holder.roomnum.setText(item.get("roomnum"));
             holder.bednum.setText(item.get("bednum"));
             holder.name.setText(item.get("bedusername"));
+
+            holder.hr.setText(item.get("hr"));
+            holder.rr.setText(item.get("rr"));
+            holder.status.setText(item.get("onbedstatus"));
 
             return layout;
         }
@@ -365,6 +382,15 @@ public class MyPatientsActivity extends Activity implements GetRealtimeDataDeleg
                  itemHolder.hr.setText(emRealTimeReport.getHR());
                  itemHolder.rr.setText(emRealTimeReport.getRR());
                  itemHolder.status.setText(emRealTimeReport.getOnBedStatus());
+
+                 for (Map<String,String> item:mAppList) {
+                     if(item.get("bedusercode").equals(currentBedusercode)){
+                         item.put("hr",emRealTimeReport.getHR());
+                         item.put("rr",emRealTimeReport.getRR());
+                         item.put("onbedstatus",emRealTimeReport.getOnBedStatus());
+                         break;
+                     }
+                 }
                  System.out.print(currentBedusercode + "实时数据===============\n");
              }
         }
